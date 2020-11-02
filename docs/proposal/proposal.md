@@ -89,7 +89,7 @@
 #### Student 1
 
 > * Employer UI
-> * Employer back-end UI
+> * Employer back-end API
 > * Logins 
 > * Data analytics 
 > * Testing
