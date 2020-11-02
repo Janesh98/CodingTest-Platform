@@ -1,54 +1,44 @@
 # School of Computing &mdash; Year 4 Project Proposal Form
 
-> Edit (then commit and push) this document to complete your proposal form.
-> Make use of figures / diagrams where appropriate.
->
-> Do not rename this file.
 
 ## SECTION A
 
 |                     |                   |
 |---------------------|-------------------|
-|Project Title:       | Mern Coding Test Platform |
+|Project Title:       | MERN Coding Test Platform |
 |Student 1 Name:      | Paul McNally            |
 |Student 1 ID:        | 17318221           |
 |Student 2 Name:      | Janesh Sharma            |
 |Student 2 ID:        | 17473124            |
 |Project Supervisor:  | Stephen Blott           |
 
-> Ensure that the Supervisor formally agrees to supervise your project; this is only recognised once the
-> Supervisor assigns herself/himself via the project Dashboard.
->
-> Project proposals without an assigned
-> Supervisor will not be accepted for presentation to the Approval Panel.
+
 
 ## SECTION B
-
-> Guidance: This document is expected to be approximately 3 pages in length, but it can exceed this page limit.
-> It is also permissible to carry forward content from this proposal to your later documents (e.g. functional
-> specification) as appropriate.
->
-> Your proposal must include *at least* the following sections.
 
 
 ### Introduction
 
-> This project will be a full stack web application covering frontend and backend technologies.
+> This project will be a full stack web application covering frontend and backend technologies with CI/CD.
 
 ### Outline
 
-> The main goal of the project is to build a coding test platform for businesses to use as a means to assess potential new hires. We will build a live coding environment allowing candidates to complete a coding test along with the option to complete video responses to questions proposed by an employer. In addition to this employers will have access to an analytics section where candidates are ranked based on performance.
+> The main goal of the project is to build a coding test platform for companies to use as a means to assess potential new hires. We will build a live coding environment allowing candidates to complete a coding test along with the option to complete video responses to questions proposed by an employer. In addition to this employers will have access to an analytics section where candidates are ranked based on performance.
 
 ### Background
 
-> Our idea came from looking at Stephen Blotts projects, specifically the einstein project. We decided to build a variation on this project and we thought of coding tests as we were already discussing how we did in coding tests for companies we applied to.
+> Our idea came from looking at Stephen Blott's project ideas, specifically the einstein project. We decided to build a variation on this project and we thought of coding tests as we were already discussing how we did in coding tests for companies we applied to.
 
 ### Achievements
 
-> There will be two main users for this coding test plaform.
+> There will be two main users for this coding test platform.
 > 1. Employers will use this web application to access applicants for jobs. Employers will be able to use the application for several functions:
 >     * Set coding challenges for the applicants, the employer will provide a description of the challenge as well as the test cases for each challenge to test the applicants code when it is run.
->     *  The employer will also have the option to set questions for each applicant to record a video response
+>     *  The employer will also have the option to set questions for each applicant to record a video response.
+>     * After the applicant(s) have completed the application process, the employer will be able to view the analytics from the applicant(s) i.e. time to complete coding challenges.
+> 2. Applications will use this web application to complete the coding challenges and provide video responses set by the employer.
+>     * Applicants will be able to choose from a selection which programming  language they would like to use for the coding challenges.
+>     * They will be able to run their code against the test cases before submitting their final code.
     
 ### Justification
 
@@ -73,7 +63,7 @@
 > 4. Node.js
 >     * The back-end, Nodejs is a JavaScript runtime environment that executes JavaScript code outside a web browser. It allows you use JavaScript to write command line tools and for server-side scripting.
 > <p align="center">
-  <img src="./res/mernstack.png" width="400px">
+  <img src="./res/mernstack.png">
   </p>
 
 ### Hardware
@@ -94,27 +84,20 @@
 
 ### Breakdown of work
 
-> Clearly identify who will undertake which parts of the project.
->
-> It must be clear from the explanation of this breakdown of work both that each student is responsible for
-> separate, clearly-defined tasks, and that those responsibilities substantially cover all of the work required
-> for the project.
+
 
 #### Student 1
 
-> *Student 1 should complete this section.*
+> * Employer UI
+> * Employer back-end UI
+> * Logins 
+> * Data analytics 
+> * Testing
 
 #### Student 2
 
-> *Student 2 should complete this section.*
-
-## Example
-
-> Example: Here's how you can include images in markdown documents...
-
-<!-- Basically, just use HTML! -->
-
-<p align="center">
-  <img src="./res/cat.png" width="300px">
-</p>
-
+> * CI/CD
+> * Applicant UI
+> * Applicant back-end API 
+> * Database
+> * Testing
