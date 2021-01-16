@@ -2,7 +2,7 @@ image: node:latest
 
 default:
   before_script:
-    - cd src
+    - cd src/client
 
 stages:
   - build
@@ -12,16 +12,18 @@ cache:
   paths:
     - node_modules/
 
-install_dependencies:
+build_react:
   stage: build
   script:
-    - cd client && yarn install
+    - yarn install
     - yarn build
   artifacts:
     expire_in: 1 hour
     paths:
       - build
 
-frontend_testing:
+test_react:
   stage: test
-  script: cd client && yarn test --watchAll=false
+  script:
+    - pwd
+    - yarn test --watchAll=false
