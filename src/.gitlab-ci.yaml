@@ -1,0 +1,18 @@
+image: node:latest
+
+stages:
+  - build
+  - test
+
+cache:
+  paths:
+    - node_modules/
+
+install_dependencies:
+  stage: build
+  script:
+    - cd client && yarn install
+
+frontend_testing:
+  stage: test
+  script: cd client && yarn test --watchAll=false
