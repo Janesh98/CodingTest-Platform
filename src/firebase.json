@@ -8,11 +8,7 @@
         "destination": "/index.html"
       },
       {
-        "source": "/api",
-        "function": "api"
-      },
-      {
-        "source": "/admin",
+        "source": "**",
         "function": "api"
       }
     ]
