@@ -2,10 +2,11 @@ image: node:12
 
 stages:
   - test
+  - deploy
 
 before_script:
   - npm i -g firebase-tools
-  
+
 cache:
   paths:
     - node_modules/
@@ -46,4 +47,3 @@ deploy-frontend:
     - firebase deploy --only hosting --token $FIREBASE_TOKEN
   only:
     - master
-
