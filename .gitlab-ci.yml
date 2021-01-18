@@ -36,7 +36,7 @@ deploy-backend:
     refs:
       - master
     changes:
-      - functions/**/*
+      - functions/*
 
 deploy-frontend:
   stage: deploy
