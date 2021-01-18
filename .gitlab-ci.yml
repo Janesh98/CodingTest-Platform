@@ -7,9 +7,16 @@ cache:
   paths:
     - node_modules/
 
-test_react:
+test_frontend:
   stage: test
   script:
     - cd src/client
     - yarn install
     - yarn test --watchAll=false
+
+test_backend:
+  stage: test
+  script:
+    - cd src/functions
+    - npm ci
+    - npm run test
