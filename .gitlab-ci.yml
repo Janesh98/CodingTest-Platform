@@ -33,10 +33,7 @@ deploy-backend:
     - cd ..
     - firebase deploy --only functions --token $FIREBASE_TOKEN
   only:
-    refs:
-      - master
-    changes:
-      - functions/*
+    - master
 
 deploy-frontend:
   stage: deploy
