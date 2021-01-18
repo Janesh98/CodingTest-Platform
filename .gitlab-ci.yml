@@ -2,6 +2,9 @@ image: node:12
 
 stages:
   - test
+
+before_script:
+  - npm i -g firebase-tools
   
 cache:
   paths:
@@ -20,3 +23,27 @@ test_backend:
     - cd src/functions
     - npm ci
     - npm run test
+
+deploy-backend:
+  stage: deploy
+  script:
+    - cd src/functions
+    - npm ci
+    - cd ..
+    - firebase deploy --only functions --token $FIREBASE_TOKEN
+  only:
+    refs:
+      - master
+    changes:
+      - functions/**/*
+
+deploy-frontend:
+  stage: deploy
+  script:
+    - cd src/client
+    - yarn install
+    - yarn build
+    - firebase deploy --only hosting --token $FIREBASE_TOKEN
+  only:
+    - master
+
