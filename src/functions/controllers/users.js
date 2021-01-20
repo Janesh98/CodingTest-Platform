@@ -1,5 +1,5 @@
 const { db } = require('../utilities/admin');
-
+let NewUserDB = require('../models/UserModel')
 const config = require('../config/config')
 
 const firebase = require('firebase');
@@ -48,6 +48,20 @@ exports.register = (req, res) => {
           userId
         };
         return db.doc(`/users/${newUser.company}`).set(userCredentials);
+      })
+      .then(() => {
+        const company = newUser.company;
+        const email = newUser.email;
+        const createdAt = new Date().toISOString();
+
+        const newUserEntry = new NewUserDB({
+          company,
+          email,
+          createdAt,
+          userId,
+        });
+
+        newUserEntry.save()
       })
       .then(() => {
         return res.status(201).json({ token });
