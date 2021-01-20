@@ -52,7 +52,7 @@ deploy-backend:
   script:
     - cd src
     - firebase deploy --only functions --token $FIREBASE_TOKEN
-  dependecies: []
+  dependencies: []
   only:
     refs:
       - master
@@ -68,7 +68,7 @@ deploy-frontend:
     - yarn install
     - yarn build
     - firebase deploy --only hosting --token $FIREBASE_TOKEN
-  dependecies: [build-frontend]
+  dependencies: [build-frontend]
   only:
     refs:
       - master
