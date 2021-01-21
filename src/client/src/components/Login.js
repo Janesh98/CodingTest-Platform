@@ -3,39 +3,24 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import './Signup.css';
+import './Login.css';
 import { useAuth } from '../contexts/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
 
-export default function Signup() {
+export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
-  const [isError, setIsError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { signup, signInWithGoogle } = useAuth();
+  const { login, signInWithGoogle } = useAuth();
   const history = useHistory();
 
-  const validatePassword = (confirmPass) => {
-    setConfirmPassword(confirmPass);
-
-    if (password !== confirmPass) {
-      setIsError(true);
-      return setError('Passwords do not match');
-    }
-    setIsError(false);
-    setError('');
-  };
-
-  const handleSubmitSignup = async (e) => {
+  const handleSubmitLogin = async (e) => {
     try {
       e.preventDefault();
       setLoading(true);
       //console.log(email, password);
-      const user = await signup(email, password);
+      const user = await login(email, password);
       //console.log(user);
-
       setLoading(false);
       history.push('/');
     } catch {
@@ -61,7 +46,7 @@ export default function Signup() {
     <Container component="main" maxWidth="xs">
       <div>
         <Typography component="h1" variant="h5">
-          Sign Up
+          Sign In
         </Typography>
         <form>
           <TextField
@@ -88,33 +73,19 @@ export default function Signup() {
             autoComplete="current-password"
             onChange={(event) => setPassword(event.target.value)}
           />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Confirm Password"
-            type="password"
-            id="confirm-password"
-            error={isError}
-            helperText={error}
-            autoComplete="current-password"
-            onChange={(event) => validatePassword(event.target.value)}
-          />
           <Button
-            id="sign-up"
+            id="sign-in"
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
             disabled={loading}
-            onClick={(e) => handleSubmitSignup(e)}
+            onClick={(e) => handleSubmitLogin(e)}
           >
-            Sign Up
+            Sign In
           </Button>
           <Button
-            id="sign-up-google"
+            id="sign-in-google"
             type="submit"
             fullWidth
             variant="contained"
@@ -122,9 +93,9 @@ export default function Signup() {
             disabled={loading}
             onClick={(e) => handleSubmitGoogle(e)}
           >
-            Sign Up With Google
+            Sign In With Google
           </Button>
-          Already have an account? <Link to="/login">Sign In</Link>
+          Need an account? <Link to="/signup">Sing Up</Link>
         </form>
       </div>
     </Container>
