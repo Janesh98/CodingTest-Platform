@@ -19,10 +19,10 @@ exports.validateRegistrationData = (data) => {
     errors.email = 'Must be a valid email address';
   }
 
-  if (isEmpty(data.password)) errors.password = 'Cannot be empty';
-  if (data.password !== data.confirmPassword)
-    errors.confirmPassword = 'Passwords must match';
-  if (isEmpty(data.company)) errors.company = 'Cannot be empty';
+ // if (isEmpty(data.password)) errors.password = 'Cannot be empty';
+ // if (data.password !== data.confirmPassword)
+ //   errors.confirmPassword = 'Passwords must match';
+ // if (isEmpty(data.company)) errors.company = 'Cannot be empty';
 
   return {
     errors,
