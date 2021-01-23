@@ -6,7 +6,7 @@ require('dotenv').config();
 
 const app = express();
 
-const { register, login } = require('./controllers/users');
+const { register, company } = require('./controllers/users');
 
 const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, {
@@ -22,8 +22,8 @@ connection.once('open', () => {
 // Registration route
 app.post('/register', register);
 
-//Login Route
-app.post('/login', login);
+
+app.post('/company', company);
 
 app.get('/', (req, res) => {
   res.send('homepage');

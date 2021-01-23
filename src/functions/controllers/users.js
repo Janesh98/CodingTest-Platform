@@ -40,3 +40,21 @@ exports.register = (req, res) => {
 //  });
 };
 
+  exports.company = (req, res) => {
+    const newUser = {
+      email: req.body.email,
+      googleId: req.body.googleId,
+      company: req.body.company
+    };
+
+    const googleId = newUser.googleId;
+    const email = newUser.email;
+    const newCompany = newUser.company;
+    NewUserDB.find(({}), function(err, result){
+      if (err) throw err;
+      console.log(result);
+    });
+    return res.status(201).json({ email });
+    
+
+  };
