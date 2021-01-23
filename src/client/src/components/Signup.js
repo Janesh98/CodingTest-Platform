@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
 import './Signup.css';
 import { useAuth } from '../contexts/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
@@ -49,7 +50,7 @@ export default function Signup() {
       setLoading(true);
       //console.log(email, password);
       const user = await signInWithGoogle();
-      //console.log(user);
+      console.log(user);
       setLoading(false);
       history.push('/');
     } catch {
@@ -58,75 +59,81 @@ export default function Signup() {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <div>
-        <Typography component="h1" variant="h5">
-          Sign Up
-        </Typography>
-        <form>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            onChange={(event) => setEmail(event.target.value)}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            onChange={(event) => setPassword(event.target.value)}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Confirm Password"
-            type="password"
-            id="confirm-password"
-            error={isError}
-            helperText={error}
-            autoComplete="current-password"
-            onChange={(event) => validatePassword(event.target.value)}
-          />
-          <Button
-            id="sign-up"
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            disabled={loading}
-            onClick={(e) => handleSubmitSignup(e)}
-          >
+    <div id="signup">
+    <Grid container align="center" justify="center" direction="column">
+      <Container component="main" maxWidth="xs">
+        <div>
+          <Typography component="h1" variant="h5">
             Sign Up
-          </Button>
-          <Button
-            id="sign-up-google"
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="secondary"
-            disabled={loading}
-            onClick={(e) => handleSubmitGoogle(e)}
-          >
-            Sign Up With Google
-          </Button>
-          Already have an account? <Link to="/login">Sign In</Link>
-        </form>
-      </div>
-    </Container>
+          </Typography>
+          <form>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              onChange={(event) => setEmail(event.target.value)}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              onChange={(event) => setPassword(event.target.value)}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Confirm Password"
+              type="password"
+              id="confirm-password"
+              error={isError}
+              helperText={error}
+              autoComplete="current-password"
+              onChange={(event) => validatePassword(event.target.value)}
+            />
+            <Button
+              id="sign-up"
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              disabled={loading}
+              onClick={(e) => handleSubmitSignup(e)}
+            >
+              Sign Up
+            </Button>
+            <Button
+              id="sign-up-google"
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="secondary"
+              disabled={loading}
+              onClick={(e) => handleSubmitGoogle(e)}
+            >
+              Sign Up With Google
+            </Button>
+            <Typography>
+              Already have an account? <Link to="/login">Sign In</Link>
+            </Typography>
+          </form>
+        </div>
+      </Container>
+    </Grid>
+    </div>
   );
 }
