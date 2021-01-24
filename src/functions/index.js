@@ -23,7 +23,7 @@ connection.once('open', () => {
 app.post('/register', register);
 
 
-app.post('/company', company);
+app.get('/company', company);
 
 app.get('/', (req, res) => {
   res.send('homepage');

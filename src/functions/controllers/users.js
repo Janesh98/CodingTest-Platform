@@ -29,28 +29,9 @@ exports.register = (req, res) => {
   });
   newUserEntry.save();
   return res.status(201).json({ googleId });
-
-  // TODO Check if user account for company already exists in the DB
-//  NewUserDB.countDocuments({company: company}, function (err, count){
-//    if (count > 0){
-//      return res
-//        .status(400)
-//        .json({ company: 'This company is already registered' });
-//    }
-//  });
 };
 
   exports.company = (req, res) => {
-    const newUser = {
-      email: req.body.email,
-      googleId: req.body.googleId,
-      company: req.body.company
-    };
-
-    const googleId = newUser.googleId;
-    const email = newUser.email;
-    const newCompany = newUser.company;
-    let companyExists;
     NewUserDB.find(({}), function(err, result){
       if (err) throw err;
       var comp = "company";
@@ -59,13 +40,7 @@ exports.register = (req, res) => {
       for (i = 0; i < result.length; i++) {
         companiesArray.push(result[i][comp])
       }
-      companyExists = companiesArray.includes(newCompany);
-     if(companiesArray.includes(newCompany)){
-       console.log("Company is already registered");
-      }; 
+     return res.status(200).json({
+       companies: companiesArray});
     });
-
-    return res.status(201).json({ email });
-    
-
   };
