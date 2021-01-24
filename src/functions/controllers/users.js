@@ -32,11 +32,25 @@ exports.register = (req, res) => {
 };
 
   exports.company = (req, res) => {
-   // NewUserDB.find({}, { _id: 0, company: 1 }, function(err, result){
     NewUserDB.find({company: {$ne:null}}, {_id: 0, company: 1}, function(err, result){
       if (err) throw err;
      return res.status(200).json({
        companies: result
       });
     });
+  };
+
+  exports.addCompany = (req, res) => {
+    const newCompany = {
+      googleId: req.body.googleId,
+      company: req.body.company
+    };
+    var query = { googleId: newCompany.googleId };
+    var companyToBeAdded = { $set: { company: newCompany.company } };
+    NewUserDB.updateOne(query, companyToBeAdded, function(err, res) {
+      if (err) throw err;
+    });
+    return res.status(200).json({
+      googleId: "Company added successfully"
+     });
   };
