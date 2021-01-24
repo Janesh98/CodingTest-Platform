@@ -32,15 +32,10 @@ exports.register = (req, res) => {
 };
 
   exports.company = (req, res) => {
-    NewUserDB.find(({}), function(err, result){
+    NewUserDB.find({}, { _id: 0, company: 1 }, function(err, result){
       if (err) throw err;
-      var comp = "company";
-      var companiesArray = [];
-      var i;
-      for (i = 0; i < result.length; i++) {
-        companiesArray.push(result[i][comp])
-      }
      return res.status(200).json({
-       companies: companiesArray});
+       companies: result
+      });
     });
   };
