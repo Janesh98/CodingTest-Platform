@@ -32,7 +32,8 @@ exports.register = (req, res) => {
 };
 
   exports.company = (req, res) => {
-    NewUserDB.find({}, { _id: 0, company: 1 }, function(err, result){
+   // NewUserDB.find({}, { _id: 0, company: 1 }, function(err, result){
+    NewUserDB.find({company: {$ne:null}}, {_id: 0, company: 1}, function(err, result){
       if (err) throw err;
      return res.status(200).json({
        companies: result
