@@ -50,10 +50,21 @@ exports.register = (req, res) => {
     const googleId = newUser.googleId;
     const email = newUser.email;
     const newCompany = newUser.company;
+    let companyExists;
     NewUserDB.find(({}), function(err, result){
       if (err) throw err;
-      console.log(result);
+      var comp = "company";
+      var companiesArray = [];
+      var i;
+      for (i = 0; i < result.length; i++) {
+        companiesArray.push(result[i][comp])
+      }
+      companyExists = companiesArray.includes(newCompany);
+     if(companiesArray.includes(newCompany)){
+       console.log("Company is already registered");
+      }; 
     });
+
     return res.status(201).json({ email });
     
 
