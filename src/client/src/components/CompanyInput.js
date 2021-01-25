@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import {
   Button,
   TextField,
@@ -15,6 +16,7 @@ const CompanyInput = () => {
   const [error, setError] = useState('');
   const [isError, setISError] = useState(false);
   const history = useHistory();
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     const getCompanies = async () => {
@@ -47,6 +49,7 @@ const CompanyInput = () => {
       await axios.post(
         'http://localhost:5000/coding-test-platform/us-central1/api/company',
         {
+          googleId: currentUser.uid,
           company,
         }
       );

@@ -7,6 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import './Signup.css';
 import { useAuth } from '../contexts/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
+import axios from 'axios';
 
 export default function Signup() {
   const [email, setEmail] = useState('');
@@ -29,13 +30,23 @@ export default function Signup() {
     setError('');
   };
 
+  const postUserDetails = async (user) => {
+    await axios.post(
+      'http://localhost:5000/coding-test-platform/us-central1/api/register',
+      {
+        googleId: user.uid,
+        email: user.email,
+      }
+    );
+  };
+
   const handleSubmitSignup = async (e) => {
     try {
       e.preventDefault();
       setLoading(true);
-      //console.log(email, password);
-      const user = await signup(email, password);
-      //console.log(user);
+      const res = await signup(email, password);
+
+      await postUserDetails(res.user);
 
       setLoading(false);
       history.push('/signup/company');
@@ -48,9 +59,10 @@ export default function Signup() {
     try {
       e.preventDefault();
       setLoading(true);
-      //console.log(email, password);
-      const user = await signInWithGoogle();
-      console.log(user);
+      const res = await signInWithGoogle();
+
+      await postUserDetails(res.user);
+
       setLoading(false);
       history.push('/signup/company');
     } catch {
@@ -60,80 +72,80 @@ export default function Signup() {
 
   return (
     <div id="signup">
-    <Grid container align="center" justify="center" direction="column">
-      <Container component="main" maxWidth="xs">
-        <div>
-          <Typography component="h1" variant="h5">
-            Sign Up
-          </Typography>
-          <form>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              onChange={(event) => setEmail(event.target.value)}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              onChange={(event) => setPassword(event.target.value)}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Confirm Password"
-              type="password"
-              id="confirm-password"
-              error={isError}
-              helperText={error}
-              autoComplete="current-password"
-              onChange={(event) => validatePassword(event.target.value)}
-            />
-            <Button
-              id="sign-up"
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              disabled={loading}
-              onClick={(e) => handleSubmitSignup(e)}
-            >
+      <Grid container align="center" justify="center" direction="column">
+        <Container component="main" maxWidth="xs">
+          <div>
+            <Typography component="h1" variant="h5">
               Sign Up
-            </Button>
-            <Button
-              id="sign-up-google"
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="secondary"
-              disabled={loading}
-              onClick={(e) => handleSubmitGoogle(e)}
-            >
-              Sign Up With Google
-            </Button>
-            <Typography>
-              Already have an account? <Link to="/login">Sign In</Link>
             </Typography>
-          </form>
-        </div>
-      </Container>
-    </Grid>
+            <form>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                onChange={(event) => setEmail(event.target.value)}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                onChange={(event) => setPassword(event.target.value)}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Confirm Password"
+                type="password"
+                id="confirm-password"
+                error={isError}
+                helperText={error}
+                autoComplete="current-password"
+                onChange={(event) => validatePassword(event.target.value)}
+              />
+              <Button
+                id="sign-up"
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="primary"
+                disabled={loading}
+                onClick={(e) => handleSubmitSignup(e)}
+              >
+                Sign Up
+              </Button>
+              <Button
+                id="sign-up-google"
+                type="submit"
+                fullWidth
+                variant="contained"
+                color="secondary"
+                disabled={loading}
+                onClick={(e) => handleSubmitGoogle(e)}
+              >
+                Sign Up With Google
+              </Button>
+              <Typography>
+                Already have an account? <Link to="/login">Sign In</Link>
+              </Typography>
+            </form>
+          </div>
+        </Container>
+      </Grid>
     </div>
   );
 }
