@@ -1,10 +1,13 @@
 const functions = require('firebase-functions');
 const mongoose = require('mongoose');
 const express = require('express');
+const cors = require('cors');
 
 require('dotenv').config();
 
 const app = express();
+
+app.use(cors());
 
 const { register, company, addCompany } = require('./controllers/users');
 

@@ -38,7 +38,7 @@ export default function Signup() {
       //console.log(user);
 
       setLoading(false);
-      history.push('/');
+      history.push('/signup/company');
     } catch {
       console.log('error');
     }
@@ -52,7 +52,7 @@ export default function Signup() {
       const user = await signInWithGoogle();
       console.log(user);
       setLoading(false);
-      history.push('/');
+      history.push('/signup/company');
     } catch {
       console.log('error');
     }
