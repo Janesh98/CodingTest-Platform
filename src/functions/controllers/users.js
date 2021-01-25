@@ -46,11 +46,21 @@ exports.register = (req, res) => {
       company: req.body.company
     };
     var query = { googleId: newCompany.googleId };
-    var companyToBeAdded = { $set: { company: newCompany.company } };
-    NewUserDB.updateOne(query, companyToBeAdded, function(err, res) {
+
+    NewUserDB.find({ googleId: newCompany.googleId }, {_id: 0, googleId: 1}, function(err, result){
       if (err) throw err;
-    });
-    return res.status(200).json({
-      googleId: "Company added successfully"
-     });
+      
+      if(result.length == 0) {return res.status(200).json({
+        googleId: "Account for googleId does not exist"
+       })}
+      else{
+        var companyToBeAdded = { $set: { company: newCompany.company } };
+        NewUserDB.updateOne(query, companyToBeAdded, function(err, res) {
+         if (err) throw err;
+        });
+        return res.status(200).json({
+          googleId: "Company added successfully"
+        });
+      }
+    }); 
   };
