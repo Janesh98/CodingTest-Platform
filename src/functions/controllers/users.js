@@ -11,8 +11,8 @@ const {
 
 exports.register = (req, res) => {
   const newUser = {
-    email: req.body.email,
-    googleId: req.body.googleId
+    email: req.body.data.email,
+    googleId: req.body.data.googleId,
   };
 
   const { valid, errors } = validateRegistrationData(newUser);
@@ -31,36 +31,48 @@ exports.register = (req, res) => {
   return res.status(201).json({ googleId });
 };
 
-  exports.company = (req, res) => {
-    NewUserDB.find({company: {$ne:null}}, {_id: 0, company: 1}, function(err, result){
+exports.company = (req, res) => {
+  NewUserDB.find(
+    { company: { $ne: null } },
+    { _id: 0, company: 1 },
+    function (err, result) {
       if (err) throw err;
-     return res.status(200).json({
-       companies: result
+      // need to return data as key in response for firebase functions
+      return res.send({
+        status: 'success',
+        data: result,
       });
-    });
+    }
+  );
+};
+
+exports.addCompany = (req, res) => {
+  const newCompany = {
+    googleId: req.body.data.googleId,
+    company: req.body.data.company,
   };
+  var query = { googleId: newCompany.googleId };
 
-  exports.addCompany = (req, res) => {
-    const newCompany = {
-      googleId: req.body.googleId,
-      company: req.body.company
-    };
-    var query = { googleId: newCompany.googleId };
-
-    NewUserDB.find({ googleId: newCompany.googleId }, {_id: 0, googleId: 1}, function(err, result){
+  NewUserDB.find(
+    { googleId: newCompany.googleId },
+    { _id: 0, googleId: 1 },
+    function (err, result) {
       if (err) throw err;
-      
-      if(result.length == 0) {return res.status(200).json({
-        googleId: "Account for googleId does not exist"
-       })}
-      else{
-        var companyToBeAdded = { $set: { company: newCompany.company } };
-        NewUserDB.updateOne(query, companyToBeAdded, function(err, res) {
-         if (err) throw err;
-        });
+
+      if (result.length == 0) {
         return res.status(200).json({
-          googleId: "Company added successfully"
+          googleId: 'Account for googleId does not exist',
+        });
+      } else {
+        var companyToBeAdded = { $set: { company: newCompany.company } };
+        NewUserDB.updateOne(query, companyToBeAdded, function (err, res) {
+          if (err) throw err;
+        });
+        return res.status(200).send({
+          status: 'success',
+          data: null,
         });
       }
-    }); 
-  };
+    }
+  );
+};

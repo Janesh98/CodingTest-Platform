@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import {
@@ -9,6 +8,7 @@ import {
   Container,
   Typography,
 } from '@material-ui/core';
+import { callCompany, updateCompany } from '../endpoints';
 
 const CompanyInput = () => {
   const [companies, setCompanies] = useState([]);
@@ -20,13 +20,8 @@ const CompanyInput = () => {
 
   useEffect(() => {
     const getCompanies = async () => {
-      const res = await axios.get(
-        'http://localhost:5000/coding-test-platform/us-central1/api/company'
-      );
-
-      setCompanies(
-        res.data.companies.map((item) => item.company.toLowerCase())
-      );
+      const res = await callCompany();
+      setCompanies(res.data.map((item) => item.company.toLowerCase()));
     };
 
     getCompanies();
@@ -46,13 +41,10 @@ const CompanyInput = () => {
       setISError(true);
       return setError('Company already exists');
     } else {
-      await axios.post(
-        'http://localhost:5000/coding-test-platform/us-central1/api/company',
-        {
-          googleId: currentUser.uid,
-          company,
-        }
-      );
+      await updateCompany({
+        googleId: currentUser.uid,
+        company,
+      });
       return history.push('/');
     }
   };

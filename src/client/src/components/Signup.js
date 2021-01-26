@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import './Signup.css';
 import { useAuth } from '../contexts/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
-import axios from 'axios';
+import { callRegister } from '../endpoints';
 
 export default function Signup() {
   const [email, setEmail] = useState('');
@@ -31,13 +31,10 @@ export default function Signup() {
   };
 
   const postUserDetails = async (user) => {
-    await axios.post(
-      'http://localhost:5000/coding-test-platform/us-central1/api/register',
-      {
-        googleId: user.uid,
-        email: user.email,
-      }
-    );
+    await callRegister({
+      googleId: user.uid,
+      email: user.email,
+    });
   };
 
   const handleSubmitSignup = async (e) => {
@@ -46,12 +43,12 @@ export default function Signup() {
       setLoading(true);
       const res = await signup(email, password);
 
-      await postUserDetails(res.user);
+      postUserDetails(res.user);
 
       setLoading(false);
       history.push('/signup/company');
-    } catch {
-      console.log('error');
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -61,7 +58,7 @@ export default function Signup() {
       setLoading(true);
       const res = await signInWithGoogle();
 
-      await postUserDetails(res.user);
+      postUserDetails(res.user);
 
       setLoading(false);
       history.push('/signup/company');
