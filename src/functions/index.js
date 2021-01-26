@@ -3,15 +3,14 @@ const mongoose = require('mongoose');
 const express = require('express');
 const cors = require('cors');
 
-require('dotenv').config();
-
 const app = express();
 
 app.use(cors());
 
 const { register, company, addCompany } = require('./controllers/users');
 
-const uri = process.env.ATLAS_URI;
+// functions:config:set app.atlas_uri="mongodb+srv://user2:user2@cluster0.qzfyt.mongodb.net/test?retryWrites=true&w=majority"
+const uri = functions.config().app.atlas_uri;
 mongoose.connect(uri, {
   useNewUrlParser: true,
   useCreateIndex: true,
