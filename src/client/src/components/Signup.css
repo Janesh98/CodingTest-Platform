@@ -1,0 +1,22 @@
+#sign-up {
+  margin-bottom: 10px;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  height: 100%;
+  display: flex;
+}
+
+#signup {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
