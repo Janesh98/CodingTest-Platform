@@ -19,9 +19,7 @@ export default function Login() {
     try {
       e.preventDefault();
       setLoading(true);
-      //console.log(email, password);
-      const user = await login(email, password);
-      //console.log(user);
+      await login(email, password);
       setLoading(false);
       history.push('/');
     } catch {
@@ -33,9 +31,7 @@ export default function Login() {
     try {
       e.preventDefault();
       setLoading(true);
-      //console.log(email, password);
-      const user = await signInWithGoogle();
-      //console.log(user);
+      await signInWithGoogle();
       setLoading(false);
       history.push('/');
     } catch {

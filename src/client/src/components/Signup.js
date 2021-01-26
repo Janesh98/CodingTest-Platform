@@ -12,6 +12,7 @@ import { callRegister } from '../endpoints';
 export default function Signup() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  // eslint-disable-next-line no-unused-vars
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [isError, setIsError] = useState(false);
