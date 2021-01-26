@@ -2,75 +2,45 @@ image: node:12
 
 stages:
   - test
-  - build
   - deploy
+
+before_script:
+  - npm i -g firebase-tools
 
 cache:
   paths:
-    - ./src/client/node_modules/
-    - ./src/functions/node_modules/
+    - node_modules/
 
-test-frontend:
+test_frontend:
   stage: test
   script:
     - cd src/client
     - yarn install
     - yarn test --watchAll=false
-  only:
-    changes:
-      - src/client/**/*
 
-test-backend:
+test_backend:
   stage: test
   script:
     - cd src/functions
     - npm ci
     - npm run test
-  only:
-    changes:
-      - src/functions/**/*
-
-build-frontend:
-  stage: build
-  script:
-    - cd src/client
-    - yarn build
-  artifacts:
-    expire_in: 1 hour
-    paths:
-      - ./src/client/build/
-  only:
-    refs:
-      - master
-    changes:
-      - src/client/**/*
 
 deploy-backend:
   stage: deploy
-  before_script:
-  - npm i -g firebase-tools
   script:
-    - cd src
+    - cd src/functions
+    - npm ci
+    - cd ..
     - firebase deploy --only functions --token $FIREBASE_TOKEN
-  dependencies: []
   only:
-    refs:
-      - master
-    changes:
-      - src/functions/**/*
+    - master
 
 deploy-frontend:
   stage: deploy
-  before_script:
-  - npm i -g firebase-tools
   script:
     - cd src/client
     - yarn install
     - yarn build
     - firebase deploy --only hosting --token $FIREBASE_TOKEN
-  dependencies: [build-frontend]
   only:
-    refs:
-      - master
-    changes:
-      - src/client/**/*
+    - master
