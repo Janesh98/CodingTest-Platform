@@ -4,12 +4,22 @@ const express = require('express');
 const cors = require('cors');
 
 const app = express();
-
+// ALLOW CORS
 app.use(cors());
+// SET CORS for PREFLIGHT OPTIONS
+app.options('*', cors());
+
+const API_PREFIX = 'api';
+// Rewrite Firebase hosting requests: /api/:path => /:path
+app.use((req, res, next) => {
+  if (req.url.indexOf(`/${API_PREFIX}/`) === 0) {
+    req.url = req.url.substring(API_PREFIX.length + 1);
+  }
+  next();
+});
 
 const { register, company, addCompany } = require('./controllers/users');
 
-// functions:config:set app.atlas_uri="mongodb+srv://user2:user2@cluster0.qzfyt.mongodb.net/test?retryWrites=true&w=majority"
 const uri = functions.config().app.atlas_uri;
 mongoose.connect(uri, {
   useNewUrlParser: true,
@@ -27,4 +37,4 @@ app.post('/register', register);
 app.post('/company/all', company);
 app.post('/company', addCompany);
 
-exports.api = functions.https.onRequest(app);
+exports[API_PREFIX] = functions.https.onRequest(app);

@@ -20,8 +20,14 @@ const CompanyInput = () => {
 
   useEffect(() => {
     const getCompanies = async () => {
-      const res = await callCompany();
-      setCompanies(res.data.map((item) => item.company.toLowerCase()));
+      try {
+        const res = await callCompany();
+        setCompanies(res.data.map((item) => item.company.toLowerCase()));
+      } catch {
+        console.log(
+          'error in CompanyInput.js getting list of companies from backend api'
+        );
+      }
     };
 
     getCompanies();

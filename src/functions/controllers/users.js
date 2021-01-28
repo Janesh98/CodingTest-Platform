@@ -28,7 +28,10 @@ exports.register = (req, res) => {
     googleId,
   });
   newUserEntry.save();
-  return res.status(201).json({ googleId });
+  return res.status(201).json({
+    googleId,
+    data: null,
+  });
 };
 
 exports.company = (req, res) => {
@@ -38,7 +41,7 @@ exports.company = (req, res) => {
     function (err, result) {
       if (err) throw err;
       // need to return data as key in response for firebase functions
-      return res.send({
+      return res.status(200).json({
         status: 'success',
         data: result,
       });

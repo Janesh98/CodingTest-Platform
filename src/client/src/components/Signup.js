@@ -43,7 +43,6 @@ export default function Signup() {
       e.preventDefault();
       setLoading(true);
       const res = await signup(email, password);
-
       postUserDetails(res.user);
 
       setLoading(false);
