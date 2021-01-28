@@ -1,9 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/functions';
 
-const development = false;
-
-if (development) firebase.functions().useEmulator('localhost', 5000);
+if (process.env.REACT_APP_ENV === 'development') firebase.functions().useEmulator('localhost', 5000);
 
 export const callCompany = firebase
   .functions()
