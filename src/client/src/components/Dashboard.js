@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { Link, useHistory } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
-import './Dashboard.css';
+import './css/Dashboard.css';
 
 export default function Dashboard() {
   const history = useHistory();
