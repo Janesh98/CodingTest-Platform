@@ -38,55 +38,56 @@ export default function Dashboard() {
   };
 
   return (
-    <div id="dashboard-container">
-      <Grid container align="center" justify="center" direction="column">
-        <Container component="main" maxWidth="xs">
-          <div>
-            <Typography component="h1" variant="h5">
-              Dashboard
-            </Typography>
-            <form>          
-              <Button
-                id="setup-test"
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                disabled={loading}
-                onClick={(e) => handleSubmitNew(e)}
-              >
-                Setup a New Coding Test
-              </Button>
-              <Button
-                id="edit-test"
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="secondary"
-                disabled={loading}
-                onClick={(e) => handleSubmitEdit(e)}
-              >
-                Edit Existing Coding Test
-              </Button>
-              <Button
-                id="history-results"
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                disabled={loading}
-                onClick={(e) => handleSubmitResults(e)}
-              >
-                View Previous Tests History/Results
-              </Button>
-              <Typography>
-                <Link to="/login">Logout</Link>
+    <Container>
+      <div id="dashboard-container">
+        <Grid container align="center" justify="center" direction="column">
+          <Container component="main" maxWidth="xs">
+            <div>
+              <Typography component="h1" variant="h5">
+                Dashboard
               </Typography>
-            </form>
-          </div>
-        </Container>
-      </Grid>
-    </div>
+              <form>
+                <Button
+                  id="setup-test"
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  disabled={loading}
+                  onClick={(e) => handleSubmitNew(e)}
+                >
+                  Setup a New Coding Test
+                </Button>
+                <Button
+                  id="edit-test"
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="secondary"
+                  disabled={loading}
+                  onClick={(e) => handleSubmitEdit(e)}
+                >
+                  Edit Existing Coding Test
+                </Button>
+                <Button
+                  id="history-results"
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  disabled={loading}
+                  onClick={(e) => handleSubmitResults(e)}
+                >
+                  View Previous Tests History/Results
+                </Button>
+                <Typography>
+                  <Link to="/login">Logout</Link>
+                </Typography>
+              </form>
+            </div>
+          </Container>
+        </Grid>
+      </div>
+    </Container>
   );
-};
-
+}

@@ -68,81 +68,83 @@ export default function Signup() {
   };
 
   return (
-    <div id="signup">
-      <Grid container align="center" justify="center" direction="column">
-        <Container component="main" maxWidth="xs">
-          <div>
-            <Typography component="h1" variant="h5">
-              Sign Up
-            </Typography>
-            <form>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-                onChange={(event) => setEmail(event.target.value)}
-              />
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                onChange={(event) => setPassword(event.target.value)}
-              />
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Confirm Password"
-                type="password"
-                id="confirm-password"
-                error={isError}
-                helperText={error}
-                autoComplete="current-password"
-                onChange={(event) => validatePassword(event.target.value)}
-              />
-              <Button
-                id="sign-up"
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                disabled={loading}
-                onClick={(e) => handleSubmitSignup(e)}
-              >
+    <Container>
+      <div id="signup">
+        <Grid container align="center" justify="center" direction="column">
+          <Container component="main" maxWidth="xs">
+            <div>
+              <Typography component="h1" variant="h5">
                 Sign Up
-              </Button>
-              <Button
-                id="sign-up-google"
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="secondary"
-                disabled={loading}
-                onClick={(e) => handleSubmitGoogle(e)}
-              >
-                Sign Up With Google
-              </Button>
-              <Typography>
-                Already have an account? <Link to="/login">Sign In</Link>
               </Typography>
-            </form>
-          </div>
-        </Container>
-      </Grid>
-    </div>
+              <form>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                  onChange={(event) => setEmail(event.target.value)}
+                />
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  onChange={(event) => setPassword(event.target.value)}
+                />
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Confirm Password"
+                  type="password"
+                  id="confirm-password"
+                  error={isError}
+                  helperText={error}
+                  autoComplete="current-password"
+                  onChange={(event) => validatePassword(event.target.value)}
+                />
+                <Button
+                  id="sign-up"
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  disabled={loading}
+                  onClick={(e) => handleSubmitSignup(e)}
+                >
+                  Sign Up
+                </Button>
+                <Button
+                  id="sign-up-google"
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="secondary"
+                  disabled={loading}
+                  onClick={(e) => handleSubmitGoogle(e)}
+                >
+                  Sign Up With Google
+                </Button>
+                <Typography>
+                  Already have an account? <Link to="/login">Sign In</Link>
+                </Typography>
+              </form>
+            </div>
+          </Container>
+        </Grid>
+      </div>
+    </Container>
   );
 }

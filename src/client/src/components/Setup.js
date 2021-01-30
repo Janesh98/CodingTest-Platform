@@ -66,6 +66,7 @@ export default function Setup() {
     setOpen(false);
   };
   return (
+    <Container>
     <div id="setup-container">
       <Grid container align="center" justify="center" direction="column">
         <Container component="main" maxWidth="xs">
@@ -319,5 +320,6 @@ export default function Setup() {
         </Container>
       </Grid>
     </div>
+    </Container>
   );
 };

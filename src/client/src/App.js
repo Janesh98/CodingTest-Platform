@@ -1,4 +1,3 @@
-import { Container } from '@material-ui/core';
 import './App.css';
 import Signup from './components/Signup';
 import Login from './components/Login';
@@ -10,10 +9,10 @@ import Results from './components/Results';
 import { AuthProvider } from './contexts/AuthContext';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
+import CodingTest from './components/CodingTest/CodingTest';
 
 function App() {
   return (
-    <Container>
       <Router>
         <AuthProvider>
           <Switch>
@@ -24,10 +23,10 @@ function App() {
             <PrivateRoute path="/setup" component={Setup} />
             <PrivateRoute path="/edit" component={Edit} />
             <PrivateRoute path="/results" component={Results} />
+            <PrivateRoute path="/codingtest" component={CodingTest} />
           </Switch>
         </AuthProvider>
       </Router>
-    </Container>
   );
 }
 
