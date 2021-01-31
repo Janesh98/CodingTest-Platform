@@ -3,7 +3,6 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import { Link, useHistory } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
@@ -14,6 +13,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Box from '@material-ui/core/Box';
 import SaveIcon from '@material-ui/icons/Save';
 import './css/Setup.css';
+import NavBar from './Navbar';
 
 
 const styles = (theme) => ({
@@ -67,6 +67,7 @@ export default function Setup() {
   };
   return (
     <Container>
+      <NavBar/>
     <div id="setup-container">
       <Grid container align="center" justify="center" direction="column">
         <Container component="main" maxWidth="xs">

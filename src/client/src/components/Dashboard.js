@@ -5,6 +5,7 @@ import Container from '@material-ui/core/Container';
 import { Link, useHistory } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
 import './css/Dashboard.css';
+import NavBar from './Navbar';
 
 export default function Dashboard() {
   const history = useHistory();
@@ -39,12 +40,16 @@ export default function Dashboard() {
 
   return (
     <Container>
+      <NavBar/>
       <div id="dashboard-container">
         <Grid container align="center" justify="center" direction="column">
           <Container component="main" maxWidth="xs">
             <div>
               <Typography component="h1" variant="h5">
                 Dashboard
+              </Typography>
+              <Typography component="h1" variant="h5">
+                ** OTHER INFORMATION WILL BE DISPLAYED HERE **
               </Typography>
               <form>
                 <Button
