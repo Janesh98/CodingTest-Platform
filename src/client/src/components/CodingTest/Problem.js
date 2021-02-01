@@ -12,7 +12,7 @@ const Problem = () => {
 
   return (
     <Container>
-      <Typography>{problem}</Typography>
+      <Typography align="left" style={{ whiteSpace: 'pre-line' }}>{problem}</Typography>
     </Container>
   );
 };

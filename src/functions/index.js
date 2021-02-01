@@ -19,6 +19,7 @@ app.use((req, res, next) => {
 });
 
 const { register, company, addCompany } = require('./controllers/users');
+const { executeCode } = require('./controllers/code');
 
 const uri = functions.config().app.atlas_uri;
 mongoose.connect(uri, {
@@ -36,5 +37,6 @@ connection.once('open', () => {
 app.post('/register', register);
 app.post('/company/all', company);
 app.post('/company', addCompany);
+app.post('/code', executeCode);
 
 exports[API_PREFIX] = functions.https.onRequest(app);

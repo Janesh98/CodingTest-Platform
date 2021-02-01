@@ -1,11 +1,27 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import { Container, Typography } from '@material-ui/core';
 
 const Terminal = () => {
-    return (
-        <div>
-            Terminal
-        </div>
-    )
-}
+  const [output, setOutput] = useState('');
 
-export default Terminal
+  useEffect(() => {
+    setOutput('True\nFalse');
+  }, []);
+
+  return (
+    <div>
+      <Container>
+        <Typography
+          align="left"
+          variant="body1"
+          gutterBottom={true}
+          style={{ whiteSpace: 'pre-line' }}
+        >
+          {output}
+        </Typography>
+      </Container>
+    </div>
+  );
+};
+
+export default Terminal;

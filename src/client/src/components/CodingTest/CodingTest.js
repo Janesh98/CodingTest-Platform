@@ -18,17 +18,17 @@ const useStyles = makeStyles((theme) => ({
     background: theme.palette.success.contrastText,
     height: '100%',
   },
-  editor: {
-    textAlign: 'center',
-    color: theme.palette.common.white,
-    background: theme.palette.success.contrastText,
-    height: '60%',
-  },
   terminal: {
     textAlign: 'center',
     color: theme.palette.common.white,
     background: theme.palette.success.contrastText,
-    height: '40%',
+    height: '35%',
+  },
+  run: {
+    textAlign: 'center',
+    color: theme.palette.common.white,
+    background: theme.palette.success.contrastText,
+    height: '4%',
   },
 }));
 
@@ -43,9 +43,7 @@ export default function CodingTest() {
         </Paper>
       </Grid>
       <Grid item xs={12} sm={7}>
-        <Paper square className={classes.editor}>
-          <CodeEditor />
-        </Paper>
+        <CodeEditor />
         <Paper square className={classes.terminal}>
           <Terminal />
         </Paper>
