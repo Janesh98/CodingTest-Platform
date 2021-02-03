@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Problem from './Problem';
 import CodeEditor from './CodeEditor';
 import Terminal from './Terminal';
+import { CodingTestProvider } from './context/CodingTestState';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,18 +37,20 @@ export default function CodingTest() {
   const classes = useStyles();
 
   return (
-    <Grid container className={classes.root} spacing={0}>
-      <Grid item xs={12} sm={5}>
-        <Paper square className={classes.problem}>
-          <Problem />
-        </Paper>
+    <CodingTestProvider>
+      <Grid container className={classes.root} spacing={0}>
+        <Grid item xs={12} sm={5}>
+          <Paper square className={classes.problem}>
+            <Problem />
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={7}>
+          <CodeEditor />
+          <Paper square className={classes.terminal}>
+            <Terminal />
+          </Paper>
+        </Grid>
       </Grid>
-      <Grid item xs={12} sm={7}>
-        <CodeEditor />
-        <Paper square className={classes.terminal}>
-          <Terminal />
-        </Paper>
-      </Grid>
-    </Grid>
+    </CodingTestProvider>
   );
 }

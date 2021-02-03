@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Editor from '@monaco-editor/react';
 import {
   makeStyles,
@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core';
 import CodeIcon from '@material-ui/icons/Code';
 import { executeCode } from '../../endpoints';
+import { CodingTestContext } from './context/CodingTestState';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -25,8 +26,8 @@ const useStyles = makeStyles((theme) => ({
 const CodeEditor = () => {
   const [language, setLanguage] = useState('python');
   const [code, setCode] = useState('');
-  const [output, setOutput] = useState('');
   const classes = useStyles();
+  const { updateCodeOuput } = useContext(CodingTestContext);
 
   const handleSubmitCode = async (e) => {
     e.preventDefault();
@@ -36,11 +37,10 @@ const CodeEditor = () => {
       language: language,
       code: encodedString,
     });
-    console.log(output);
     // decode from base64 string
     const decodedString = atob(output.data.stdout);
     // set code execution output
-    setOutput(decodedString);
+    updateCodeOuput(decodedString);
   };
 
   return (

@@ -1,12 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Container, Typography } from '@material-ui/core';
+import { CodingTestContext } from './context/CodingTestState';
 
 const Terminal = () => {
-  const [output, setOutput] = useState('');
-
-  useEffect(() => {
-    setOutput('True\nFalse');
-  }, []);
+  const { codeOutput } = useContext(CodingTestContext);
 
   return (
     <div>
@@ -17,7 +14,7 @@ const Terminal = () => {
           gutterBottom={true}
           style={{ whiteSpace: 'pre-line' }}
         >
-          {output}
+          {codeOutput}
         </Typography>
       </Container>
     </div>
