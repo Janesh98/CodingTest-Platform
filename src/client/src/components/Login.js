@@ -3,6 +3,8 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import Alert from '@material-ui/lab/Alert';
+
 import './css/Login.css';
 import { useAuth } from '../contexts/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
@@ -12,6 +14,8 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [formError, setFormError] = useState('');
+  const [isformError, setIsFormError] = useState(false);
   const { login, signInWithGoogle } = useAuth();
   const history = useHistory();
 
@@ -22,8 +26,10 @@ export default function Login() {
       await login(email, password);
       setLoading(false);
       history.push('/');
-    } catch {
-      console.log('error');
+    } catch (error) {
+      setIsFormError(true);
+      setFormError(error.message);
+      setLoading(false);
     }
   };
 
@@ -34,8 +40,10 @@ export default function Login() {
       await signInWithGoogle();
       setLoading(false);
       history.push('/');
-    } catch {
-      console.log('error');
+    } catch (error) {
+      setIsFormError(true);
+      setFormError(error.message);
+      setLoading(false);
     }
   };
 
@@ -48,6 +56,16 @@ export default function Login() {
               <Typography component="h1" variant="h5">
                 Sign In
               </Typography>
+              {isformError ? (
+                <Alert
+                  severity="error"
+                  onClose={() => {
+                    setIsFormError(false);
+                  }}
+                >
+                  {formError}
+                </Alert>
+              ) : null}
               <form>
                 <TextField
                   variant="outlined"

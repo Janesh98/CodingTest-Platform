@@ -4,6 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
+import Alert from '@material-ui/lab/Alert';
 import './css/Signup.css';
 import { useAuth } from '../contexts/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
@@ -17,6 +18,8 @@ export default function Signup() {
   const [error, setError] = useState('');
   const [isError, setIsError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [formError, setFormError] = useState('');
+  const [isformError, setIsFormError] = useState(false);
   const { signup, signInWithGoogle } = useAuth();
   const history = useHistory();
 
@@ -41,6 +44,8 @@ export default function Signup() {
   const handleSubmitSignup = async (e) => {
     try {
       e.preventDefault();
+
+      if (isError !== false) return;
       setLoading(true);
       const res = await signup(email, password);
       postUserDetails(res.user);
@@ -48,13 +53,17 @@ export default function Signup() {
       setLoading(false);
       history.push('/signup/company');
     } catch (error) {
-      console.log(error);
+      setIsFormError(true);
+      setFormError(error.message);
+      setLoading(false);
     }
   };
 
   const handleSubmitGoogle = async (e) => {
     try {
       e.preventDefault();
+
+      if (isError !== false) return;
       setLoading(true);
       const res = await signInWithGoogle();
 
@@ -62,8 +71,10 @@ export default function Signup() {
 
       setLoading(false);
       history.push('/signup/company');
-    } catch {
-      console.log('error');
+    } catch (error) {
+      setIsFormError(true);
+      setFormError(error.message);
+      setLoading(false);
     }
   };
 
@@ -76,6 +87,16 @@ export default function Signup() {
               <Typography component="h1" variant="h5">
                 Sign Up
               </Typography>
+              {isformError ? (
+                <Alert
+                  severity="error"
+                  onClose={() => {
+                    setIsFormError(false);
+                  }}
+                >
+                  {formError}
+                </Alert>
+              ) : null}
               <form>
                 <TextField
                   variant="outlined"
