@@ -6,6 +6,7 @@ import CompanyInput from './components/CompanyInput';
 import Setup from './components/Setup';
 import Edit from './components/Edit';
 import Results from './components/Results';
+import Create from './components/Create';
 import { AuthProvider } from './contexts/AuthContext';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
@@ -20,6 +21,7 @@ function App() {
             <Route path="/signup" component={Signup} />
             <Route path="/login" component={Login} />
             <PrivateRoute exact path="/" component={Dashboard} />
+            <PrivateRoute path="/create" component={Create} />
             <PrivateRoute path="/setup" component={Setup} />
             <PrivateRoute path="/edit" component={Edit} />
             <PrivateRoute path="/results" component={Results} />

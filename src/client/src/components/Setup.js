@@ -5,12 +5,28 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { Grid } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import './css/Setup.css';
 import NavBar from './Navbar';
 import Card from "./Card"
+import { useHistory } from 'react-router-dom';
 
 
 export default function Setup() {
+  const history = useHistory();
+
+  function refreshPage() {
+    window.location.reload(false);
+  }
+
+    const handleOnClickExit = async (e) => {
+        try {
+          e.preventDefault();
+          history.push('/');
+        } catch {
+          console.log('error');
+        }
+      };
   
   return (
     <Container>
@@ -55,7 +71,6 @@ export default function Setup() {
                 placeholder="Problem Description of Challenge"
                 name="problem description"
                 autoComplete="problem description"
-                autoFocus
               />
               <Typography component="h10" variant="h10">
                 Input Format
@@ -71,7 +86,6 @@ export default function Setup() {
                 placeholder="Input Format"
                 name="input format"
                 autoComplete="input format"
-                autoFocus
               />
             
               <Typography component="h10" variant="h10">
@@ -88,7 +102,6 @@ export default function Setup() {
                 placeholder="Return Format"
                 name="return format"
                 autoComplete="return format"
-                autoFocus
               />
               <Typography component="h10" variant="h10">
                 Constraints
@@ -105,7 +118,6 @@ export default function Setup() {
                 placeholder="Constraints"
                 name="constraints"
                 autoComplete="constraints"
-                autoFocus
               />
               <Typography component="h10" variant="h10">
                 Sample Input 
@@ -121,7 +133,6 @@ export default function Setup() {
                 placeholder="Sample Input"
                 name="sample input"
                 autoComplete="sample input"
-                autoFocus
               />
               <Typography component="h10" variant="h10">
                 Sample Output 
@@ -137,7 +148,6 @@ export default function Setup() {
                 placeholder="Sample Output"
                 name="sample output"
                 autoComplete="sample output"
-                autoFocus
               />
               <Typography component="h10" variant="h10">
                 Example with Explanation  
@@ -154,16 +164,121 @@ export default function Setup() {
                 placeholder="Example with Explanation"
                 name="example with explanation"
                 autoComplete="example with explanation"
-                autoFocus
               />
+              <Typography component="h10" variant="h10">
+                Test Cases (Please provide at least 1 test case)  
+              </Typography>
+               <TextField
+                 variant="outlined"
+                 margin="normal"
+                 required
+                 id="test input 1"
+                 label="Input"
+                 placeholder="Input"
+                 name="Input"
+                 autoComplete="Input"
+               />
+               <TextField
+                 variant="outlined"
+                 margin="normal"
+                 required
+                 id="test output 1"
+                 label="Expected Output"
+                 placeholder="Expected Output"
+                 name="Output"
+                 autoComplete="Output"
+               />
+               <TextField
+                 variant="outlined"
+                 margin="normal"
+                 id="test input 2"
+                 label="Input"
+                 placeholder="Input"
+                 name="Input"
+                 autoComplete="Input"
+               />
+               <TextField
+                 variant="outlined"
+                 margin="normal"
+                 id="test output 2"
+                 label="Expected Output"
+                 placeholder=" Expected Output"
+                 name="Output"
+                 autoComplete="Output"
+               />
+               <TextField
+                 variant="outlined"
+                 margin="normal"
+                 id="test input 3"
+                 label="Input"
+                 placeholder="Input"
+                 name="Input"
+                 autoComplete="Input"
+               />
+               <TextField
+                 variant="outlined"
+                 margin="normal"
+                 id="test output 3"
+                 label="Expected Output"
+                 placeholder=" Expected Output"
+                 name="Output"
+                 autoComplete="Output"
+               />
+               <TextField
+                 variant="outlined"
+                 margin="normal"
+                 id="test input 4"
+                 label="Input"
+                 placeholder="Input"
+                 name="Input"
+                 autoComplete="Input"
+               />
+               <TextField
+                 variant="outlined"
+                 margin="normal"
+                 id="test output 4"
+                 label="Expected Output"
+                 placeholder=" Expected Output"
+                 name="Output"
+                 autoComplete="Output"
+               />
+               <TextField
+                 variant="outlined"
+                 margin="normal"
+                 id="test input 5"
+                 label="Input"
+                 placeholder="Input"
+                 name="Input"
+                 autoComplete="Input"
+               />
+               <TextField
+                 variant="outlined"
+                 margin="normal"
+                 id="test output 5"
+                 label="Expected Output"
+                 placeholder=" Expected Output"
+                 name="Output"
+                 autoComplete="Output"
+               />
               <Button
                 id = "save-challenge"
                 variant="contained"
                 color="primary"
                 size="large"
                 startIcon={<SaveIcon />}
+                onClick={refreshPage}
                 >
                   Save Challenge 
+                </Button>
+                <Button
+                id = "save-challenge"
+                variant="contained"
+                color="secondary"
+                size="large"
+                startIcon={<ExitToAppIcon />}
+                onClick={(e) => handleOnClickExit(e)}
+                >
+                  Save Challenge and Exit
                 </Button>
           </form>
         </Container>
