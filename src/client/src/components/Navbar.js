@@ -1,7 +1,7 @@
-import React, { useState} from "react"
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import {AppBar, Toolbar, IconButton, Drawer} from '@material-ui/core'
-import { Menu } from '@material-ui/icons'
+import { AppBar, Toolbar, IconButton, Drawer } from '@material-ui/core';
+import { Menu } from '@material-ui/icons';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
@@ -10,6 +10,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import { useAuth } from '../contexts/AuthContext';
 
 const drawerWidth = 240;
 
@@ -70,81 +71,86 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function NavBar() {
-    const history = useHistory();
-    const classes = useStyles();
-    const theme = useTheme();
-    const [open, setOpen] = useState(false);
+  const { logout } = useAuth();
+  const history = useHistory();
+  const classes = useStyles();
+  const theme = useTheme();
+  const [open, setOpen] = useState(false);
 
-    const handleDrawerOpen = () => {
-        setOpen(true);
-    };
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
 
-    const handleDrawerClose = () => {
-        setOpen(false);
-    };
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
 
-    const handleSubmitLogout = async (e) => {
-        try {
-          e.preventDefault();
-          history.push('/login');
-        } catch {
-          console.log('error');
-        }
-      };
+  const handleSubmitLogout = async (e) => {
+    try {
+      e.preventDefault();
+      logout();
+      history.push('/login');
+    } catch {
+      console.log('error');
+    }
+  };
 
-      const handleSubmitNew = async (e) => {
-        try {
-          e.preventDefault();
-          history.push('/setup');
-        } catch {
-          console.log('error');
-        }
-      };
+  const handleSubmitNew = async (e) => {
+    try {
+      e.preventDefault();
+      history.push('/setup');
+    } catch {
+      console.log('error');
+    }
+  };
 
-      const handleSubmitEdit = async (e) => {
-        try {
-          e.preventDefault();
-          history.push('/edit');
-        } catch {
-          console.log('error');
-        }
-      };
-    
-      const handleSubmitResults = async (e) => {
-        try {
-          e.preventDefault();
-          history.push('/results');
-        } catch {
-          console.log('error');
-        }
-      };
-      const handleSubmitDash = async (e) => {
-        try {
-          e.preventDefault();
-          history.push('/');
-        } catch {
-          console.log('error');
-        }
-      };
+  const handleSubmitEdit = async (e) => {
+    try {
+      e.preventDefault();
+      history.push('/edit');
+    } catch {
+      console.log('error');
+    }
+  };
 
-    return (
-        <div>
-        <AppBar>
-          <Toolbar>
-            <IconButton onClick = {handleDrawerOpen} color = 'inherit' edge= 'start' aria-label='menu'>
-              <Menu/>
-            </IconButton>
-            <Typography variant = 'h6' style={{ flexGrow : 1}}>
-              Coding Test Platform
-            </Typography>
-            <Button 
-            color = 'inherit'
-            onClick={(e) => handleSubmitLogout(e)}>
-              Logout
-            </Button>
-          </Toolbar>
-        </AppBar>
-        <Drawer
+  const handleSubmitResults = async (e) => {
+    try {
+      e.preventDefault();
+      history.push('/results');
+    } catch {
+      console.log('error');
+    }
+  };
+  const handleSubmitDash = async (e) => {
+    try {
+      e.preventDefault();
+      history.push('/');
+    } catch {
+      console.log('error');
+    }
+  };
+
+  return (
+    <div>
+      <AppBar>
+        <Toolbar>
+          <IconButton
+            onClick={handleDrawerOpen}
+            color="inherit"
+            edge="start"
+            aria-label="menu"
+          >
+            <Menu />
+          </IconButton>
+          <Typography variant="h6" style={{ flexGrow: 1 }}>
+            Coding Test Platform
+          </Typography>
+          <Button color="inherit" onClick={(e) => handleSubmitLogout(e)}>
+            Logout
+          </Button>
+        </Toolbar>
+      </AppBar>
+      <Drawer
         className={classes.drawer}
         variant="persistent"
         anchor="left"
@@ -154,36 +160,39 @@ export default function NavBar() {
         }}
       >
         <div className={classes.drawerHeader}>
-            Menu
+          Menu
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            {theme.direction === 'ltr' ? (
+              <ChevronLeftIcon />
+            ) : (
+              <ChevronRightIcon />
+            )}
           </IconButton>
         </div>
         <Divider />
         <List>
-            <ListItem button color = 'primary' onClick={(e) => handleSubmitDash(e)}>
-                Dashboard
-
-            </ListItem>
-        <Divider />
-            <ListItem button color = 'primary' onClick={(e) => handleSubmitNew(e)}>
-                Setup New Coding Test
-
-            </ListItem>
-        <Divider />
-        <ListItem button color = 'primary' onClick={(e) => handleSubmitEdit(e)}>
-                Edit Existing Test
-
-            </ListItem>
-        <Divider />
-        <ListItem button color = 'primary' onClick={(e) => handleSubmitResults(e)}>
-                View previous Test Results
-
-            </ListItem>
-        <Divider />
-        
+          <ListItem button color="primary" onClick={(e) => handleSubmitDash(e)}>
+            Dashboard
+          </ListItem>
+          <Divider />
+          <ListItem button color="primary" onClick={(e) => handleSubmitNew(e)}>
+            Setup New Coding Test
+          </ListItem>
+          <Divider />
+          <ListItem button color="primary" onClick={(e) => handleSubmitEdit(e)}>
+            Edit Existing Test
+          </ListItem>
+          <Divider />
+          <ListItem
+            button
+            color="primary"
+            onClick={(e) => handleSubmitResults(e)}
+          >
+            View previous Test Results
+          </ListItem>
+          <Divider />
         </List>
       </Drawer>
-        </div>
-    );
+    </div>
+  );
 }
