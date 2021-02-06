@@ -98,7 +98,7 @@ export default function NavBar() {
   const handleSubmitNew = async (e) => {
     try {
       e.preventDefault();
-      history.push('/setup');
+      history.push('/create');
     } catch {
       console.log('error');
     }

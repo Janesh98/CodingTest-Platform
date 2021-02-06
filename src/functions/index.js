@@ -18,7 +18,7 @@ app.use((req, res, next) => {
   next();
 });
 
-const { register, company, addCompany } = require('./controllers/users');
+const { register, company, addCompany, newTest } = require('./controllers/users');
 const { executeCode } = require('./controllers/code');
 
 const uri = functions.config().app.atlas_uri;
@@ -38,5 +38,6 @@ app.post('/register', register);
 app.post('/company/all', company);
 app.post('/company', addCompany);
 app.post('/code', executeCode);
+app.post('/test', newTest);
 
 exports[API_PREFIX] = functions.https.onRequest(app);

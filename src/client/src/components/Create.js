@@ -8,17 +8,36 @@ import './css/Create.css';
 import NavBar from './Navbar';
 import TextField from '@material-ui/core/TextField';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import { addTest } from '../endpoints';
+import { useAuth } from '../contexts/AuthContext';
 
-export default function Create(){
+const Create = () => {
+    const [name, setName] = useState('');
+    const [error, setError] = useState('');
+    const [isError, setISError] = useState(false);
+    const { currentUser } = useAuth();
     const history = useHistory();
 
+    const setNameAndRemoveErrors = (name) => {
+      setName(name);
+      if (isError) {
+        setISError(false);
+        setError('');
+      }
+    };
+
     const handleOnClick = async (e) => {
-        try {
-          e.preventDefault();
-          history.push('/setup');
-        } catch {
-          console.log('error');
-        }
+      e.preventDefault();
+      if (name.length === 0) {
+        setISError(true);
+        return setError('Test name cannot be null');
+      } else {
+        await addTest({
+          googleId: currentUser.uid,
+          testName: name,
+        });
+        return history.push('/setup');
+      }
       };
 
     return(
@@ -39,8 +58,10 @@ export default function Create(){
                       label="Coding test name"
                       placeholder="Coding test name'"
                       name="name"
-                      autoComplete="name"
                       autoFocus
+                      error={isError}
+                      helperText={error}
+                      onChange={(input) => setNameAndRemoveErrors(input.target.value)}
                     />
                     <Button
                     id = "save-challenge"
@@ -58,3 +79,5 @@ export default function Create(){
         </Container>
     );
 };
+
+export default Create;

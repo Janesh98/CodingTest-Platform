@@ -1,5 +1,6 @@
 let NewUserDB = require('../models/UserModel');
 const config = require('../config/config');
+let CodingTestDB = require('../models/CodingTestModel');
 
 const firebase = require('firebase');
 firebase.initializeApp(config);
@@ -78,4 +79,32 @@ exports.addCompany = (req, res) => {
       }
     }
   );
+};
+
+exports.newTest = (req, res) => {
+  const test = {
+    googleId: req.body.data.googleId,
+    testName: req.body.data.testName,
+  };
+
+  const googleId = test.googleId;
+  const testName = test.testName;
+  // Add test to MongoDB
+  const newTestEntry = new CodingTestDB({
+    googleId,
+    testName,
+  });
+
+    newTestEntry.save(function(err, room) {
+    const testId = room.id;
+    NewUserDB.updateOne(
+      { googleId: test.googleId },
+      { $push: { codingTests: testId }}, function (err, res) {
+        if (err) throw err;
+      });
+    return res.status(200).json({
+      status: 'success',
+      data: null,
+    });
+ });
 };

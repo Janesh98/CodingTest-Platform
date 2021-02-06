@@ -31,7 +31,7 @@ export default function Setup() {
   return (
     <Container>
       <NavBar/>
-    <div id="setup-container" style={{marginTop: 80}}>
+    <div id="setup-container" style={{marginTop: 200}}>
       <Grid container align="center" justify="center" direction="column">
         <Container component="main" maxWidth="xs">
           <div>
