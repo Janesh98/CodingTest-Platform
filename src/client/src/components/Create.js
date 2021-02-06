@@ -36,7 +36,9 @@ const Create = () => {
           googleId: currentUser.uid,
           testName: name,
         });
-        return history.push('/setup');
+        return history.push({
+          pathname: '/setup',
+          state:{ newTestName : name}});
       }
       };
 

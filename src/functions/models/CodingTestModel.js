@@ -9,6 +9,7 @@ const testSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  challenges: { type: Array, required: false},
 });
 
 const CodingTestDB = mongoose.model('CodingTestDB', testSchema);
