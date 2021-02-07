@@ -12,7 +12,7 @@ const challengeSchema = new Schema({
   title: { type: String, required: true },
   problemDescription: { type: String, required: true },
   inputFormat: { type: String, required: true },
-  outputFormat: { type: String, required: true },
+  returnFormat: { type: String, required: true },
   constraints: { type: String, required: true },
   sampleInput: { type: String, required: true },
   sampleOutput: { type: String, required: true },

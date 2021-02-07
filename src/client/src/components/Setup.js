@@ -10,23 +10,78 @@ import './css/Setup.css';
 import NavBar from './Navbar';
 import Card from "./Card"
 import { useHistory } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+import { addChallenge } from '../endpoints';
 
 
-export default function Setup() {
+const Setup = () => {
+  const [title, setTitle] = useState('');
+  const [probDesc, setProbDesc] = useState('');
+  const [inFormat, setInFormat] = useState('');
+  const [returnFormat, setReturnFormat] = useState('');
+  const [constraints, setConstraints] = useState('');
+  const [sampleIn, setSampleIn] = useState('');
+  const [sampleOut, setSampleOut] = useState('');
+  const [exampleExplanation, setExampleExplanation] = useState('');
+  const [testIn1, setTestIn1] = useState('');
+  const [testOut1, setTestOut1] = useState('');
+  const [testIn2, setTestIn2] = useState('');
+  const [testOut2, setTestOut2] = useState('');
+  const [testIn3, setTestIn3] = useState('');
+  const [testOut3, setTestOut3] = useState('');
+  const [testIn4, setTestIn4] = useState('');
+  const [testOut4, setTestOut4] = useState('');
+  const [testIn5, setTestIn5] = useState('');
+  const [testOut5, setTestOut5] = useState('');
+  const [error, setError] = useState('');
+  const [isError, setISError] = useState(false);
+  const { currentUser } = useAuth();
   const history = useHistory();
+  const testName = history.location.state.newTestName;
 
   function refreshPage() {
     window.location.reload(false);
   }
 
-    const handleOnClickExit = async (e) => {
-        try {
-          e.preventDefault();
-          history.push('/');
-        } catch {
-          console.log('error');
-        }
-      };
+  const handleOnClickSave = async (e) => {
+    e.preventDefault();
+    if (title.length === 0 || probDesc.length === 0 || inFormat === 0) {
+      setISError(true);
+      return setError('All highlighted fields must not be empty');
+    } else {
+    await addChallenge({
+      googleId: currentUser.uid,
+      testName: testName,
+      title: title,
+      problemDescription: probDesc,
+      inputFormat: inFormat,
+      returnFormat: returnFormat,
+      constraints: constraints,
+      sampleInput: sampleIn,
+      sampleOutput: sampleOut,
+      exampleExplanation: exampleExplanation,
+      testInput1: testIn1,
+      testOutput1: testOut1,
+      testInput2: testIn2,
+      testOutput2: testOut2,
+      testInput3: testIn3,
+      testOutput3: testOut3,
+      testInput4: testIn4,
+      testOutput4: testOut4,
+      testInput5: testIn5,
+      testOutput5: testOut5,
+      });
+    return refreshPage();
+    }
+    };
+  const handleOnClickExit = async (e) => {
+      try {
+        e.preventDefault();
+        history.push('/');
+      } catch {
+        console.log('error');
+      }
+    };
   
   return (
     <Container>
@@ -41,7 +96,7 @@ export default function Setup() {
           </div>
           <Card/>
           <form>
-            <Typography component="h10" variant="h10">
+            <Typography component="h10">
               Challenge Title 
             </Typography>
             <TextField
@@ -53,10 +108,12 @@ export default function Setup() {
                 label="Title E.g. 'FizzBuzz'"
                 placeholder="Title E.g. 'FizzBuzz'"
                 name="title"
-                autoComplete="title"
                 autoFocus
+                error={isError}
+                helperText={error}
+                onChange={(input) => setTitle(input.target.value)}
               />
-              <Typography component="h10" variant="h10">
+              <Typography component="h10">
                 Problem Description
               </Typography> 
               <TextField
@@ -70,9 +127,11 @@ export default function Setup() {
                 label="Problem Description"
                 placeholder="Problem Description of Challenge"
                 name="problem description"
-                autoComplete="problem description"
+                error={isError}
+                helperText={error}
+                onChange={(input) => setProbDesc(input.target.value)}
               />
-              <Typography component="h10" variant="h10">
+              <Typography component="h10">
                 Input Format
               </Typography> 
               <TextField
@@ -85,10 +144,12 @@ export default function Setup() {
                 label="Input Format"
                 placeholder="Input Format"
                 name="input format"
-                autoComplete="input format"
+                error={isError}
+                helperText={error}
+                onChange={(input) => setInFormat(input.target.value)}
               />
             
-              <Typography component="h10" variant="h10">
+              <Typography component="h10">
                 Return Format
               </Typography> 
               <TextField
@@ -101,9 +162,11 @@ export default function Setup() {
                 label="Return Format"
                 placeholder="Return Format"
                 name="return format"
-                autoComplete="return format"
+                error={isError}
+                helperText={error}
+                onChange={(input) => setReturnFormat(input.target.value)}
               />
-              <Typography component="h10" variant="h10">
+              <Typography component="h10">
                 Constraints
               </Typography> 
               <TextField
@@ -116,10 +179,13 @@ export default function Setup() {
                 id= "constraints"
                 label="Constraints"
                 placeholder="Constraints"
-                name="constraints"
-                autoComplete="constraints"
+                name="constraints"   
+                error={isError}
+                helperText={error}    
+                onChange={(input) => setConstraints(input.target.value)}
+                
               />
-              <Typography component="h10" variant="h10">
+              <Typography component="h10">
                 Sample Input 
               </Typography> 
               <TextField
@@ -132,9 +198,11 @@ export default function Setup() {
                 label="Sample Input"
                 placeholder="Sample Input"
                 name="sample input"
-                autoComplete="sample input"
+                error={isError}
+                helperText={error}             
+                onChange={(input) => setSampleIn(input.target.value)}
               />
-              <Typography component="h10" variant="h10">
+              <Typography component="h10">
                 Sample Output 
               </Typography> 
               <TextField
@@ -146,10 +214,12 @@ export default function Setup() {
                 id="sample output"
                 label="Sample Output"
                 placeholder="Sample Output"
-                name="sample output"
-                autoComplete="sample output"
+                name="sample output"  
+                error={isError}
+                helperText={error}          
+                onChange={(input) => setSampleOut(input.target.value)}
               />
-              <Typography component="h10" variant="h10">
+              <Typography component="h10">
                 Example with Explanation  
               </Typography> 
               <TextField
@@ -162,10 +232,12 @@ export default function Setup() {
                 id="example with explanation"
                 label="Example with Explanation"
                 placeholder="Example with Explanation"
-                name="example with explanation"
-                autoComplete="example with explanation"
+                name="example with explanation" 
+                error={isError}
+                helperText={error}            
+                onChange={(input) => setExampleExplanation(input.target.value)}
               />
-              <Typography component="h10" variant="h10">
+              <Typography component="h10">
                 Test Cases (Please provide at least 1 test case)  
               </Typography>
                <TextField
@@ -176,7 +248,9 @@ export default function Setup() {
                  label="Input"
                  placeholder="Input"
                  name="Input"
-                 autoComplete="Input"
+                 error={isError}
+                 helperText={error}
+                 onChange={(input) => setTestIn1(input.target.value)}
                />
                <TextField
                  variant="outlined"
@@ -185,8 +259,10 @@ export default function Setup() {
                  id="test output 1"
                  label="Expected Output"
                  placeholder="Expected Output"
-                 name="Output"
-                 autoComplete="Output"
+                 name="Output"       
+                 error={isError}
+                 helperText={error}      
+                 onChange={(input) => setTestOut1(input.target.value)}
                />
                <TextField
                  variant="outlined"
@@ -194,8 +270,8 @@ export default function Setup() {
                  id="test input 2"
                  label="Input"
                  placeholder="Input"
-                 name="Input"
-                 autoComplete="Input"
+                 name="Input"              
+                 onChange={(input) => setTestIn2(input.target.value)}
                />
                <TextField
                  variant="outlined"
@@ -203,8 +279,8 @@ export default function Setup() {
                  id="test output 2"
                  label="Expected Output"
                  placeholder=" Expected Output"
-                 name="Output"
-                 autoComplete="Output"
+                 name="Output"             
+                 onChange={(input) => setTestOut2(input.target.value)}
                />
                <TextField
                  variant="outlined"
@@ -212,8 +288,8 @@ export default function Setup() {
                  id="test input 3"
                  label="Input"
                  placeholder="Input"
-                 name="Input"
-                 autoComplete="Input"
+                 name="Input"          
+                 onChange={(input) => setTestIn3(input.target.value)}
                />
                <TextField
                  variant="outlined"
@@ -222,7 +298,7 @@ export default function Setup() {
                  label="Expected Output"
                  placeholder=" Expected Output"
                  name="Output"
-                 autoComplete="Output"
+                 onChange={(input) => setTestOut3(input.target.value)}
                />
                <TextField
                  variant="outlined"
@@ -231,7 +307,7 @@ export default function Setup() {
                  label="Input"
                  placeholder="Input"
                  name="Input"
-                 autoComplete="Input"
+                 onChange={(input) => setTestIn4(input.target.value)}
                />
                <TextField
                  variant="outlined"
@@ -240,7 +316,7 @@ export default function Setup() {
                  label="Expected Output"
                  placeholder=" Expected Output"
                  name="Output"
-                 autoComplete="Output"
+                 onChange={(input) => setTestOut4(input.target.value)}
                />
                <TextField
                  variant="outlined"
@@ -249,7 +325,7 @@ export default function Setup() {
                  label="Input"
                  placeholder="Input"
                  name="Input"
-                 autoComplete="Input"
+                 onChange={(input) => setTestIn5(input.target.value)}
                />
                <TextField
                  variant="outlined"
@@ -258,7 +334,7 @@ export default function Setup() {
                  label="Expected Output"
                  placeholder=" Expected Output"
                  name="Output"
-                 autoComplete="Output"
+                 onChange={(input) => setTestOut5(input.target.value)}
                />
               <Button
                 id = "save-challenge"
@@ -266,7 +342,7 @@ export default function Setup() {
                 color="primary"
                 size="large"
                 startIcon={<SaveIcon />}
-                onClick={refreshPage}
+                onClick={(e) => handleOnClickSave(e)}
                 >
                   Save Challenge 
                 </Button>
@@ -278,7 +354,7 @@ export default function Setup() {
                 startIcon={<ExitToAppIcon />}
                 onClick={(e) => handleOnClickExit(e)}
                 >
-                  Save Challenge and Exit
+                  Exit
                 </Button>
           </form>
         </Container>
@@ -287,3 +363,5 @@ export default function Setup() {
     </Container>
   );
 };
+
+export default Setup;

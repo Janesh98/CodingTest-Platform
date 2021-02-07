@@ -1,6 +1,7 @@
 let NewUserDB = require('../models/UserModel');
 const config = require('../config/config');
 let CodingTestDB = require('../models/CodingTestModel');
+let CodingChallengeDB = require('../models/CodingChallengeModel');
 
 const firebase = require('firebase');
 firebase.initializeApp(config);
@@ -107,4 +108,88 @@ exports.newTest = (req, res) => {
       data: null,
     });
  });
+};
+
+exports.newChallenge = (req, res) => {
+  const challenge = {
+    googleId: req.body.data.googleId,
+    testName: req.body.data.testName,
+    title: req.body.data.title,
+    problemDescription: req.body.data.problemDescription,
+    inputFormat: req.body.data.inputFormat,
+    returnFormat: req.body.data.returnFormat,
+    constraints: req.body.data.constraints,
+    sampleInput: req.body.data.sampleInput,
+    sampleOutput: req.body.data.sampleOutput,
+    exampleExplanation: req.body.data.exampleExplanation,
+    testInput1: req.body.data.testInput1,
+    testOutput1: req.body.data.testOutput1,
+    testInput2: req.body.data.testInput2,
+    testOutput2: req.body.data.testOutput2,
+    testInput3: req.body.data.testInput3,
+    testOutput3: req.body.data.testOutput3,
+    testInput4: req.body.data.testInput4,
+    testOutput4: req.body.data.testOutput4,
+    testInput5: req.body.data.testInput5,
+    testOutput5: req.body.data.testOutput5,
+  }
+
+  const googleId = challenge.googleId;
+  const testName = challenge.testName;
+  const title = challenge.title;
+  const problemDescription = challenge.problemDescription;
+  const inputFormat = challenge.inputFormat;
+  const returnFormat = challenge.returnFormat;
+  const constraints = challenge.constraints;
+  const sampleInput = challenge.sampleInput;
+  const sampleOutput = challenge.sampleOutput;
+  const exampleExplanation = challenge.exampleExplanation;
+  const testInput1 = challenge.testInput1;
+  const testOutput1 = challenge.testOutput1;
+  const testInput2 = challenge.testInput2;
+  const testOutput2 = challenge.testOutput2;
+  const testInput3 = challenge.testInput3;
+  const testOutput3 = challenge.testOutput3;
+  const testInput4 = challenge.testInput4;
+  const testOutput4 = challenge.testOutput4;
+  const testInput5 = challenge.testInput5;
+  const testOutput5 = challenge.testOutput5;
+
+  // Add CHallenge to MongoDB
+  const newChallengeEntry = new CodingChallengeDB({
+    googleId,
+    testName,
+    title,
+    problemDescription,
+    inputFormat,
+    returnFormat,
+    constraints,
+    sampleInput,
+    sampleOutput,
+    exampleExplanation,
+    testInput1,
+    testOutput1,
+    testInput2,
+    testOutput2,
+    testInput3,
+    testOutput3,
+    testInput4,
+    testOutput4,
+    testInput5,
+    testOutput5,
+  });
+
+  newChallengeEntry.save(function(err, room) {
+    const challengeId = room.id;
+    CodingTestDB.updateOne(
+      { testName: challenge.testName},
+      { $push: { challenges: challengeId }}, function (err, res) {
+        if (err) throw err;
+      });
+    return res.status(200).json({
+      status: 'success',
+      data: null,
+  });
+  });
+
 };
