@@ -65,7 +65,7 @@ const CodeEditor = () => {
             startIcon={<CodeIcon />}
             onClick={(e) => handleSubmitCode(e)}
           >
-            <Typography variant="button">Run</Typography>
+            <Typography variant="button">Run Code</Typography>
           </Button>
         </Container>
       </Paper>
