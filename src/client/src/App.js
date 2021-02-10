@@ -4,6 +4,7 @@ import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import CompanyInput from './components/CompanyInput';
 import Setup from './components/Setup';
+import Questions from './components/Questions';
 import Edit from './components/Edit';
 import Results from './components/Results';
 import Create from './components/Create';
@@ -23,6 +24,7 @@ function App() {
             <PrivateRoute exact path="/" component={Dashboard} />
             <PrivateRoute path="/create" component={Create} />
             <PrivateRoute path="/setup" component={Setup} />
+            <PrivateRoute path="/questions" component={Questions} />
             <PrivateRoute path="/edit" component={Edit} />
             <PrivateRoute path="/results" component={Results} />
             <PrivateRoute path="/codingtest" component={CodingTest} />

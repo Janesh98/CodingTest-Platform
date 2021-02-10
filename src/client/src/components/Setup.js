@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { Grid } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import './css/Setup.css';
 import NavBar from './Navbar';
@@ -74,6 +75,18 @@ const Setup = () => {
     return refreshPage();
     }
     };
+
+  const handleOnClickContinue = async (e) => {
+    try {
+      e.preventDefault();
+      history.push({
+        pathname: '/questions',
+        state:{ newTestName : testName}});
+    } catch {
+      console.log('error');
+    }
+  };
+
   const handleOnClickExit = async (e) => {
       try {
         e.preventDefault();
@@ -347,9 +360,19 @@ const Setup = () => {
                   Save Challenge 
                 </Button>
                 <Button
-                id = "save-challenge"
+                id = "continue"
                 variant="contained"
                 color="secondary"
+                size="large"
+                startIcon={<ArrowForwardIcon />}
+                onClick={(e) => handleOnClickContinue(e)}
+                >
+                  Continue 
+                </Button>
+                <Button
+                id = "exit"
+                variant="contained"
+                color="primary"
                 size="large"
                 startIcon={<ExitToAppIcon />}
                 onClick={(e) => handleOnClickExit(e)}

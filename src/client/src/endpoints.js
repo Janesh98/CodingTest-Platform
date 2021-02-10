@@ -12,3 +12,6 @@ export const callRegister = firebase.functions().httpsCallable('api/register');
 export const executeCode = firebase.functions().httpsCallable('api/code');
 export const addTest = firebase.functions().httpsCallable('api/test');
 export const addChallenge = firebase.functions().httpsCallable('api/challenge');
+export const addQs = firebase.functions().httpsCallable('api/questions');
+export const getTests = firebase.functions().httpsCallable('api/tests');
+

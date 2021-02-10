@@ -2,6 +2,7 @@ let NewUserDB = require('../models/UserModel');
 const config = require('../config/config');
 let CodingTestDB = require('../models/CodingTestModel');
 let CodingChallengeDB = require('../models/CodingChallengeModel');
+let QuestionsDB = require('../models/QuestionsModel');
 
 const firebase = require('firebase');
 firebase.initializeApp(config);
@@ -192,4 +193,61 @@ exports.newChallenge = (req, res) => {
   });
   });
 
+};
+
+exports.addQs = (req, res) => {
+  const Qs = {
+    googleId: req.body.data.googleId,
+    testName: req.body.data.testName,
+    question1: req.body.data.question1,
+    question2: req.body.data.question2,
+    question3: req.body.data.question3,
+  }
+
+  const googleId = Qs.googleId;
+  const testName = Qs.testName;
+  const question1 = Qs.question1;
+  const question2 = Qs.question2;
+  const question3 = Qs.question3;
+
+  const newQuestionsEntry = new QuestionsDB({
+    googleId,
+    testName,
+    question1,
+    question2,
+    question3,
+  });
+
+  newQuestionsEntry.save(function(err, room) {
+    const questionsId = room.id;
+    CodingTestDB.updateOne(
+      { testName: Qs.testName},
+      { $push: { questions: questionsId }}, function (err, res) {
+        if (err) throw err;
+      });
+    return res.status(200).json({
+      status: 'success',
+      data: null,
+  });
+  });
+};
+
+
+
+
+exports.getTests = (req, res) => {
+  const user = {
+    googleId: req.body.data.googleId,
+  };
+
+  CodingTestDB.find(
+    { googleId: user.googleId },
+    { _id: 0, __v: 0, challenges: 0, googleId: 0},
+    function(err, result){
+      if (err) throw err;
+      return res.status(200).json({
+        data: result,
+    });
+
+    });
 };

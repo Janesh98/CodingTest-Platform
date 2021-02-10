@@ -1,7 +1,13 @@
 #save-challenge {
     margin-bottom: 10px;
   }
-  
+#continue {
+    margin-bottom: 10px;
+  }
+
+#exit {
+    margin-bottom: 10px;
+  }
   html,
   body {
     height: 100%;
