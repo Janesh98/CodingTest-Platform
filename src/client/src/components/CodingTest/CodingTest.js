@@ -6,6 +6,7 @@ import Problem from './Problem';
 import CodeEditor from './CodeEditor';
 import Terminal from './Terminal';
 import { CodingTestProvider } from './context/CodingTestState';
+import Header from './Header';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,13 +24,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     color: theme.palette.common.white,
     background: theme.palette.success.contrastText,
-    height: '35%',
-  },
-  run: {
-    textAlign: 'center',
-    color: theme.palette.common.white,
-    background: theme.palette.success.contrastText,
-    height: '4%',
+    height: '30.6%',
   },
 }));
 
@@ -39,6 +34,9 @@ export default function CodingTest() {
   return (
     <CodingTestProvider>
       <Grid container className={classes.root} spacing={0}>
+        <Grid item xs={12} sm={12}>
+          <Header />
+        </Grid>
         <Grid item xs={12} sm={5}>
           <Paper square className={classes.problem}>
             <Problem />

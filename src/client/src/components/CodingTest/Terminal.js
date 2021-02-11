@@ -44,14 +44,13 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     display: 'flex',
-    height: '35vh',
+    height: '28.4vh',
   },
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
   },
   tabPanels: {
     overflow: 'auto',
-    width: '100%',
   },
 }));
 
@@ -59,6 +58,12 @@ const Terminal = () => {
   const { codeOutput } = useContext(CodingTestContext);
   const classes = useStyles();
   const [value, setValue] = useState(0);
+
+  const parseCodeOutput = () => {
+    if (codeOutput.stderr && codeOutput.stderr != null)
+      return atob(codeOutput.stderr);
+    return codeOutput.stdout ? atob(codeOutput.stdout) : '';
+  };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -92,7 +97,7 @@ const Terminal = () => {
         style={{ whiteSpace: 'pre-line' }}
         className={classes.tabPanels}
       >
-        {codeOutput}
+        {parseCodeOutput()}
       </TabPanel>
       <TabPanel value={value} index={1}>
         Item Two

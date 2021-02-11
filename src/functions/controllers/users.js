@@ -4,8 +4,8 @@ let CodingTestDB = require('../models/CodingTestModel');
 let CodingChallengeDB = require('../models/CodingChallengeModel');
 let QuestionsDB = require('../models/QuestionsModel');
 
-const firebase = require('firebase');
-firebase.initializeApp(config);
+// const firebase = require('firebase');
+// firebase.initializeApp(config);
 
 const {
   validateRegistrationData,
@@ -97,18 +97,20 @@ exports.newTest = (req, res) => {
     testName,
   });
 
-    newTestEntry.save(function(err, room) {
+  newTestEntry.save(function (err, room) {
     const testId = room.id;
     NewUserDB.updateOne(
       { googleId: test.googleId },
-      { $push: { codingTests: testId }}, function (err, res) {
+      { $push: { codingTests: testId } },
+      function (err, res) {
         if (err) throw err;
-      });
+      }
+    );
     return res.status(200).json({
       status: 'success',
       data: null,
     });
- });
+  });
 };
 
 exports.newChallenge = (req, res) => {
@@ -133,7 +135,7 @@ exports.newChallenge = (req, res) => {
     testOutput4: req.body.data.testOutput4,
     testInput5: req.body.data.testInput5,
     testOutput5: req.body.data.testOutput5,
-  }
+  };
 
   const googleId = challenge.googleId;
   const testName = challenge.testName;
@@ -180,19 +182,20 @@ exports.newChallenge = (req, res) => {
     testOutput5,
   });
 
-  newChallengeEntry.save(function(err, room) {
+  newChallengeEntry.save(function (err, room) {
     const challengeId = room.id;
     CodingTestDB.updateOne(
-      { testName: challenge.testName},
-      { $push: { challenges: challengeId }}, function (err, res) {
+      { testName: challenge.testName },
+      { $push: { challenges: challengeId } },
+      function (err, res) {
         if (err) throw err;
-      });
+      }
+    );
     return res.status(200).json({
       status: 'success',
       data: null,
+    });
   });
-  });
-
 };
 
 exports.addQs = (req, res) => {
@@ -202,7 +205,7 @@ exports.addQs = (req, res) => {
     question1: req.body.data.question1,
     question2: req.body.data.question2,
     question3: req.body.data.question3,
-  }
+  };
 
   const googleId = Qs.googleId;
   const testName = Qs.testName;
@@ -218,22 +221,21 @@ exports.addQs = (req, res) => {
     question3,
   });
 
-  newQuestionsEntry.save(function(err, room) {
+  newQuestionsEntry.save(function (err, room) {
     const questionsId = room.id;
     CodingTestDB.updateOne(
-      { testName: Qs.testName},
-      { $push: { questions: questionsId }}, function (err, res) {
+      { testName: Qs.testName },
+      { $push: { questions: questionsId } },
+      function (err, res) {
         if (err) throw err;
-      });
+      }
+    );
     return res.status(200).json({
       status: 'success',
       data: null,
-  });
+    });
   });
 };
-
-
-
 
 exports.getTests = (req, res) => {
   const user = {
@@ -242,12 +244,12 @@ exports.getTests = (req, res) => {
 
   CodingTestDB.find(
     { googleId: user.googleId },
-    { _id: 0, __v: 0, challenges: 0, googleId: 0},
-    function(err, result){
+    { _id: 0, __v: 0, challenges: 0, googleId: 0 },
+    function (err, result) {
       if (err) throw err;
       return res.status(200).json({
         data: result,
-    });
-
-    });
+      });
+    }
+  );
 };

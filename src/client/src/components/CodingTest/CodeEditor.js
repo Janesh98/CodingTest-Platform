@@ -24,23 +24,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CodeEditor = () => {
-  const [language, setLanguage] = useState('python');
   const [code, setCode] = useState('');
   const classes = useStyles();
-  const { updateCodeOuput } = useContext(CodingTestContext);
+  const { language, updateCodeOuput } = useContext(CodingTestContext);
 
   const handleSubmitCode = async (e) => {
     e.preventDefault();
     // encode to base64 string
     const encodedString = btoa(code);
     const output = await executeCode({
-      language: language,
+      language: language.toLowerCase(),
       code: encodedString,
     });
     // decode from base64 string
-    const decodedString = atob(output.data.stdout);
+    // const decodedString = atob(output.data.stdout);
     // set code execution output
-    updateCodeOuput(decodedString);
+    updateCodeOuput(output.data);
   };
 
   return (
@@ -48,7 +47,7 @@ const CodeEditor = () => {
       <div>
         <Editor
           height="61vh"
-          defaultLanguage={language}
+          defaultLanguage={language.toLowerCase()}
           theme="vs-dark"
           onChange={(value, event) => setCode(value)}
         />

@@ -3,7 +3,8 @@ import { CodingTestReducer } from './CodingTestReducer';
 
 // Initial State
 const initialState = {
-  codeOutput: 'True\nFalse\nTrue',
+  codeOutput: {},
+  language: 'Python',
 };
 
 // Create context
@@ -21,11 +22,20 @@ export const CodingTestProvider = ({ children }) => {
     });
   };
 
+  const updateLanguage = (language) => {
+    dispatch({
+      type: 'UPDATE_LANGUAGE',
+      payload: language,
+    });
+  };
+
   return (
     <CodingTestContext.Provider
       value={{
         codeOutput: state.codeOutput,
+        language: state.language,
         updateCodeOuput,
+        updateLanguage,
       }}
     >
       {children}

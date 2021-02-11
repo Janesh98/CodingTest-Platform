@@ -1,18 +1,18 @@
-const axios = require('axios').default;
-const functions = require('firebase-functions');
+const submitCode = async (code, languageId, stdin = '') => {
+  // Lazy load axios to reduce unecessary memory usage
+  const axios = require('axios').default;
 
-const submitCode = async (code, stdin = '') => {
   const options = {
     method: 'POST',
     url: 'https://judge0-ce.p.rapidapi.com/submissions',
-    params: { base64_encoded: 'true', wait: 'true', fields: '*' },
+    params: { base64_encoded: 'true', wait: 'true' },
     headers: {
       'content-type': 'application/json',
       'x-rapidapi-key': '671207b829msh7bf3336d5f94edbp13fecbjsn452157ddab57',
       'x-rapidapi-host': 'judge0-ce.p.rapidapi.com',
     },
     data: {
-      language_id: 71,
+      language_id: languageId,
       source_code: code,
       stdin: stdin,
     },
@@ -25,11 +25,23 @@ exports.executeCode = (req, res) => {
   const code = req.body.data.code;
   const language = req.body.data.language;
 
-  const runtimeOpts = {
-    timeoutSeconds: 10,
-  };
+  // judge0 api id to refer to programming language
+  languageId = 71;
+  switch (language) {
+    case 'python':
+      languageId = 71;
+      break;
+    case 'java':
+      languageId = 62;
+      break;
+    case 'javascript':
+      languageId = 63;
+      break;
+    default:
+      console.log(`Language '${language}' is not supported`);
+  }
 
-  submitCode(code)
+  submitCode(code, languageId)
     .then((output) => {
       const data = output.data;
 

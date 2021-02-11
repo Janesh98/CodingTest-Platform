@@ -1,4 +1,4 @@
-import { Container, Typography } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 import React, { useState, useEffect } from 'react';
 
 const Problem = () => {
@@ -6,14 +6,18 @@ const Problem = () => {
 
   useEffect(() => {
     setProblem(
-      "The Fibonacci numbers, commonly denoted F(n) form a sequence, called the Fibonacci sequence, such that each number is the sum of the two preceding ones, starting from 0 and 1."
+      'The Fibonacci numbers, commonly denoted F(n) form a sequence, called the Fibonacci sequence, such that each number is the sum of the two preceding ones, starting from 0 and 1.'
     );
   }, []);
 
   return (
-    <Container>
-      <Typography align="left" style={{ whiteSpace: 'pre-line' }}>{problem}</Typography>
-    </Container>
+    <Box p={3}>
+      <div id="problem-description">
+        <Typography align="left" style={{ whiteSpace: 'pre-line' }}>
+          {problem}
+        </Typography>
+      </div>
+    </Box>
   );
 };
 

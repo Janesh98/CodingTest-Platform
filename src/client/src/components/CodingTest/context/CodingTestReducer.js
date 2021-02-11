@@ -5,6 +5,11 @@ export const CodingTestReducer = (state, action) => {
         ...state,
         codeOutput: action.payload,
       };
+    case 'UPDATE_LANGUAGE':
+      return {
+        ...state,
+        language: action.payload,
+      };
     default:
       return state;
   }
