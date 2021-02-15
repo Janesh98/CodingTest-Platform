@@ -244,7 +244,7 @@ exports.getTests = (req, res) => {
 
   CodingTestDB.find(
     { googleId: user.googleId },
-    { _id: 0, __v: 0, challenges: 0, googleId: 0 },
+    { _id: 0, __v: 0, challenges: 0, googleId: 0, questions: 0 },
     function (err, result) {
       if (err) throw err;
       return res.status(200).json({
@@ -252,4 +252,33 @@ exports.getTests = (req, res) => {
       });
     }
   );
+};
+
+exports.deleteTest = (req, res) => {
+  const test = {
+    googleId: req.body.data.googleId,
+    testName: req.body.data.testName,
+  };
+
+  var query = {
+    googleId: test.googleId,
+    testName: test.testName
+  };
+  CodingTestDB.deleteOne(query, function(err, obj){
+    if (err) throw err;
+    console.log("1 document deleted");
+  });
+
+  CodingChallengeDB.deleteMany(query, function(err, obj){
+    if (err) throw err;
+    console.log("Many document(s) deleted");
+  });
+
+  QuestionsDB.deleteMany(query, function(err, obj){
+    if (err) throw err;
+    console.log("Many document(s) deleted");
+  });
+    return res.status(200).json({
+      data: null,
+    });
 };
