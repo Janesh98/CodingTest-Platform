@@ -6,6 +6,7 @@ import CompanyInput from './components/CompanyInput';
 import Setup from './components/Setup';
 import Questions from './components/Questions';
 import Edit from './components/Edit';
+import EditTest from './components/EditTest';
 import Results from './components/Results';
 import Create from './components/Create';
 import { AuthProvider } from './contexts/AuthContext';
@@ -26,6 +27,7 @@ function App() {
             <PrivateRoute path="/setup" component={Setup} />
             <PrivateRoute path="/questions" component={Questions} />
             <PrivateRoute path="/edit" component={Edit} />
+            <PrivateRoute path="/edittest" component={EditTest} />
             <PrivateRoute path="/results" component={Results} />
             <PrivateRoute path="/codingtest" component={CodingTest} />
           </Switch>

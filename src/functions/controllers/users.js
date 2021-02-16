@@ -282,3 +282,83 @@ exports.deleteTest = (req, res) => {
       data: null,
     });
 };
+
+exports.getChallenges = (req, res) => {
+  const user = {
+    googleId: req.body.data.googleId,
+    testName: req.body.data.testName,
+  };
+
+  CodingChallengeDB.find(
+    { googleId: user.googleId, testName: user.testName },
+    { _id: 0, __v: 0, googleId: 0, testName: 0},
+    function (err, result) {
+      if (err) throw err;
+      return res.status(200).json({
+        data: result,
+      });
+    }
+  );
+};
+
+exports.getQuestions = (req, res) => {
+  const user = {
+    googleId: req.body.data.googleId,
+    testName: req.body.data.testName,
+  };
+
+  QuestionsDB.find(
+    { googleId: user.googleId, testName: user.testName },
+    { _id: 0, __v: 0, googleId: 0, testName: 0},
+    function (err, result) {
+      if (err) throw err;
+      console.log(user.testName);
+      return res.status(200).json({
+        data: result,
+      });
+    }
+  );
+};
+
+exports.deleteChallenge = (req, res) => {
+  const challenge = {
+    googleId: req.body.data.googleId,
+    testName: req.body.data.testName,
+    title: req.body.data.title
+  };
+
+  var query = {
+    googleId: challenge.googleId,
+    testName: challenge.testName,
+    title: challenge.title,
+  };
+  CodingChallengeDB.deleteOne(query, function(err, obj){
+    if (err) throw err;
+    console.log("1 document deleted");
+  });
+  return res.status(200).json({
+    data: null,
+  });
+
+};
+
+exports.deleteQuestions = (req, res) => {
+  const questions = {
+    googleId: req.body.data.googleId,
+    testName: req.body.data.testName,
+  };
+
+  var query = {
+    googleId: questions.googleId,
+    testName: questions.testName,
+  };
+
+  QuestionsDB.deleteOne(query, function(err, obj){
+    if (err) throw err;
+    console.log("1 document deleted");
+  });
+  return res.status(200).json({
+    data: null,
+  });
+
+};
