@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
@@ -8,15 +8,34 @@ import './css/Create.css';
 import NavBar from './Navbar';
 import TextField from '@material-ui/core/TextField';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import { addTest } from '../endpoints';
+import { addTest, getTests } from '../endpoints';
 import { useAuth } from '../contexts/AuthContext';
+
 
 const Create = () => {
     const [name, setName] = useState('');
     const [error, setError] = useState('');
     const [isError, setISError] = useState(false);
     const { currentUser } = useAuth();
+    const [tests, setTests] = useState([]);
     const history = useHistory();
+
+    useEffect(() => {
+      const getUserTests = async () => {
+        try {
+          const res = await getTests({
+            googleId: currentUser.uid,
+          });
+          setTests(res.data.map((item) => item.testName.toLowerCase()));
+        } catch {
+          console.log(
+            'error in Create.js getting list of tests from backend api'
+          );
+        }
+      };
+  
+      getUserTests();
+    }, [currentUser.uid]);
 
     const setNameAndRemoveErrors = (name) => {
       setName(name);
@@ -31,6 +50,9 @@ const Create = () => {
       if (name.length === 0) {
         setISError(true);
         return setError('Test name cannot be null');
+      } else if (tests.includes(name.toLowerCase())) {
+        setISError(true);
+        return setError('A test by this name already exists');
       } else {
         await addTest({
           googleId: currentUser.uid,

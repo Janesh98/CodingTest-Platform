@@ -6,7 +6,6 @@ import { Grid } from '@material-ui/core';
 import './css/Edit.css';
 import { getTests, deleteTest } from '../endpoints';
 import { useAuth } from '../contexts/AuthContext';
-import Button from '@material-ui/core/Button';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
