@@ -13,6 +13,7 @@ import Card from "./Card"
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { addChallenge } from '../endpoints';
+import Alert from '@material-ui/lab/Alert';
 
 
 const Setup = () => {
@@ -40,6 +41,10 @@ const Setup = () => {
   const history = useHistory();
   const testName = history.location.state.newTestName;
 
+  function refreshPage() {
+    window.location.reload(false);
+  }
+  
   const handleOnClickSave = async (e) => {
     e.preventDefault();
     if (title.length === 0 || probDesc.length === 0 || inFormat === 0) {
@@ -68,24 +73,7 @@ const Setup = () => {
       testInput5: testIn5,
       testOutput5: testOut5,
       });
-      setTitle('');
-      setProbDesc('');
-      setInFormat('');
-      setReturnFormat('');
-      setConstraints('');
-      setSampleIn('');
-      setSampleOut('');
-      setExampleExplanation('');
-      setTestIn1('');
-      setTestOut1('');
-      setTestIn2('');
-      setTestOut2('');
-      setTestIn3('');
-      setTestOut3('');
-      setTestIn4('');
-      setTestOut4('');
-      setTestIn5('');
-      setTestOut5('');
+      return refreshPage();
     }
     };
 
@@ -131,6 +119,7 @@ const Setup = () => {
                 required
                 fullWidth
                 id="title"
+                refs="title"
                 label="Title E.g. 'FizzBuzz'"
                 placeholder="Title E.g. 'FizzBuzz'"
                 name="title"
