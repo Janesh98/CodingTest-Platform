@@ -9,34 +9,36 @@ import SaveIcon from '@material-ui/icons/Save';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import './css/Questions.css';
 import { useHistory } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import { addQs } from '../endpoints';
+import { updateQuestions } from '../endpoints';
 
-const Questions = () => {
-    const [question1, setQuestion1] = useState('');
-    const [question2, setQuestion2] = useState('');
-    const [question3, setQuestion3] = useState('');
-    const { currentUser } = useAuth();
+const EditQuestions = () => {
     const history = useHistory();
-    const testName = history.location.state.newTestName;
+    const testName = history.location.state.testName;
+    const questionsData = history.location.state.questionsData;
+    const [question1, setQuestion1] = useState(questionsData[0].question1);
+    const [question2, setQuestion2] = useState(questionsData[0].question2);
+    const [question3, setQuestion3] = useState(questionsData[0].question3);
 
     const handleOnClickSave = async (e) => {
         e.preventDefault();
-        await addQs({
-          googleId: currentUser.uid,
-          testName: testName,
+        await updateQuestions({
+          _id: questionsData[0]._id,
           question1: question1,
           question2: question2,
           question3: question3,
           });
-          history.push('/');;
+          history.push({
+            pathname: '/edittest',
+            state:{ TestName : testName}});
         };
 
     const handleOnClickExit = async (e) => {
         try {
           e.preventDefault();
-          history.push('/');
-        } catch {
+          history.push({
+            pathname: '/edittest',
+            state:{ TestName : testName}});
+         }catch {
           console.log('error');
         }
     };
@@ -62,6 +64,7 @@ const Questions = () => {
                 multiline
                 rows = {2}
                 id="question1"
+                defaultValue = {questionsData[0].question1}
                 label="Question 1"
                 placeholder="Question 1"
                 name="question1"
@@ -77,6 +80,7 @@ const Questions = () => {
                 multiline
                 rows = {2}
                 id="question2"
+                defaultValue = {questionsData[0].question2}
                 label="Question 2"
                 placeholder="Question 2"
                 name="question2"
@@ -92,6 +96,7 @@ const Questions = () => {
                 multiline
                 rows = {2}
                 id="question3"
+                defaultValue = {questionsData[0].question3}
                 label="Question 3"
                 placeholder="Question 3"
                 name="question3"
@@ -115,7 +120,7 @@ const Questions = () => {
                 startIcon={<ExitToAppIcon />}
                 onClick={(e) => handleOnClickExit(e)}
                 >
-                  Skip and Exit
+                  Cancel
                 </Button>
               </form>
               </Container>
@@ -126,4 +131,4 @@ const Questions = () => {
   );
 };
 
-export default Questions;
+export default EditQuestions;

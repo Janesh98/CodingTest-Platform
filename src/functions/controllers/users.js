@@ -353,7 +353,7 @@ exports.getQuestions = (req, res) => {
 
   QuestionsDB.find(
     { googleId: user.googleId, testName: user.testName },
-    { _id: 0, __v: 0, googleId: 0, testName: 0 },
+    { __v: 0, googleId: 0, testName: 0 },
     function (err, result) {
       if (err) throw err;
       return res.status(200).json({
@@ -449,6 +449,29 @@ exports.updateChallenge = (req, res) => {
         testOutput4: challenge.testOutput4,
         testInput5: challenge.testInput5,
         testOutput5: challenge.testOutput5, },
+      function (err, res) {
+        if (err) throw err;
+      }
+    );
+    return res.status(200).json({
+      status: 'success',
+      data: null,
+    });
+};
+
+exports.updateQuestions = (req, res) => {
+  const Qs = {
+    _id: req.body.data._id,
+    question1: req.body.data.question1,
+    question2: req.body.data.question2,
+    question3: req.body.data.question3,
+  };
+
+    QuestionsDB.updateOne(
+      { _id: Qs._id},
+      { question1: Qs.question1,
+        question2: Qs.question2,
+        question3: Qs.question3},
       function (err, res) {
         if (err) throw err;
       }

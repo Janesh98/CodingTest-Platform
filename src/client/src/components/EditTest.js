@@ -64,7 +64,7 @@ const EditTest = () => {
             googleId: currentUser.uid,
             testName: TestName,
           });
-          await setQuestionsTableData(res.data.map(item => ({question1: item.question1, question2: item.question2, question3: item.question3})));
+          await setQuestionsTableData(res.data.map(item => ({_id: item._id, question1: item.question1, question2: item.question2, question3: item.question3})));
         };
       
         questionRows();
@@ -96,6 +96,12 @@ const EditTest = () => {
                   title: e,
                   challengeData : tableData}});
       };
+      const handleOnClickEditQuestions = async (e) => {
+        history.push({
+          pathname: '/editquestions',
+          state:{ testName : TestName,
+                  questionsData : QuestionsTableData}});
+      };
 
       const handleOnClickDeleteChallenge = async (e) => {
         try {
@@ -106,6 +112,17 @@ const EditTest = () => {
             title: title,
           });
           return refreshPage();
+        } catch {
+          console.log('error');
+        }
+      };
+
+      const handleOnClickAddQuestions = async (e) => {
+        try {
+          e.preventDefault();
+          history.push({
+            pathname: '/questions',
+            state:{ newTestName : TestName}});
         } catch {
           console.log('error');
         }
@@ -122,6 +139,21 @@ const EditTest = () => {
           console.log('error');
         }
       };
+
+    let addButton;
+      if (QuestionsTableData.length === 0){ 
+      addButton = <TableCell><Button
+          id = "addQs"
+          variant="contained"
+          color="primary"
+          size="small"
+          onClick={(e) => handleOnClickAddQuestions(e)}
+          >
+            Add Questions
+          </Button></TableCell>}
+
+
+
 
     return (
       <Container>
@@ -195,14 +227,7 @@ const EditTest = () => {
             <TableCell>Question 1</TableCell>
             <TableCell>Question 2</TableCell>
             <TableCell>Question 3</TableCell>
-            <TableCell><Button
-                id = "exit"
-                variant="contained"
-                color="primary"
-                size="small"
-                >
-                  Add or Edit Questions
-                </Button></TableCell>
+            {addButton}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -213,6 +238,19 @@ const EditTest = () => {
               </TableCell>
               <TableCell className={classes.cell_short}>{row.question2}</TableCell>
               <TableCell className={classes.cell_short}>{row.question3}</TableCell>
+              <TableCell>
+                <IconButton
+                aria-label="edit" 
+                className={classes.margin}
+                id = "edit"
+                variant="contained"
+                color="primary"
+                size="small"
+                onClick={(e) => handleOnClickEditQuestions(row.title)}
+                >
+                <EditIcon />
+                </IconButton>
+                </TableCell>
               <TableCell>
                 <IconButton
                 aria-label="deleteQuestions" 
