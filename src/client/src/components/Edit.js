@@ -61,7 +61,6 @@ const Edit = () => {
   };
 
   const handleOnClickEdit = async (e) => {
-    console.log(e)
     history.push({
       pathname: '/edittest',
       state:{ TestName : e}});

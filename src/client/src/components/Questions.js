@@ -52,7 +52,7 @@ const Questions = () => {
               </Typography>
               </div>
               <form>
-              <Typography component="h10">
+              <Typography component="h1">
               Question 1
             </Typography>
             <TextField
@@ -68,7 +68,7 @@ const Questions = () => {
                 autoFocus
                 onChange={(input) => setQuestion1(input.target.value)}
               />
-              <Typography component="h10">
+              <Typography component="h1">
                 Question 2
               </Typography> 
               <TextField
@@ -84,7 +84,7 @@ const Questions = () => {
                 autoFocus
                 onChange={(input) => setQuestion2(input.target.value)}
               />
-              <Typography component="h10">
+              <Typography component="h1">
                 Question 3
               </Typography> 
               <TextField

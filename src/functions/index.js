@@ -32,6 +32,7 @@ const {
   getQuestions,
   deleteChallenge,
   deleteQuestions,
+  updateChallenge,
 } = require('./controllers/users');
 const { executeCode } = require('./controllers/code');
 
@@ -62,5 +63,6 @@ app.post('/codingtest/:codingTestId', getCodingTest);
 app.post('/getQuestions', getQuestions);
 app.post('/deleteChallenge', deleteChallenge);
 app.post('/deleteQuestions', deleteQuestions);
+app.post('/updateChallenge', updateChallenge);
 
 exports[API_PREFIX] = functions.https.onRequest(app);

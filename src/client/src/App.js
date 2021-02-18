@@ -7,6 +7,7 @@ import Setup from './components/Setup';
 import Questions from './components/Questions';
 import Edit from './components/Edit';
 import EditTest from './components/EditTest';
+import EditChallenge from './components/EditChallenge';
 import Results from './components/Results';
 import Create from './components/Create';
 import { AuthProvider } from './contexts/AuthContext';
@@ -28,6 +29,7 @@ function App() {
           <PrivateRoute path="/questions" component={Questions} />
           <PrivateRoute path="/edit" component={Edit} />
           <PrivateRoute path="/edittest" component={EditTest} />
+          <PrivateRoute path="/editchallenge" component={EditChallenge} />
           <PrivateRoute path="/results" component={Results} />
           <Route path="/codingtest/:id" component={CodingTest} />
         </Switch>

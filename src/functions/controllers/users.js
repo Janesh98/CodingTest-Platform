@@ -291,7 +291,7 @@ exports.getChallenges = (req, res) => {
 
   CodingChallengeDB.find(
     { googleId: user.googleId, testName: user.testName },
-    { _id: 0, __v: 0, googleId: 0, testName: 0 },
+    { __v: 0, googleId: 0, testName: 0 },
     function (err, result) {
       if (err) throw err;
       return res.status(200).json({
@@ -356,7 +356,6 @@ exports.getQuestions = (req, res) => {
     { _id: 0, __v: 0, googleId: 0, testName: 0 },
     function (err, result) {
       if (err) throw err;
-      console.log(user.testName);
       return res.status(200).json({
         data: result,
       });
@@ -403,4 +402,59 @@ exports.deleteQuestions = (req, res) => {
   return res.status(200).json({
     data: null,
   });
+};
+
+exports.updateChallenge = (req, res) => {
+  const challenge = {
+    _id: req.body.data._id,
+    googleId: req.body.data.googleId,
+    testName: req.body.data.testName,
+    title: req.body.data.title,
+    problemDescription: req.body.data.problemDescription,
+    inputFormat: req.body.data.inputFormat,
+    returnFormat: req.body.data.returnFormat,
+    constraints: req.body.data.constraints,
+    sampleInput: req.body.data.sampleInput,
+    sampleOutput: req.body.data.sampleOutput,
+    exampleExplanation: req.body.data.exampleExplanation,
+    testInput1: req.body.data.testInput1,
+    testOutput1: req.body.data.testOutput1,
+    testInput2: req.body.data.testInput2,
+    testOutput2: req.body.data.testOutput2,
+    testInput3: req.body.data.testInput3,
+    testOutput3: req.body.data.testOutput3,
+    testInput4: req.body.data.testInput4,
+    testOutput4: req.body.data.testOutput4,
+    testInput5: req.body.data.testInput5,
+    testOutput5: req.body.data.testOutput5,
+  };
+
+    CodingChallengeDB.updateOne(
+      { _id: challenge._id},
+      { title: challenge.title,
+        problemDescription: challenge.problemDescription,
+        inputFormat: challenge.inputFormat,
+        returnFormat: challenge.returnFormat,
+        constraints: challenge.constraints,
+        sampleInput: challenge.sampleInput,
+        sampleOutput: challenge.sampleOutput,
+        exampleExplanation: challenge.exampleExplanation,
+        testInput1: challenge.testInput1,
+        testOutput1: challenge.testOutput1,
+        testInput2: challenge.testInput2,
+        testOutput2: challenge.testOutput2,
+        testInput3: challenge.testInput3,
+        testOutput3: challenge.testOutput3,
+        testInput4: challenge.testInput4,
+        testOutput4: challenge.testOutput4,
+        testInput5: challenge.testInput5,
+        testOutput5: challenge.testOutput5, },
+      function (err, res) {
+        if (err) throw err;
+      }
+    );
+    return res.status(200).json({
+      status: 'success',
+      data: null,
+    });
 };

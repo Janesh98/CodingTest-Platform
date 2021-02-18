@@ -15,6 +15,8 @@ export const addChallenge = firebase.functions().httpsCallable('api/challenge');
 export const addQs = firebase.functions().httpsCallable('api/questions');
 export const getTests = firebase.functions().httpsCallable('api/tests');
 export const deleteTest = firebase.functions().httpsCallable('api/delete');
+export const updateChallenge = firebase.functions().httpsCallable('api/updateChallenge');
+
 export const getChallenges = firebase
   .functions()
   .httpsCallable('api/challenges');

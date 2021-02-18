@@ -5,40 +5,40 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { Grid } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import './css/Setup.css';
 import NavBar from './Navbar';
 import Card from "./Card"
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { addChallenge } from '../endpoints';
+import { updateChallenge } from '../endpoints';
 
 
-const Setup = () => {
-  const [title, setTitle] = useState('');
-  const [probDesc, setProbDesc] = useState('');
-  const [inFormat, setInFormat] = useState('');
-  const [returnFormat, setReturnFormat] = useState('');
-  const [constraints, setConstraints] = useState('');
-  const [sampleIn, setSampleIn] = useState('');
-  const [sampleOut, setSampleOut] = useState('');
-  const [exampleExplanation, setExampleExplanation] = useState('');
-  const [testIn1, setTestIn1] = useState('');
-  const [testOut1, setTestOut1] = useState('');
-  const [testIn2, setTestIn2] = useState('');
-  const [testOut2, setTestOut2] = useState('');
-  const [testIn3, setTestIn3] = useState('');
-  const [testOut3, setTestOut3] = useState('');
-  const [testIn4, setTestIn4] = useState('');
-  const [testOut4, setTestOut4] = useState('');
-  const [testIn5, setTestIn5] = useState('');
-  const [testOut5, setTestOut5] = useState('');
+const EditChallenge = () => {
+  const history = useHistory();
+  const TestName = history.location.state.testName;
+  const challengeData = history.location.state.challengeData;
+  const [title, setTitle] = useState(challengeData[0].title);
+  const [probDesc, setProbDesc] = useState(challengeData[0].problemDescription);
+  const [inFormat, setInFormat] = useState(challengeData[0].inputFormat);
+  const [returnFormat, setReturnFormat] = useState(challengeData[0].returnFormat);
+  const [constraints, setConstraints] = useState(challengeData[0].constraints);
+  const [sampleIn, setSampleIn] = useState(challengeData[0].sampleInput);
+  const [sampleOut, setSampleOut] = useState(challengeData[0].sampleOutput);
+  const [exampleExplanation, setExampleExplanation] = useState(challengeData[0].exampleExplanation);
+  const [testIn1, setTestIn1] = useState(challengeData[0].testInput1);
+  const [testOut1, setTestOut1] = useState(challengeData[0].testOutput1);
+  const [testIn2, setTestIn2] = useState(challengeData[0].testInput2);
+  const [testOut2, setTestOut2] = useState(challengeData[0].testOutput2);
+  const [testIn3, setTestIn3] = useState(challengeData[0].testInput3);
+  const [testOut3, setTestOut3] = useState(challengeData[0].testOutput3);
+  const [testIn4, setTestIn4] = useState(challengeData[0].testInput4);
+  const [testOut4, setTestOut4] = useState(challengeData[0].testOutput4);
+  const [testIn5, setTestIn5] = useState(challengeData[0].testInput5);
+  const [testOut5, setTestOut5] = useState(challengeData[0].testOutput5);
   const [error, setError] = useState('');
   const [isError, setISError] = useState(false);
   const { currentUser } = useAuth();
-  const history = useHistory();
-  const testName = history.location.state.newTestName;
 
   const handleOnClickSave = async (e) => {
     e.preventDefault();
@@ -46,9 +46,10 @@ const Setup = () => {
       setISError(true);
       return setError('All highlighted fields must not be empty');
     } else {
-    await addChallenge({
+    await updateChallenge({
+      _id: challengeData[0]._id,
       googleId: currentUser.uid,
-      testName: testName,
+      testName: TestName,
       title: title,
       problemDescription: probDesc,
       inputFormat: inFormat,
@@ -68,47 +69,22 @@ const Setup = () => {
       testInput5: testIn5,
       testOutput5: testOut5,
       });
-      setTitle('');
-      setProbDesc('');
-      setInFormat('');
-      setReturnFormat('');
-      setConstraints('');
-      setSampleIn('');
-      setSampleOut('');
-      setExampleExplanation('');
-      setTestIn1('');
-      setTestOut1('');
-      setTestIn2('');
-      setTestOut2('');
-      setTestIn3('');
-      setTestOut3('');
-      setTestIn4('');
-      setTestOut4('');
-      setTestIn5('');
-      setTestOut5('');
+      history.push({
+        pathname: '/edittest',
+        state:{ TestName : TestName}});
     }
     };
-
-  const handleOnClickContinue = async (e) => {
-    try {
-      e.preventDefault();
-      history.push({
-        pathname: '/questions',
-        state:{ newTestName : testName}});
-    } catch {
-      console.log('error');
-    }
-  };
 
   const handleOnClickExit = async (e) => {
       try {
         e.preventDefault();
-        history.push('/');
+        history.push({
+          pathname: '/edittest',
+          state:{ TestName : TestName}});
       } catch {
         console.log('error');
       }
     };
-  
   return (
     <Container>
       <NavBar/>
@@ -133,6 +109,7 @@ const Setup = () => {
                 id="title"
                 label="Title E.g. 'FizzBuzz'"
                 placeholder="Title E.g. 'FizzBuzz'"
+                defaultValue= {challengeData[0].title}
                 name="title"
                 autoFocus
                 error={isError}
@@ -150,6 +127,7 @@ const Setup = () => {
                 multiline
                 rows = {3}
                 id="problem description"
+                defaultValue= {challengeData[0].problemDescription}
                 label="Problem Description"
                 placeholder="Problem Description of Challenge"
                 name="problem description"
@@ -167,6 +145,7 @@ const Setup = () => {
                 fullWidth
                 multiline
                 id="input format"
+                defaultValue= {challengeData[0].inputFormat}
                 label="Input Format"
                 placeholder="Input Format"
                 name="input format"
@@ -185,6 +164,7 @@ const Setup = () => {
                 fullWidth
                 multiline
                 id="return format"
+                defaultValue= {challengeData[0].returnFormat}
                 label="Return Format"
                 placeholder="Return Format"
                 name="return format"
@@ -203,6 +183,7 @@ const Setup = () => {
                 multiline
                 rows = {2}
                 id= "constraints"
+                defaultValue= {challengeData[0].constraints}
                 label="Constraints"
                 placeholder="Constraints"
                 name="constraints"   
@@ -221,6 +202,7 @@ const Setup = () => {
                 fullWidth
                 multiline
                 id="sample input"
+                defaultValue= {challengeData[0].sampleInput}
                 label="Sample Input"
                 placeholder="Sample Input"
                 name="sample input"
@@ -238,6 +220,7 @@ const Setup = () => {
                 fullWidth
                 multiline
                 id="sample output"
+                defaultValue= {challengeData[0].sampleOutput}
                 label="Sample Output"
                 placeholder="Sample Output"
                 name="sample output"  
@@ -256,6 +239,7 @@ const Setup = () => {
                 multiline
                 rows = {2}
                 id="example with explanation"
+                defaultValue= {challengeData[0].exampleExplanation}
                 label="Example with Explanation"
                 placeholder="Example with Explanation"
                 name="example with explanation" 
@@ -271,6 +255,7 @@ const Setup = () => {
                  margin="normal"
                  required
                  id="test input 1"
+                 defaultValue= {challengeData[0].testInput1}
                  label="Input"
                  placeholder="Input"
                  name="Input"
@@ -283,6 +268,7 @@ const Setup = () => {
                  margin="normal"
                  required
                  id="test output 1"
+                 defaultValue= {challengeData[0].testOutput1}
                  label="Expected Output"
                  placeholder="Expected Output"
                  name="Output"       
@@ -294,6 +280,7 @@ const Setup = () => {
                  variant="outlined"
                  margin="normal"
                  id="test input 2"
+                 defaultValue= {challengeData[0].testInput2}
                  label="Input"
                  placeholder="Input"
                  name="Input"              
@@ -303,6 +290,7 @@ const Setup = () => {
                  variant="outlined"
                  margin="normal"
                  id="test output 2"
+                 defaultValue= {challengeData[0].testOutput2}
                  label="Expected Output"
                  placeholder=" Expected Output"
                  name="Output"             
@@ -312,6 +300,7 @@ const Setup = () => {
                  variant="outlined"
                  margin="normal"
                  id="test input 3"
+                 defaultValue= {challengeData[0].testInput3}
                  label="Input"
                  placeholder="Input"
                  name="Input"          
@@ -321,6 +310,7 @@ const Setup = () => {
                  variant="outlined"
                  margin="normal"
                  id="test output 3"
+                 defaultValue= {challengeData[0].testOutput3}
                  label="Expected Output"
                  placeholder=" Expected Output"
                  name="Output"
@@ -330,6 +320,7 @@ const Setup = () => {
                  variant="outlined"
                  margin="normal"
                  id="test input 4"
+                 defaultValue= {challengeData[0].testInput4}
                  label="Input"
                  placeholder="Input"
                  name="Input"
@@ -339,6 +330,7 @@ const Setup = () => {
                  variant="outlined"
                  margin="normal"
                  id="test output 4"
+                 defaultValue= {challengeData[0].testOutput4}
                  label="Expected Output"
                  placeholder=" Expected Output"
                  name="Output"
@@ -348,6 +340,7 @@ const Setup = () => {
                  variant="outlined"
                  margin="normal"
                  id="test input 5"
+                 defaultValue= {challengeData[0].testInput5}
                  label="Input"
                  placeholder="Input"
                  name="Input"
@@ -357,6 +350,7 @@ const Setup = () => {
                  variant="outlined"
                  margin="normal"
                  id="test output 5"
+                 defaultValue= {challengeData[0].testOutput5}
                  label="Expected Output"
                  placeholder=" Expected Output"
                  name="Output"
@@ -370,27 +364,17 @@ const Setup = () => {
                 startIcon={<SaveIcon />}
                 onClick={(e) => handleOnClickSave(e)}
                 >
-                  Save Challenge 
-                </Button>
-                <Button
-                id = "continue"
-                variant="contained"
-                color="secondary"
-                size="large"
-                startIcon={<ArrowForwardIcon />}
-                onClick={(e) => handleOnClickContinue(e)}
-                >
-                  Continue 
+                  Save Changes
                 </Button>
                 <Button
                 id = "exit"
                 variant="contained"
-                color="primary"
+                color="secondary"
                 size="large"
                 startIcon={<ExitToAppIcon />}
                 onClick={(e) => handleOnClickExit(e)}
                 >
-                  Exit
+                  Cancel
                 </Button>
           </form>
         </Container>
@@ -400,4 +384,4 @@ const Setup = () => {
   );
 };
 
-export default Setup;
+export default EditChallenge;

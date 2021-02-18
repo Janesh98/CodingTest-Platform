@@ -18,6 +18,7 @@ import { useHistory } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import Button from '@material-ui/core/Button';
 
 const EditTest = () => {
     const history = useHistory();
@@ -32,7 +33,26 @@ const EditTest = () => {
             googleId: currentUser.uid,
             testName: TestName,
           });
-          await setTableData(res.data.map(item => ({title: item.title, problemDescription: item.problemDescription, createdAt: item.createdAt})));
+          await setTableData(res.data.map(item => ({
+            _id: item._id,
+            title: item.title, 
+            problemDescription: item.problemDescription, 
+            inputFormat: item.inputFormat, 
+            returnFormat: item.returnFormat,
+            constraints: item.constraints,
+            sampleInput: item.sampleInput,
+            sampleOutput: item.sampleOutput,
+            exampleExplanation: item.exampleExplanation,
+            testInput1: item.testInput1,
+            testOutput1: item.testOutput1,
+            testInput2: item.testInput2,
+            testOutput2: item.testOutput2,
+            testInput3: item.testInput3,
+            testOutput3: item.testOutput3,
+            testInput4: item.testInput4,
+            testOutput4: item.testOutput4,
+            testInput5: item.testInput5,
+            testOutput5: item.testOutput5,createdAt: item.createdAt})));
         };
       
         rows();
@@ -44,7 +64,6 @@ const EditTest = () => {
             googleId: currentUser.uid,
             testName: TestName,
           });
-          console.log(res.data);
           await setQuestionsTableData(res.data.map(item => ({question1: item.question1, question2: item.question2, question3: item.question3})));
         };
       
@@ -69,6 +88,14 @@ const EditTest = () => {
       function refreshPage() {
         window.location.reload(false);
       }
+
+      const handleOnClickEditChallenge = async (e) => {
+        history.push({
+          pathname: '/editchallenge',
+          state:{ testName : TestName,
+                  title: e,
+                  challengeData : tableData}});
+      };
 
       const handleOnClickDeleteChallenge = async (e) => {
         try {
@@ -103,11 +130,11 @@ const EditTest = () => {
           <Grid container align="center" justify="center" direction="column">
             <Container component="main" maxWidth="md">
               <div>
-                <Typography component="h1" variant="h5" gutterBottom="true">
+                <Typography component="h1" variant="h5">
                 Coding Test: {TestName}
                 </Typography>
                 </div>
-                <Typography component="h1" variant="h5" gutterBottom="true">
+                <Typography component="h1" variant="h5">
                 Coding Challenges for this test
                 </Typography>
                 <TableContainer component={Paper}>
@@ -129,6 +156,19 @@ const EditTest = () => {
               <TableCell>{row.createdAt}</TableCell>
               <TableCell>
                 <IconButton
+                aria-label="edit" 
+                className={classes.margin}
+                id = "edit"
+                variant="contained"
+                color="primary"
+                size="small"
+                onClick={(e) => handleOnClickEditChallenge(row.title)}
+                >
+                <EditIcon />
+                </IconButton>
+                </TableCell>
+              <TableCell>
+                <IconButton
                 aria-label="deleteChallenge" 
                 className={classes.margin}
                 id = "deleteChallenge"
@@ -145,7 +185,7 @@ const EditTest = () => {
         </TableBody>
       </Table>
     </TableContainer>
-    <Typography component="h1" variant="h5" gutterBottom="true">
+    <Typography component="h1" variant="h5">
         Video Interview Questions for this test
     </Typography>
     <TableContainer component={Paper}>
@@ -155,6 +195,14 @@ const EditTest = () => {
             <TableCell>Question 1</TableCell>
             <TableCell>Question 2</TableCell>
             <TableCell>Question 3</TableCell>
+            <TableCell><Button
+                id = "exit"
+                variant="contained"
+                color="primary"
+                size="small"
+                >
+                  Add or Edit Questions
+                </Button></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
