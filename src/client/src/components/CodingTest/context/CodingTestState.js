@@ -5,6 +5,7 @@ import { CodingTestReducer } from './CodingTestReducer';
 const initialState = {
   codeOutput: {},
   language: 'Python',
+  codingTest: null,
 };
 
 // Create context
@@ -29,13 +30,22 @@ export const CodingTestProvider = ({ children }) => {
     });
   };
 
+  const updateCodingTest = (codingTest) => {
+    dispatch({
+      type: 'UPDATE_CODING_TEST',
+      payload: codingTest,
+    });
+  };
+
   return (
     <CodingTestContext.Provider
       value={{
         codeOutput: state.codeOutput,
         language: state.language,
+        codingTest: state.codingTest,
         updateCodeOuput,
         updateLanguage,
+        updateCodingTest,
       }}
     >
       {children}

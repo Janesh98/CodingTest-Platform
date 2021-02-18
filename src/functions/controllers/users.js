@@ -301,6 +301,7 @@ exports.getChallenges = (req, res) => {
   );
 };
 
+// returns coding test challenges and questions based on id url param
 exports.getCodingTest = async (req, res) => {
   const codingTest = {
     challenges: null,
@@ -320,7 +321,7 @@ exports.getCodingTest = async (req, res) => {
         {
           _id: { $in: codingTestIds.challenges },
         },
-        { googleId: 0, createdAt: 0, __v: 0 }
+        { _id: 0, testName: 0, googleId: 0, createdAt: 0, __v: 0 }
       );
     }
 
@@ -329,7 +330,7 @@ exports.getCodingTest = async (req, res) => {
         {
           _id: { $in: codingTestIds.questions },
         },
-        { googleId: 0, createdAt: 0, __v: 0 }
+        { _id: 0, testName: 0, googleId: 0, createdAt: 0, __v: 0 }
       );
     }
 
@@ -337,7 +338,10 @@ exports.getCodingTest = async (req, res) => {
       data: codingTest,
     });
   } catch (err) {
-    console.log(err);
+    console.error(err);
+    return await res.status(400).json({
+      data: err.message,
+    });
   }
 };
 

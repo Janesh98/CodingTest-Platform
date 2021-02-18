@@ -16,23 +16,23 @@ import CodingTest from './components/CodingTest/CodingTest';
 
 function App() {
   return (
-      <Router>
-        <AuthProvider>
-          <Switch>
-            <PrivateRoute path="/signup/company" component={CompanyInput} />
-            <Route path="/signup" component={Signup} />
-            <Route path="/login" component={Login} />
-            <PrivateRoute exact path="/" component={Dashboard} />
-            <PrivateRoute path="/create" component={Create} />
-            <PrivateRoute path="/setup" component={Setup} />
-            <PrivateRoute path="/questions" component={Questions} />
-            <PrivateRoute path="/edit" component={Edit} />
-            <PrivateRoute path="/edittest" component={EditTest} />
-            <PrivateRoute path="/results" component={Results} />
-            <PrivateRoute path="/codingtest" component={CodingTest} />
-          </Switch>
-        </AuthProvider>
-      </Router>
+    <Router>
+      <AuthProvider>
+        <Switch>
+          <PrivateRoute path="/signup/company" component={CompanyInput} />
+          <Route path="/signup" component={Signup} />
+          <Route path="/login" component={Login} />
+          <PrivateRoute exact path="/" component={Dashboard} />
+          <PrivateRoute path="/create" component={Create} />
+          <PrivateRoute path="/setup" component={Setup} />
+          <PrivateRoute path="/questions" component={Questions} />
+          <PrivateRoute path="/edit" component={Edit} />
+          <PrivateRoute path="/edittest" component={EditTest} />
+          <PrivateRoute path="/results" component={Results} />
+          <Route path="/codingtest/:id" component={CodingTest} />
+        </Switch>
+      </AuthProvider>
+    </Router>
   );
 }
 

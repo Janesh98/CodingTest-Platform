@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Terminal = () => {
-  const { codeOutput } = useContext(CodingTestContext);
+  const { codeOutput, codingTest } = useContext(CodingTestContext);
   const classes = useStyles();
   const [value, setValue] = useState(0);
 
@@ -97,7 +97,12 @@ const Terminal = () => {
         style={{ whiteSpace: 'pre-line' }}
         className={classes.tabPanels}
       >
-        {parseCodeOutput()}
+        Input
+        {codingTest !== null
+          ? '\n' + codingTest.challenges[0].testInput1 + '\n\n'
+          : ''}
+        Output
+        {'\n' + parseCodeOutput()}
       </TabPanel>
       <TabPanel value={value} index={1}>
         Item Two
