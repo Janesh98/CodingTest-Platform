@@ -60,9 +60,11 @@ const Terminal = () => {
   const [value, setValue] = useState(0);
 
   const parseCodeOutput = () => {
-    if (codeOutput.stderr && codeOutput.stderr != null)
+    if (codeOutput.compile_output && codeOutput.compile_output != null)
+      return atob(codeOutput.compile_output);
+    else if (codeOutput.stderr && codeOutput.stderr != null)
       return atob(codeOutput.stderr);
-    return codeOutput.stdout ? atob(codeOutput.stdout) : '';
+    else return codeOutput.stdout ? atob(codeOutput.stdout) : '';
   };
 
   const handleChange = (event, newValue) => {
@@ -76,7 +78,7 @@ const Terminal = () => {
         variant="scrollable"
         value={value}
         onChange={handleChange}
-        aria-label="Vertical tabs example"
+        aria-label="Terminal test tabs"
         className={classes.tabs}
       >
         <Tab label="Test 1" {...a11yProps(0)} />

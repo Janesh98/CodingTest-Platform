@@ -36,9 +36,7 @@ const CodeEditor = () => {
       language: language.toLowerCase(),
       code: encodedString,
     });
-    // decode from base64 string
-    // const decodedString = atob(output.data.stdout);
-    // set code execution output
+
     updateCodeOuput(output.data);
   };
 
@@ -47,7 +45,9 @@ const CodeEditor = () => {
       <div>
         <Editor
           height="61vh"
+          // default language only checked once on intial load
           defaultLanguage={language.toLowerCase()}
+          language={language.toLowerCase()}
           theme="vs-dark"
           onChange={(value, event) => setCode(value)}
         />
