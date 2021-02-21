@@ -103,13 +103,14 @@ const EditTest = () => {
                   questionsData : QuestionsTableData}});
       };
 
-      const handleOnClickDeleteChallenge = async (e) => {
+      const handleOnClickDeleteChallenge = async (e, _id) => {
         try {
           const title = e;
           await deleteChallenge({
             googleId: currentUser.uid,
             testName: TestName,
             title: title,
+            _id: _id,
           });
           return refreshPage();
         } catch {
@@ -133,6 +134,7 @@ const EditTest = () => {
           await deleteQuestions({
             googleId: currentUser.uid,
             testName: TestName,
+            _id: e,
           });
           return refreshPage();
         } catch {
@@ -207,7 +209,7 @@ const EditTest = () => {
                 variant="contained"
                 color="secondary"
                 size="small"
-                onClick={(e) => handleOnClickDeleteChallenge(row.title)}
+                onClick={(e) => handleOnClickDeleteChallenge(row.title, row._id)}
                 >
                 <DeleteIcon />
                 </IconButton>
@@ -259,7 +261,7 @@ const EditTest = () => {
                 variant="contained"
                 color="secondary"
                 size="small"
-                onClick={(e) => handleOnClickDeleteQuestions(e)}
+                onClick={(e) => handleOnClickDeleteQuestions(row._id)}
                 >
                 <DeleteIcon />
                 </IconButton>

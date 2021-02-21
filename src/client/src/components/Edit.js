@@ -33,7 +33,7 @@ const Edit = () => {
     var res = await getTests({
       googleId: currentUser.uid,
     });
-    await setTableData(res.data.map(item => ({testName: item.testName, createdAt: item.createdAt})));
+    await setTableData(res.data.map(item => ({_id: item._id, testName: item.testName, createdAt: item.createdAt})));
   };
 
   rows();
@@ -47,12 +47,13 @@ const Edit = () => {
 
   const classes = useStyles();
 
-  const handleOnClickDelete = async (e) => {
+  const handleOnClickDelete = async (e, _id) => {
     try {
       const testName = e;
       await deleteTest({
         googleId: currentUser.uid,
         testName: testName,
+        _id: _id,
       });
       return refreshPage();
     } catch {
@@ -113,7 +114,7 @@ const Edit = () => {
                 variant="contained"
                 color="secondary"
                 size="small"
-                onClick={(e) => handleOnClickDelete(row.testName)}
+                onClick={(e) => handleOnClickDelete(row.testName, row._id)}
                 >
                 <DeleteIcon />
                 </IconButton>

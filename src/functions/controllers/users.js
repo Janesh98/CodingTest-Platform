@@ -244,7 +244,7 @@ exports.getTests = (req, res) => {
 
   CodingTestDB.find(
     { googleId: user.googleId },
-    { _id: 0, __v: 0, challenges: 0, googleId: 0, questions: 0 },
+    { __v: 0, challenges: 0, googleId: 0, questions: 0 },
     function (err, result) {
       if (err) throw err;
       return res.status(200).json({
@@ -258,6 +258,7 @@ exports.deleteTest = (req, res) => {
   const test = {
     googleId: req.body.data.googleId,
     testName: req.body.data.testName,
+    _id: req.body.data._id,
   };
 
   var query = {
@@ -278,6 +279,14 @@ exports.deleteTest = (req, res) => {
     if (err) throw err;
     console.log('Many document(s) deleted');
   });
+ 
+  NewUserDB.updateOne(
+    {googleId: test.googleId},
+    { $pull: { codingTests: test._id}},
+    function (err, res) {
+      if (err) throw err;
+    }
+  )
   return res.status(200).json({
     data: null,
   });
@@ -368,6 +377,7 @@ exports.deleteChallenge = (req, res) => {
     googleId: req.body.data.googleId,
     testName: req.body.data.testName,
     title: req.body.data.title,
+    _id: req.body.data._id,
   };
 
   var query = {
@@ -379,6 +389,13 @@ exports.deleteChallenge = (req, res) => {
     if (err) throw err;
     console.log('1 document deleted');
   });
+  CodingTestDB.updateOne(
+    {googleId: challenge.googleId, testName: challenge.testName},
+    { $pull: { challenges: challenge._id}},
+    function (err, res) {
+      if (err) throw err;
+    }
+  )
   return res.status(200).json({
     data: null,
   });
@@ -388,6 +405,7 @@ exports.deleteQuestions = (req, res) => {
   const questions = {
     googleId: req.body.data.googleId,
     testName: req.body.data.testName,
+    _id: req.body.data._id,
   };
 
   var query = {
@@ -399,6 +417,13 @@ exports.deleteQuestions = (req, res) => {
     if (err) throw err;
     console.log('1 document deleted');
   });
+  CodingTestDB.updateOne(
+    {googleId: questions.googleId, testName: questions.testName},
+    { $pull: { questions: questions._id}},
+    function (err, res) {
+      if (err) throw err;
+    }
+  )
   return res.status(200).json({
     data: null,
   });
