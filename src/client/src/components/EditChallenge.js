@@ -16,26 +16,27 @@ import { updateChallenge } from '../endpoints';
 
 const EditChallenge = () => {
   const history = useHistory();
+  const index = history.location.state.index;
   const TestName = history.location.state.testName;
   const challengeData = history.location.state.challengeData;
-  const [title, setTitle] = useState(challengeData[0].title);
-  const [probDesc, setProbDesc] = useState(challengeData[0].problemDescription);
-  const [inFormat, setInFormat] = useState(challengeData[0].inputFormat);
-  const [returnFormat, setReturnFormat] = useState(challengeData[0].returnFormat);
-  const [constraints, setConstraints] = useState(challengeData[0].constraints);
-  const [sampleIn, setSampleIn] = useState(challengeData[0].sampleInput);
-  const [sampleOut, setSampleOut] = useState(challengeData[0].sampleOutput);
-  const [exampleExplanation, setExampleExplanation] = useState(challengeData[0].exampleExplanation);
-  const [testIn1, setTestIn1] = useState(challengeData[0].testInput1);
-  const [testOut1, setTestOut1] = useState(challengeData[0].testOutput1);
-  const [testIn2, setTestIn2] = useState(challengeData[0].testInput2);
-  const [testOut2, setTestOut2] = useState(challengeData[0].testOutput2);
-  const [testIn3, setTestIn3] = useState(challengeData[0].testInput3);
-  const [testOut3, setTestOut3] = useState(challengeData[0].testOutput3);
-  const [testIn4, setTestIn4] = useState(challengeData[0].testInput4);
-  const [testOut4, setTestOut4] = useState(challengeData[0].testOutput4);
-  const [testIn5, setTestIn5] = useState(challengeData[0].testInput5);
-  const [testOut5, setTestOut5] = useState(challengeData[0].testOutput5);
+  const [title, setTitle] = useState(challengeData[index].title);
+  const [probDesc, setProbDesc] = useState(challengeData[index].problemDescription);
+  const [inFormat, setInFormat] = useState(challengeData[index].inputFormat);
+  const [returnFormat, setReturnFormat] = useState(challengeData[index].returnFormat);
+  const [constraints, setConstraints] = useState(challengeData[index].constraints);
+  const [sampleIn, setSampleIn] = useState(challengeData[index].sampleInput);
+  const [sampleOut, setSampleOut] = useState(challengeData[index].sampleOutput);
+  const [exampleExplanation, setExampleExplanation] = useState(challengeData[index].exampleExplanation);
+  const [testIn1, setTestIn1] = useState(challengeData[index].testInput1);
+  const [testOut1, setTestOut1] = useState(challengeData[index].testOutput1);
+  const [testIn2, setTestIn2] = useState(challengeData[index].testInput2);
+  const [testOut2, setTestOut2] = useState(challengeData[index].testOutput2);
+  const [testIn3, setTestIn3] = useState(challengeData[index].testInput3);
+  const [testOut3, setTestOut3] = useState(challengeData[index].testOutput3);
+  const [testIn4, setTestIn4] = useState(challengeData[index].testInput4);
+  const [testOut4, setTestOut4] = useState(challengeData[index].testOutput4);
+  const [testIn5, setTestIn5] = useState(challengeData[index].testInput5);
+  const [testOut5, setTestOut5] = useState(challengeData[index].testOutput5);
   const [error, setError] = useState('');
   const [isError, setISError] = useState(false);
   const { currentUser } = useAuth();
@@ -47,7 +48,7 @@ const EditChallenge = () => {
       return setError('All highlighted fields must not be empty');
     } else {
     await updateChallenge({
-      _id: challengeData[0]._id,
+      _id: challengeData[index]._id,
       googleId: currentUser.uid,
       testName: TestName,
       title: title,
@@ -109,7 +110,7 @@ const EditChallenge = () => {
                 id="title"
                 label="Title E.g. 'FizzBuzz'"
                 placeholder="Title E.g. 'FizzBuzz'"
-                defaultValue= {challengeData[0].title}
+                defaultValue= {challengeData[index].title}
                 name="title"
                 autoFocus
                 error={isError}
@@ -127,7 +128,7 @@ const EditChallenge = () => {
                 multiline
                 rows = {3}
                 id="problem description"
-                defaultValue= {challengeData[0].problemDescription}
+                defaultValue= {challengeData[index].problemDescription}
                 label="Problem Description"
                 placeholder="Problem Description of Challenge"
                 name="problem description"
@@ -145,7 +146,7 @@ const EditChallenge = () => {
                 fullWidth
                 multiline
                 id="input format"
-                defaultValue= {challengeData[0].inputFormat}
+                defaultValue= {challengeData[index].inputFormat}
                 label="Input Format"
                 placeholder="Input Format"
                 name="input format"
@@ -164,7 +165,7 @@ const EditChallenge = () => {
                 fullWidth
                 multiline
                 id="return format"
-                defaultValue= {challengeData[0].returnFormat}
+                defaultValue= {challengeData[index].returnFormat}
                 label="Return Format"
                 placeholder="Return Format"
                 name="return format"
@@ -183,7 +184,7 @@ const EditChallenge = () => {
                 multiline
                 rows = {2}
                 id= "constraints"
-                defaultValue= {challengeData[0].constraints}
+                defaultValue= {challengeData[index].constraints}
                 label="Constraints"
                 placeholder="Constraints"
                 name="constraints"   
@@ -202,7 +203,7 @@ const EditChallenge = () => {
                 fullWidth
                 multiline
                 id="sample input"
-                defaultValue= {challengeData[0].sampleInput}
+                defaultValue= {challengeData[index].sampleInput}
                 label="Sample Input"
                 placeholder="Sample Input"
                 name="sample input"
@@ -220,7 +221,7 @@ const EditChallenge = () => {
                 fullWidth
                 multiline
                 id="sample output"
-                defaultValue= {challengeData[0].sampleOutput}
+                defaultValue= {challengeData[index].sampleOutput}
                 label="Sample Output"
                 placeholder="Sample Output"
                 name="sample output"  
@@ -239,7 +240,7 @@ const EditChallenge = () => {
                 multiline
                 rows = {2}
                 id="example with explanation"
-                defaultValue= {challengeData[0].exampleExplanation}
+                defaultValue= {challengeData[index].exampleExplanation}
                 label="Example with Explanation"
                 placeholder="Example with Explanation"
                 name="example with explanation" 
@@ -255,7 +256,7 @@ const EditChallenge = () => {
                  margin="normal"
                  required
                  id="test input 1"
-                 defaultValue= {challengeData[0].testInput1}
+                 defaultValue= {challengeData[index].testInput1}
                  label="Input"
                  placeholder="Input"
                  name="Input"
@@ -268,7 +269,7 @@ const EditChallenge = () => {
                  margin="normal"
                  required
                  id="test output 1"
-                 defaultValue= {challengeData[0].testOutput1}
+                 defaultValue= {challengeData[index].testOutput1}
                  label="Expected Output"
                  placeholder="Expected Output"
                  name="Output"       
@@ -280,7 +281,7 @@ const EditChallenge = () => {
                  variant="outlined"
                  margin="normal"
                  id="test input 2"
-                 defaultValue= {challengeData[0].testInput2}
+                 defaultValue= {challengeData[index].testInput2}
                  label="Input"
                  placeholder="Input"
                  name="Input"              
@@ -290,7 +291,7 @@ const EditChallenge = () => {
                  variant="outlined"
                  margin="normal"
                  id="test output 2"
-                 defaultValue= {challengeData[0].testOutput2}
+                 defaultValue= {challengeData[index].testOutput2}
                  label="Expected Output"
                  placeholder=" Expected Output"
                  name="Output"             
@@ -300,7 +301,7 @@ const EditChallenge = () => {
                  variant="outlined"
                  margin="normal"
                  id="test input 3"
-                 defaultValue= {challengeData[0].testInput3}
+                 defaultValue= {challengeData[index].testInput3}
                  label="Input"
                  placeholder="Input"
                  name="Input"          
@@ -310,7 +311,7 @@ const EditChallenge = () => {
                  variant="outlined"
                  margin="normal"
                  id="test output 3"
-                 defaultValue= {challengeData[0].testOutput3}
+                 defaultValue= {challengeData[index].testOutput3}
                  label="Expected Output"
                  placeholder=" Expected Output"
                  name="Output"
@@ -320,7 +321,7 @@ const EditChallenge = () => {
                  variant="outlined"
                  margin="normal"
                  id="test input 4"
-                 defaultValue= {challengeData[0].testInput4}
+                 defaultValue= {challengeData[index].testInput4}
                  label="Input"
                  placeholder="Input"
                  name="Input"
@@ -330,7 +331,7 @@ const EditChallenge = () => {
                  variant="outlined"
                  margin="normal"
                  id="test output 4"
-                 defaultValue= {challengeData[0].testOutput4}
+                 defaultValue= {challengeData[index].testOutput4}
                  label="Expected Output"
                  placeholder=" Expected Output"
                  name="Output"
@@ -340,7 +341,7 @@ const EditChallenge = () => {
                  variant="outlined"
                  margin="normal"
                  id="test input 5"
-                 defaultValue= {challengeData[0].testInput5}
+                 defaultValue= {challengeData[index].testInput5}
                  label="Input"
                  placeholder="Input"
                  name="Input"
@@ -350,7 +351,7 @@ const EditChallenge = () => {
                  variant="outlined"
                  margin="normal"
                  id="test output 5"
-                 defaultValue= {challengeData[0].testOutput5}
+                 defaultValue= {challengeData[index].testOutput5}
                  label="Expected Output"
                  placeholder=" Expected Output"
                  name="Output"

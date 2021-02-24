@@ -8,6 +8,7 @@ import Questions from './components/Questions';
 import Edit from './components/Edit';
 import EditTest from './components/EditTest';
 import EditChallenge from './components/EditChallenge';
+import NewChallenge from './components/NewChallenge';
 import EditQuestions from './components/EditQuestions';
 import Results from './components/Results';
 import Create from './components/Create';
@@ -31,6 +32,7 @@ function App() {
           <PrivateRoute path="/edit" component={Edit} />
           <PrivateRoute path="/edittest" component={EditTest} />
           <PrivateRoute path="/editchallenge" component={EditChallenge} />
+          <PrivateRoute path="/newchallenge" component={NewChallenge} />
           <PrivateRoute path="/editquestions" component={EditQuestions} />
           <PrivateRoute path="/results" component={Results} />
           <Route path="/codingtest/:id" component={CodingTest} />

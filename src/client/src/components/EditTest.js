@@ -90,11 +90,16 @@ const EditTest = () => {
       }
 
       const handleOnClickEditChallenge = async (e) => {
+        var i;
+        for (i = 0; i < tableData.length; i++){
+          if (tableData[i].title === e) {break};
+        }
         history.push({
           pathname: '/editchallenge',
           state:{ testName : TestName,
                   title: e,
-                  challengeData : tableData}});
+                  challengeData : tableData,
+                  index: i}});
       };
       const handleOnClickEditQuestions = async (e) => {
         history.push({
@@ -129,6 +134,17 @@ const EditTest = () => {
         }
       };
 
+      const handleOnClickAddChallenge = async (e) => {
+        try {
+          e.preventDefault();
+          history.push({
+            pathname: '/newchallenge',
+            state:{ newTestName : TestName}});
+        } catch {
+          console.log('error');
+        }
+      };
+
       const handleOnClickDeleteQuestions = async (e) => {
         try {
           await deleteQuestions({
@@ -154,9 +170,6 @@ const EditTest = () => {
             Add Questions
           </Button></TableCell>}
 
-
-
-
     return (
       <Container>
       <NavBar/>
@@ -178,6 +191,15 @@ const EditTest = () => {
             <TableCell>Title</TableCell>
             <TableCell>Description</TableCell>
             <TableCell>Date Created</TableCell>
+            <TableCell><Button
+          id = "addQs"
+          variant="contained"
+          color="primary"
+          size="small"
+          onClick={(e) => handleOnClickAddChallenge(e)}
+          >
+            Add New Challenge
+          </Button></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
