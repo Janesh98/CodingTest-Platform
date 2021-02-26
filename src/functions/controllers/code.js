@@ -24,6 +24,7 @@ const submitCode = async (code, languageId, stdin = '') => {
 exports.executeCode = (req, res) => {
   const code = req.body.data.code;
   const language = req.body.data.language;
+  const stdin = req.body.data.stdin;
 
   // judge0 api id to refer to programming language
   languageId = 71;
@@ -41,7 +42,7 @@ exports.executeCode = (req, res) => {
       console.log(`Language '${language}' is not supported`);
   }
 
-  submitCode(code, languageId)
+  submitCode(code, languageId, stdin)
     .then((output) => {
       const data = output.data;
 

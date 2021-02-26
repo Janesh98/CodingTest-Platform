@@ -58,6 +58,8 @@ const Terminal = () => {
   const { codeOutput, codingTest } = useContext(CodingTestContext);
   const classes = useStyles();
   const [value, setValue] = useState(0);
+  // eslint-disable-next-line no-unused-vars
+  const [currentChallengeIndex, setCurrentChallengeIndex] = useState(0);
 
   const parseCodeOutput = () => {
     if (codeOutput.compile_output && codeOutput.compile_output != null)
@@ -65,6 +67,12 @@ const Terminal = () => {
     else if (codeOutput.stderr && codeOutput.stderr != null)
       return atob(codeOutput.stderr);
     else return codeOutput.stdout ? atob(codeOutput.stdout) : '';
+  };
+
+  const getCodeTestInput = (index) => {
+    return (
+      '\n' + codingTest.challenges[currentChallengeIndex].testInput1 + '\n\n'
+    );
   };
 
   const handleChange = (event, newValue) => {
@@ -86,10 +94,6 @@ const Terminal = () => {
         <Tab label="Test 3" {...a11yProps(2)} />
         <Tab label="Test 4" {...a11yProps(3)} />
         <Tab label="Test 5" {...a11yProps(4)} />
-        <Tab label="Test 6" {...a11yProps(5)} />
-        <Tab label="Test 7" {...a11yProps(6)} />
-        <Tab label="Test 8" {...a11yProps(7)} />
-        <Tab label="Test 9" {...a11yProps(8)} />
       </Tabs>
       <TabPanel
         value={value}
@@ -100,35 +104,61 @@ const Terminal = () => {
         className={classes.tabPanels}
       >
         Input
-        {codingTest !== null
-          ? '\n' + codingTest.challenges[0].testInput1 + '\n\n'
-          : ''}
+        {codingTest !== null ? getCodeTestInput() : ''}
         Output
         {'\n' + parseCodeOutput()}
       </TabPanel>
-      <TabPanel value={value} index={1}>
-        Item Two
+      <TabPanel
+        value={value}
+        index={1}
+        align="left"
+        variant="body1"
+        style={{ whiteSpace: 'pre-line' }}
+        className={classes.tabPanels}
+      >
+        Input
+        {codingTest !== null ? getCodeTestInput() : ''}
+        Output
+        {'\n' + parseCodeOutput()}
       </TabPanel>
-      <TabPanel value={value} index={2}>
-        Item Three
+      <TabPanel
+        value={value}
+        index={2}
+        align="left"
+        variant="body1"
+        style={{ whiteSpace: 'pre-line' }}
+        className={classes.tabPanels}
+      >
+        Input
+        {codingTest !== null ? getCodeTestInput() : ''}
+        Output
+        {'\n' + parseCodeOutput()}
       </TabPanel>
-      <TabPanel value={value} index={3}>
-        Item Four
+      <TabPanel
+        value={value}
+        index={3}
+        align="left"
+        variant="body1"
+        style={{ whiteSpace: 'pre-line' }}
+        className={classes.tabPanels}
+      >
+        Input
+        {codingTest !== null ? getCodeTestInput() : ''}
+        Output
+        {'\n' + parseCodeOutput()}
       </TabPanel>
-      <TabPanel value={value} index={4}>
-        Item Five
-      </TabPanel>
-      <TabPanel value={value} index={5}>
-        Item Six
-      </TabPanel>
-      <TabPanel value={value} index={6}>
-        Item Seven
-      </TabPanel>
-      <TabPanel value={value} index={7}>
-        Item Eight
-      </TabPanel>
-      <TabPanel value={value} index={8}>
-        Item Nine
+      <TabPanel
+        value={value}
+        index={4}
+        align="left"
+        variant="body1"
+        style={{ whiteSpace: 'pre-line' }}
+        className={classes.tabPanels}
+      >
+        Input
+        {codingTest !== null ? getCodeTestInput() : ''}
+        Output
+        {'\n' + parseCodeOutput()}
       </TabPanel>
     </div>
   );
