@@ -48,9 +48,10 @@ deploy-backend:
     - npm i -g firebase-tools
   script:
     - cd src
-    - npm i --production # don't install dev dependicies
+    - npm i
     - firebase deploy --only functions --token $FIREBASE_TOKEN
-  cache: {} # Disable globally defined cache
+  cache:
+    policy: pull
   only:
     refs:
       - master
@@ -63,7 +64,7 @@ deploy-frontend:
     - npm i -g firebase-tools
   script:
     - cd src/client
-    - yarn install
+    - yarn install --prod # don't install dev dependicies
     - yarn build
     - firebase deploy --only hosting --token $FIREBASE_TOKEN
   cache: {} # Disable globally defined cache
