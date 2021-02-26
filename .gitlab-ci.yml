@@ -63,7 +63,7 @@ deploy-frontend:
     - npm i -g firebase-tools
   script:
     - cd src/client
-    - yarn install --prod # don't install dev dependicies
+    - yarn install
     - yarn build
     - firebase deploy --only hosting --token $FIREBASE_TOKEN
   cache: {} # Disable globally defined cache
