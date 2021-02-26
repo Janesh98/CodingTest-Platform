@@ -47,8 +47,8 @@ deploy-backend:
   before_script:
     - npm i -g firebase-tools
   script:
-    - cd src
-    - npm i
+    - cd src/functions
+    - npm i --production
     - firebase deploy --only functions --token $FIREBASE_TOKEN
   cache:
     policy: pull
