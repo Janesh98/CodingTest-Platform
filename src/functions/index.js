@@ -18,7 +18,24 @@ app.use((req, res, next) => {
   next();
 });
 
-const { register, company, addCompany } = require('./controllers/users');
+const {
+  register,
+  company,
+  addCompany,
+  newTest,
+  newChallenge,
+  addQs,
+  getTests,
+  deleteTest,
+  getChallenges,
+  getCodingTest,
+  getQuestions,
+  deleteChallenge,
+  deleteQuestions,
+  updateChallenge,
+  updateQuestions,
+} = require('./controllers/users');
+const { executeCode } = require('./controllers/code');
 
 const uri = functions.config().app.atlas_uri;
 mongoose.connect(uri, {
@@ -36,5 +53,18 @@ connection.once('open', () => {
 app.post('/register', register);
 app.post('/company/all', company);
 app.post('/company', addCompany);
+app.post('/code', executeCode);
+app.post('/test', newTest);
+app.post('/challenge', newChallenge);
+app.post('/questions', addQs);
+app.post('/tests', getTests);
+app.post('/delete', deleteTest);
+app.post('/challenges', getChallenges);
+app.post('/codingtest/:codingTestId', getCodingTest);
+app.post('/getQuestions', getQuestions);
+app.post('/deleteChallenge', deleteChallenge);
+app.post('/deleteQuestions', deleteQuestions);
+app.post('/updateChallenge', updateChallenge);
+app.post('/updateQuestions', updateQuestions);
 
 exports[API_PREFIX] = functions.https.onRequest(app);

@@ -4,7 +4,8 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { Link, useHistory } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
-import './Dashboard.css';
+import './css/Dashboard.css';
+import NavBar from './Navbar';
 
 export default function Dashboard() {
   const history = useHistory();
@@ -13,7 +14,7 @@ export default function Dashboard() {
   const handleSubmitNew = async (e) => {
     try {
       e.preventDefault();
-      history.push('/setup');
+      history.push('/create');
     } catch {
       console.log('error');
     }
@@ -38,55 +39,60 @@ export default function Dashboard() {
   };
 
   return (
-    <div id="dashboard-container">
-      <Grid container align="center" justify="center" direction="column">
-        <Container component="main" maxWidth="xs">
-          <div>
-            <Typography component="h1" variant="h5">
-              Dashboard
-            </Typography>
-            <form>          
-              <Button
-                id="setup-test"
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                disabled={loading}
-                onClick={(e) => handleSubmitNew(e)}
-              >
-                Setup a New Coding Test
-              </Button>
-              <Button
-                id="edit-test"
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="secondary"
-                disabled={loading}
-                onClick={(e) => handleSubmitEdit(e)}
-              >
-                Edit Existing Coding Test
-              </Button>
-              <Button
-                id="history-results"
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                disabled={loading}
-                onClick={(e) => handleSubmitResults(e)}
-              >
-                View Previous Tests History/Results
-              </Button>
-              <Typography>
-                <Link to="/login">Logout</Link>
+    <Container>
+      <NavBar/>
+      <div id="dashboard-container">
+        <Grid container align="center" justify="center" direction="column">
+          <Container component="main" maxWidth="xs">
+            <div>
+              <Typography component="h1" variant="h5">
+                Dashboard
               </Typography>
-            </form>
-          </div>
-        </Container>
-      </Grid>
-    </div>
+              <Typography component="h1" variant="h5">
+                ** OTHER INFORMATION WILL BE DISPLAYED HERE **
+              </Typography>
+              <form>
+                <Button
+                  id="setup-test"
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  disabled={loading}
+                  onClick={(e) => handleSubmitNew(e)}
+                >
+                  Setup a New Coding Test
+                </Button>
+                <Button
+                  id="edit-test"
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="secondary"
+                  disabled={loading}
+                  onClick={(e) => handleSubmitEdit(e)}
+                >
+                  Edit Existing Coding Test
+                </Button>
+                <Button
+                  id="history-results"
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  disabled={loading}
+                  onClick={(e) => handleSubmitResults(e)}
+                >
+                  View Previous Tests History/Results
+                </Button>
+                <Typography>
+                  <Link to="/login">Logout</Link>
+                </Typography>
+              </form>
+            </div>
+          </Container>
+        </Grid>
+      </div>
+    </Container>
   );
-};
-
+}

@@ -56,46 +56,48 @@ const CompanyInput = () => {
   };
 
   return (
-    <div>
-      <Grid container align="center" justify="center" direction="row">
-        <Container component="main" maxWidth="xs">
-          <div>
-            <Typography component="h1" variant="h5">
-              Enter Company
-            </Typography>
-            <form>
-              <TextField
-                variant="filled"
-                color="primary"
-                margin="normal"
-                fullWidth
-                required
-                name="company"
-                label="company"
-                type="company"
-                id="company"
-                error={isError}
-                helperText={error}
-                autoComplete="company"
-                onChange={(input) =>
-                  setCompanyAndRemoveErrors(input.target.value)
-                }
-              />
-              <Button
-                id="submit-company"
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                onClick={(e) => handleSubmit(e)}
-              >
-                Submit
-              </Button>
-            </form>
-          </div>
-        </Container>
-      </Grid>
-    </div>
+    <Container>
+      <div>
+        <Grid container align="center" justify="center" direction="row">
+          <Container component="main" maxWidth="xs">
+            <div>
+              <Typography component="h1" variant="h5">
+                Enter Company
+              </Typography>
+              <form>
+                <TextField
+                  variant="filled"
+                  color="primary"
+                  margin="normal"
+                  fullWidth
+                  required
+                  name="company"
+                  label="company"
+                  type="company"
+                  id="company"
+                  error={isError}
+                  helperText={error}
+                  autoComplete="company"
+                  onChange={(input) =>
+                    setCompanyAndRemoveErrors(input.target.value)
+                  }
+                />
+                <Button
+                  id="submit-company"
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  onClick={(e) => handleSubmit(e)}
+                >
+                  Submit
+                </Button>
+              </form>
+            </div>
+          </Container>
+        </Grid>
+      </div>
+    </Container>
   );
 };
 

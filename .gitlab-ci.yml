@@ -36,24 +36,21 @@ build-frontend:
     - cd src/client
     - yarn
     - yarn build
-  artifacts:
-    expire_in: 1 hour
-    paths:
-      - ./src/client/build/
+  cache:
+    policy: pull
   only:
-    refs:
-      - master
     changes:
       - src/client/**/*
 
 deploy-backend:
   stage: deploy
   before_script:
-  - npm i -g firebase-tools
+    - npm i -g firebase-tools
   script:
     - cd src
+    - npm i --production # don't install dev dependicies
     - firebase deploy --only functions --token $FIREBASE_TOKEN
-  dependencies: []
+  cache: {} # Disable globally defined cache
   only:
     refs:
       - master
@@ -63,13 +60,13 @@ deploy-backend:
 deploy-frontend:
   stage: deploy
   before_script:
-  - npm i -g firebase-tools
+    - npm i -g firebase-tools
   script:
     - cd src/client
-    - yarn install
+    - yarn install --prod # don't install dev dependicies
     - yarn build
     - firebase deploy --only hosting --token $FIREBASE_TOKEN
-  dependencies: [build-frontend]
+  cache: {} # Disable globally defined cache
   only:
     refs:
       - master

@@ -10,6 +10,7 @@ const userSchema = new Schema({
     default: Date.now,
   },
   googleId: { type: String, required: true },
+  codingTests: {type: Array, required: false}
 });
 
 const NewUserDB = mongoose.model('NewUserDB', userSchema);

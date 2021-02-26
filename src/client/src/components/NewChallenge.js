@@ -5,7 +5,6 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { Grid } from '@material-ui/core';
 import SaveIcon from '@material-ui/icons/Save';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import './css/Setup.css';
 import NavBar from './Navbar';
@@ -15,7 +14,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { addChallenge } from '../endpoints';
 // import Alert from '@material-ui/lab/Alert';
 
-const Setup = () => {
+const NewChallenge = () => {
   const [title, setTitle] = useState('');
   const [probDesc, setProbDesc] = useState('');
   const [inFormat, setInFormat] = useState('');
@@ -40,9 +39,6 @@ const Setup = () => {
   const history = useHistory();
   const testName = history.location.state.newTestName;
 
-  function refreshPage() {
-    window.location.reload(false);
-  }
 
   const handleOnClickSave = async (e) => {
     e.preventDefault();
@@ -72,26 +68,18 @@ const Setup = () => {
         testInput5: testIn5,
         testOutput5: testOut5,
       });
-      return refreshPage();
+      history.push({
+        pathname: '/edittest',
+        state:{ TestName : testName}});
     }
   };
 
-  const handleOnClickContinue = async (e) => {
+  const handleOnClickCancel = async (e) => {
     try {
       e.preventDefault();
       history.push({
-        pathname: '/questions',
-        state: { newTestName: testName },
-      });
-    } catch {
-      console.log('error');
-    }
-  };
-
-  const handleOnClickExit = async (e) => {
-    try {
-      e.preventDefault();
-      history.push('/');
+        pathname: '/edittest',
+        state:{ TestName : testName}});
     } catch {
       console.log('error');
     }
@@ -345,24 +333,14 @@ const Setup = () => {
                 Save Challenge
               </Button>
               <Button
-                id="continue"
+                id="exit"
                 variant="contained"
                 color="secondary"
                 size="large"
-                startIcon={<ArrowForwardIcon />}
-                onClick={(e) => handleOnClickContinue(e)}
-              >
-                Continue
-              </Button>
-              <Button
-                id="exit"
-                variant="contained"
-                color="primary"
-                size="large"
                 startIcon={<ExitToAppIcon />}
-                onClick={(e) => handleOnClickExit(e)}
+                onClick={(e) => handleOnClickCancel(e)}
               >
-                Exit
+                Cancel
               </Button>
             </form>
           </Container>
@@ -372,4 +350,4 @@ const Setup = () => {
   );
 };
 
-export default Setup;
+export default NewChallenge;
