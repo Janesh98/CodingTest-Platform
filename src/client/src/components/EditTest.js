@@ -24,6 +24,7 @@ const EditTest = () => {
     const history = useHistory();
     const { currentUser } = useAuth();
     const TestName = history.location.state.TestName;
+    const id = history.location.state._id;
     const [tableData, setTableData] = useState([]);
     const [QuestionsTableData, setQuestionsTableData] = useState([]);
 
@@ -88,6 +89,13 @@ const EditTest = () => {
       function refreshPage() {
         window.location.reload(false);
       }
+
+      const handleOnClickAddParticipants = async (e) => {
+        history.push({
+          pathname: '/addparticipants',
+          state:{ testName : TestName,
+                  _id: id}});
+      };
 
       const handleOnClickEditChallenge = async (e) => {
         var i;
@@ -180,6 +188,15 @@ const EditTest = () => {
                 <Typography component="h1" variant="h5">
                 Coding Test: {TestName}
                 </Typography>
+                <Button
+                  id = "addParticipants"
+                  variant="contained"
+                  color="secondary"
+                  size="small"
+                  onClick={(e) => handleOnClickAddParticipants(e)}
+                  >
+                    Add Participants 
+                  </Button>
                 </div>
                 <Typography component="h1" variant="h5">
                 Coding Challenges for this test

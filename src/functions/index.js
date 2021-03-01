@@ -36,6 +36,7 @@ const {
   updateQuestions,
 } = require('./controllers/users');
 const { executeCode } = require('./controllers/code');
+const { sendEmail } = require('./controllers/email');
 
 const uri = functions.config().app.atlas_uri;
 mongoose.connect(uri, {
@@ -66,5 +67,6 @@ app.post('/deleteChallenge', deleteChallenge);
 app.post('/deleteQuestions', deleteQuestions);
 app.post('/updateChallenge', updateChallenge);
 app.post('/updateQuestions', updateQuestions);
+app.post('/email', sendEmail);
 
 exports[API_PREFIX] = functions.https.onRequest(app);

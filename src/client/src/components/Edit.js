@@ -18,6 +18,7 @@ import { useHistory } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import Button from '@material-ui/core/Button';
 
 const Edit = () => {
   const { currentUser } = useAuth();
@@ -47,6 +48,13 @@ const Edit = () => {
 
   const classes = useStyles();
 
+  const handleOnClickAddParticipants = async (testName, _id) => {
+    history.push({
+      pathname: '/addparticipants',
+      state:{ testName : testName,
+              _id: _id}});
+  };
+
   const handleOnClickDelete = async (e, _id) => {
     try {
       const testName = e;
@@ -61,10 +69,11 @@ const Edit = () => {
     }
   };
 
-  const handleOnClickEdit = async (e) => {
+  const handleOnClickEdit = async (e, _id) => {
     history.push({
       pathname: '/edittest',
-      state:{ TestName : e}});
+      state:{ TestName : e,
+              _id: _id}});
   };
 
   return (
@@ -94,6 +103,17 @@ const Edit = () => {
               </TableCell>
               <TableCell>{row.createdAt}</TableCell>
               <TableCell>
+              <Button
+                  id = "addParticipants"
+                  variant="contained"
+                  color="secondary"
+                  size="small"
+                  onClick={(e) => handleOnClickAddParticipants(row.testName, row._id)}
+                  >
+                    Add Participants 
+                  </Button>
+              </TableCell>
+              <TableCell>
                 <IconButton
                 aria-label="edit" 
                 className={classes.margin}
@@ -101,7 +121,7 @@ const Edit = () => {
                 variant="contained"
                 color="primary"
                 size="small"
-                onClick={(e) => handleOnClickEdit(row.testName)}
+                onClick={(e) => handleOnClickEdit(row.testName, row._id)}
                 >
                 <EditIcon />
                 </IconButton>

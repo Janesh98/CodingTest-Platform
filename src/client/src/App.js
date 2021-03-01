@@ -12,6 +12,7 @@ import NewChallenge from './components/NewChallenge';
 import EditQuestions from './components/EditQuestions';
 import Results from './components/Results';
 import Create from './components/Create';
+import AddParticipants from './components/AddParticipants';
 import { AuthProvider } from './contexts/AuthContext';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
@@ -35,6 +36,7 @@ function App() {
           <PrivateRoute path="/newchallenge" component={NewChallenge} />
           <PrivateRoute path="/editquestions" component={EditQuestions} />
           <PrivateRoute path="/results" component={Results} />
+          <PrivateRoute path="/addparticipants" component={AddParticipants} />
           <Route path="/codingtest/:id" component={CodingTest} />
         </Switch>
       </AuthProvider>
