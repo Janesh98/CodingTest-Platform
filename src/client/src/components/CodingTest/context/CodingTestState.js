@@ -3,9 +3,10 @@ import { CodingTestReducer } from './CodingTestReducer';
 
 // Initial State
 const initialState = {
-  codeOutput: {},
+  codeOutput: [],
   language: 'Python',
   codingTest: null,
+  currentChallengeIndex: 0,
 };
 
 // Create context
@@ -37,15 +38,24 @@ export const CodingTestProvider = ({ children }) => {
     });
   };
 
+  const updateCurrentChallengeIndex = (currentChallengeIndex) => {
+    dispatch({
+      type: 'UPDATE_CURRENT_CHALLENGE_INDEX',
+      payload: currentChallengeIndex,
+    });
+  };
+
   return (
     <CodingTestContext.Provider
       value={{
         codeOutput: state.codeOutput,
         language: state.language,
         codingTest: state.codingTest,
+        currentChallengeIndex: state.currentChallengeIndex,
         updateCodeOuput,
         updateLanguage,
         updateCodingTest,
+        updateCurrentChallengeIndex,
       }}
     >
       {children}

@@ -55,12 +55,16 @@ const useStyles = makeStyles((theme) => ({
 
 const Problem = () => {
   const { codingTestId, participantId } = useParams();
-  const { updateCodingTest, codingTest } = useContext(CodingTestContext);
+  const {
+    updateCodingTest,
+    codingTest,
+    currentChallengeIndex,
+    updateCurrentChallengeIndex,
+  } = useContext(CodingTestContext);
   const classes = useStyles();
-  const [currentTab, setCurrentTab] = useState(0);
 
   const handleTabChange = (event, newTab) => {
-    setCurrentTab(newTab);
+    updateCurrentChallengeIndex(newTab);
   };
 
   useEffect(() => {
@@ -106,7 +110,7 @@ const Problem = () => {
     codingTest.challenges.map((ct, i) => {
       return collectionOfTabPanels.push(
         <TabPanel
-          value={currentTab}
+          value={currentChallengeIndex}
           index={i}
           key={i}
           className={classes.description}
@@ -126,7 +130,7 @@ const Problem = () => {
       <div className={classes.root}>
         <AppBar position="static" color="transparent">
           <Tabs
-            value={currentTab}
+            value={currentChallengeIndex}
             onChange={handleTabChange}
             indicatorColor="primary"
             variant="scrollable"

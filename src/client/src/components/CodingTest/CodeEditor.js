@@ -26,22 +26,28 @@ const useStyles = makeStyles((theme) => ({
 const CodeEditor = () => {
   const [code, setCode] = useState('');
   const classes = useStyles();
-  const { language, updateCodeOuput, codingTest } = useContext(
-    CodingTestContext
-  );
+  const {
+    language,
+    updateCodeOuput,
+    codingTest,
+    currentChallengeIndex,
+  } = useContext(CodingTestContext);
 
   const handleSubmitCode = async (e) => {
     e.preventDefault();
+
     // encode to base64 string
     const base64Code = btoa(code);
-    const base64Stdin = btoa(codingTest.challenges[0].testInput1);
-    const output = await executeCode({
-      language: language.toLowerCase(),
-      code: base64Code,
-      stdin: base64Stdin,
-    });
+    codingTest.challenges[currentChallengeIndex].testCases.map(async (test) => {
+      const base64Stdin = btoa(test.input);
+      const output = await executeCode({
+        language: language.toLowerCase(),
+        code: base64Code,
+        stdin: base64Stdin,
+      });
 
-    updateCodeOuput(output.data);
+      updateCodeOuput(output.data);
+    });
   };
 
   return (
