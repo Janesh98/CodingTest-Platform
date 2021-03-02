@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { getCodingTest } from '../../endpoints';
 import { CodingTestContext } from './context/CodingTestState';
