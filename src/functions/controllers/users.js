@@ -11,6 +11,7 @@ const {
   validateRegistrationData,
   validateLoginData,
 } = require('../utilities/validation');
+const ParticipantDB = require('../models/ParticipantsModel');
 
 exports.register = (req, res) => {
   const newUser = {
@@ -279,14 +280,14 @@ exports.deleteTest = (req, res) => {
     if (err) throw err;
     console.log('Many document(s) deleted');
   });
- 
+
   NewUserDB.updateOne(
-    {googleId: test.googleId},
-    { $pull: { codingTests: test._id}},
+    { googleId: test.googleId },
+    { $pull: { codingTests: test._id } },
     function (err, res) {
       if (err) throw err;
     }
-  )
+  );
   return res.status(200).json({
     data: null,
   });
@@ -319,6 +320,22 @@ exports.getCodingTest = async (req, res) => {
 
   try {
     const codingTestId = req.params.codingTestId;
+    const participantId = req.params.participantId;
+
+    // check if paricipant exists and has permission to access coding test.
+    await ParticipantDB.exists(
+      {
+        _id: participantId,
+        TestId: codingTestId,
+      },
+      async (error, result) => {
+        if (!result) {
+          return await res.status(400).json({
+            data: 'Bad request, the url provided is not valid',
+          });
+        }
+      }
+    );
 
     const codingTestIds = await CodingTestDB.findOne(
       { _id: codingTestId },
@@ -390,12 +407,12 @@ exports.deleteChallenge = (req, res) => {
     console.log('1 document deleted');
   });
   CodingTestDB.updateOne(
-    {googleId: challenge.googleId, testName: challenge.testName},
-    { $pull: { challenges: challenge._id}},
+    { googleId: challenge.googleId, testName: challenge.testName },
+    { $pull: { challenges: challenge._id } },
     function (err, res) {
       if (err) throw err;
     }
-  )
+  );
   return res.status(200).json({
     data: null,
   });
@@ -418,12 +435,12 @@ exports.deleteQuestions = (req, res) => {
     console.log('1 document deleted');
   });
   CodingTestDB.updateOne(
-    {googleId: questions.googleId, testName: questions.testName},
-    { $pull: { questions: questions._id}},
+    { googleId: questions.googleId, testName: questions.testName },
+    { $pull: { questions: questions._id } },
     function (err, res) {
       if (err) throw err;
     }
-  )
+  );
   return res.status(200).json({
     data: null,
   });
@@ -454,34 +471,36 @@ exports.updateChallenge = (req, res) => {
     testOutput5: req.body.data.testOutput5,
   };
 
-    CodingChallengeDB.updateOne(
-      { _id: challenge._id},
-      { title: challenge.title,
-        problemDescription: challenge.problemDescription,
-        inputFormat: challenge.inputFormat,
-        returnFormat: challenge.returnFormat,
-        constraints: challenge.constraints,
-        sampleInput: challenge.sampleInput,
-        sampleOutput: challenge.sampleOutput,
-        exampleExplanation: challenge.exampleExplanation,
-        testInput1: challenge.testInput1,
-        testOutput1: challenge.testOutput1,
-        testInput2: challenge.testInput2,
-        testOutput2: challenge.testOutput2,
-        testInput3: challenge.testInput3,
-        testOutput3: challenge.testOutput3,
-        testInput4: challenge.testInput4,
-        testOutput4: challenge.testOutput4,
-        testInput5: challenge.testInput5,
-        testOutput5: challenge.testOutput5, },
-      function (err, res) {
-        if (err) throw err;
-      }
-    );
-    return res.status(200).json({
-      status: 'success',
-      data: null,
-    });
+  CodingChallengeDB.updateOne(
+    { _id: challenge._id },
+    {
+      title: challenge.title,
+      problemDescription: challenge.problemDescription,
+      inputFormat: challenge.inputFormat,
+      returnFormat: challenge.returnFormat,
+      constraints: challenge.constraints,
+      sampleInput: challenge.sampleInput,
+      sampleOutput: challenge.sampleOutput,
+      exampleExplanation: challenge.exampleExplanation,
+      testInput1: challenge.testInput1,
+      testOutput1: challenge.testOutput1,
+      testInput2: challenge.testInput2,
+      testOutput2: challenge.testOutput2,
+      testInput3: challenge.testInput3,
+      testOutput3: challenge.testOutput3,
+      testInput4: challenge.testInput4,
+      testOutput4: challenge.testOutput4,
+      testInput5: challenge.testInput5,
+      testOutput5: challenge.testOutput5,
+    },
+    function (err, res) {
+      if (err) throw err;
+    }
+  );
+  return res.status(200).json({
+    status: 'success',
+    data: null,
+  });
 };
 
 exports.updateQuestions = (req, res) => {
@@ -492,17 +511,19 @@ exports.updateQuestions = (req, res) => {
     question3: req.body.data.question3,
   };
 
-    QuestionsDB.updateOne(
-      { _id: Qs._id},
-      { question1: Qs.question1,
-        question2: Qs.question2,
-        question3: Qs.question3},
-      function (err, res) {
-        if (err) throw err;
-      }
-    );
-    return res.status(200).json({
-      status: 'success',
-      data: null,
-    });
+  QuestionsDB.updateOne(
+    { _id: Qs._id },
+    {
+      question1: Qs.question1,
+      question2: Qs.question2,
+      question3: Qs.question3,
+    },
+    function (err, res) {
+      if (err) throw err;
+    }
+  );
+  return res.status(200).json({
+    status: 'success',
+    data: null,
+  });
 };

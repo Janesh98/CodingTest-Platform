@@ -37,7 +37,10 @@ function App() {
           <PrivateRoute path="/editquestions" component={EditQuestions} />
           <PrivateRoute path="/results" component={Results} />
           <PrivateRoute path="/addparticipants" component={AddParticipants} />
-          <Route path="/codingtest/:id" component={CodingTest} />
+          <Route
+            path="/codingtest/:codingTestId/:participantId"
+            component={CodingTest}
+          />
         </Switch>
       </AuthProvider>
     </Router>

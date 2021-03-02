@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Problem = () => {
-  const { id } = useParams();
+  const { codingTestId, participantId } = useParams();
   const { updateCodingTest, codingTest } = useContext(CodingTestContext);
   const classes = useStyles();
   const [currentTab, setCurrentTab] = useState(0);
@@ -66,7 +66,7 @@ const Problem = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await getCodingTest(id);
+        const res = await getCodingTest(codingTestId, participantId);
         updateCodingTest(res.data);
       } catch (err) {
         console.error(err);

@@ -15,8 +15,12 @@ export const addChallenge = firebase.functions().httpsCallable('api/challenge');
 export const addQs = firebase.functions().httpsCallable('api/questions');
 export const getTests = firebase.functions().httpsCallable('api/tests');
 export const deleteTest = firebase.functions().httpsCallable('api/delete');
-export const updateChallenge = firebase.functions().httpsCallable('api/updateChallenge');
-export const updateQuestions = firebase.functions().httpsCallable('api/updateQuestions');
+export const updateChallenge = firebase
+  .functions()
+  .httpsCallable('api/updateChallenge');
+export const updateQuestions = firebase
+  .functions()
+  .httpsCallable('api/updateQuestions');
 export const sendEmail = firebase.functions().httpsCallable('api/email');
 
 export const getChallenges = firebase
@@ -31,7 +35,9 @@ export const deleteChallenge = firebase
 export const deleteQuestions = firebase
   .functions()
   .httpsCallable('api/deleteQuestions');
-export const getCodingTest = async (id) => {
-  const data = await firebase.functions().httpsCallable(`api/codingTest/${id}`);
+export const getCodingTest = async (codingTestId, participantId) => {
+  const data = await firebase
+    .functions()
+    .httpsCallable(`api/codingTest/${codingTestId}/${participantId}`);
   return await data();
 };
