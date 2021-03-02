@@ -159,6 +159,34 @@ exports.newChallenge = (req, res) => {
   const testInput5 = challenge.testInput5;
   const testOutput5 = challenge.testOutput5;
 
+
+  const unfilteredTestCases = [{
+    input: testInput1,
+    output: testOutput1
+  },
+  {
+    input: testInput2,
+    output: testOutput2
+  },
+  {
+    input: testInput3,
+    output: testOutput3
+  },
+  {
+    input: testInput4,
+    output: testOutput4
+  },
+  {
+    input: testInput5,
+    output: testOutput5
+  }
+  ];
+
+  var testCases = unfilteredTestCases.filter(function (el) {
+    return el.input != null || el.output != null;
+  });
+
+
   // Add CHallenge to MongoDB
   const newChallengeEntry = new CodingChallengeDB({
     googleId,
@@ -181,6 +209,7 @@ exports.newChallenge = (req, res) => {
     testOutput4,
     testInput5,
     testOutput5,
+    testCases
   });
 
   newChallengeEntry.save(function (err, room) {
@@ -471,6 +500,32 @@ exports.updateChallenge = (req, res) => {
     testOutput5: req.body.data.testOutput5,
   };
 
+  const unfilteredTestCases = [{
+    input: challenge.testInput1,
+    output: challenge.testOutput1
+  },
+  {
+    input: challenge.testInput2,
+    output: challenge.testOutput2
+  },
+  {
+    input: challenge.testInput3,
+    output: challenge.testOutput3
+  },
+  {
+    input: challenge.testInput4,
+    output: challenge.testOutput4
+  },
+  {
+    input: challenge.testInput5,
+    output: challenge.testOutput5
+  }
+  ];
+
+  var testCases = unfilteredTestCases.filter(function (el) {
+    return el.input != null || el.output != null;
+  });
+
   CodingChallengeDB.updateOne(
     { _id: challenge._id },
     {
@@ -492,6 +547,7 @@ exports.updateChallenge = (req, res) => {
       testOutput4: challenge.testOutput4,
       testInput5: challenge.testInput5,
       testOutput5: challenge.testOutput5,
+      testCases: testCases,
     },
     function (err, res) {
       if (err) throw err;
