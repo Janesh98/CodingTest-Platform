@@ -61,11 +61,13 @@ const Problem = () => {
     currentChallengeIndex,
     updateCurrentChallengeIndex,
     updateCodeOutput,
+    updateTestResults,
   } = useContext(CodingTestContext);
   const classes = useStyles();
 
   const handleTabChange = (event, newTab) => {
     updateCodeOutput([]);
+    updateTestResults([]);
     updateCurrentChallengeIndex(newTab);
   };
 

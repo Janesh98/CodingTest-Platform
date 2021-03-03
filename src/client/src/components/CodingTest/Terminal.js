@@ -6,6 +6,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import CancelIcon from '@material-ui/icons/Cancel';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -52,12 +54,23 @@ const useStyles = makeStyles((theme) => ({
   tabPanels: {
     overflow: 'auto',
   },
+  correctIcon: {
+    color: theme.palette.success.main,
+    fontSize: 'medium',
+  },
+  incorrectIcon: {
+    color: theme.palette.error.main,
+    fontSize: 'medium',
+  },
 }));
 
 const Terminal = () => {
-  const { codeOutput, codingTest, currentChallengeIndex } = useContext(
-    CodingTestContext
-  );
+  const {
+    codeOutput,
+    codingTest,
+    currentChallengeIndex,
+    testResults,
+  } = useContext(CodingTestContext);
   const classes = useStyles();
   const [value, setValue] = useState(0);
 
@@ -90,7 +103,20 @@ const Terminal = () => {
     const tabList = [];
     codingTest.challenges[currentChallengeIndex].testCases.map((test, i) => {
       return tabList.push(
-        <Tab key={i} label={'Test ' + (i + 1)} {...a11yProps(i)} />
+        <Tab
+          icon={
+            codeOutput.length > 0 && testResults[i] === true ? (
+              <CheckCircleIcon className={classes.correctIcon} />
+            ) : testResults[i] === undefined ? (
+              ''
+            ) : (
+              <CancelIcon className={classes.incorrectIcon} />
+            )
+          }
+          key={i}
+          label={'Test ' + (i + 1)}
+          {...a11yProps(i)}
+        />
       );
     });
 

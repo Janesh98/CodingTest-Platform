@@ -31,25 +31,40 @@ const CodeEditor = () => {
     updateCodeOutput,
     codingTest,
     currentChallengeIndex,
+    updateTestResults,
   } = useContext(CodingTestContext);
 
   const handleSubmitCode = async (e) => {
     e.preventDefault();
 
     const codeOutputList = [];
+    const testResults = [];
     // encode to base64 string
     const base64Code = btoa(code);
-    codingTest.challenges[currentChallengeIndex].testCases.map(async (test) => {
-      const base64Stdin = btoa(test.input);
-      const output = await executeCode({
-        language: language.toLowerCase(),
-        code: base64Code,
-        stdin: base64Stdin,
-      });
+    codingTest.challenges[currentChallengeIndex].testCases.map(
+      async (test, i) => {
+        const base64Stdin = btoa(test.input);
+        const output = await executeCode({
+          language: language.toLowerCase(),
+          code: base64Code,
+          stdin: base64Stdin,
+        });
 
-      codeOutputList.push(output.data);
-    });
+        codeOutputList[i] = output.data;
+
+        var testResult = false;
+        if (
+          output.data.stdout !== null &&
+          atob(output.data.stdout).trim() === test.output
+        ) {
+          testResult = true;
+        }
+
+        testResults[i] = testResult;
+      }
+    );
     updateCodeOutput(codeOutputList);
+    updateTestResults(testResults);
   };
 
   return (

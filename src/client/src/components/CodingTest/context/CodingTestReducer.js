@@ -5,6 +5,12 @@ export const CodingTestReducer = (state, action) => {
         ...state,
         codeOutput: action.payload,
       };
+
+    case 'UPDATE_TEST_RESULTS':
+      return {
+        ...state,
+        testResults: action.payload,
+      };
     case 'UPDATE_LANGUAGE':
       return {
         ...state,

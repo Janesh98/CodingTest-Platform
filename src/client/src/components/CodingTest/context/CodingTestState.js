@@ -7,6 +7,7 @@ const initialState = {
   language: 'Python',
   codingTest: null,
   currentChallengeIndex: 0,
+  testResults: [],
 };
 
 // Create context
@@ -21,6 +22,13 @@ export const CodingTestProvider = ({ children }) => {
     dispatch({
       type: 'UPDATE_CODE_OUTPUT',
       payload: output,
+    });
+  };
+
+  const updateTestResults = (testResultList) => {
+    dispatch({
+      type: 'UPDATE_TEST_RESULTS',
+      payload: testResultList,
     });
   };
 
@@ -52,10 +60,12 @@ export const CodingTestProvider = ({ children }) => {
         language: state.language,
         codingTest: state.codingTest,
         currentChallengeIndex: state.currentChallengeIndex,
+        testResults: state.testResults,
         updateCodeOutput,
         updateLanguage,
         updateCodingTest,
         updateCurrentChallengeIndex,
+        updateTestResults,
       }}
     >
       {children}

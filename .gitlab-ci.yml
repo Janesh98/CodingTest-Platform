@@ -56,6 +56,7 @@ deploy-backend:
     - npm i --production # don't install dev dependencies
     - firebase deploy --only functions --token $FIREBASE_TOKEN
   cache: {} # Disable globally defined cache
+  dependencies: [] # Don't download artifacts
   only:
     refs:
       - master
@@ -72,6 +73,7 @@ deploy-frontend:
     - yarn build
     - firebase deploy --only hosting --token $FIREBASE_TOKEN
   cache: {} # Disable globally defined cache
+  dependencies: [] # Don't download artifacts
   only:
     refs:
       - master
