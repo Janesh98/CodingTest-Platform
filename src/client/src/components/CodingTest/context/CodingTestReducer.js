@@ -3,7 +3,7 @@ export const CodingTestReducer = (state, action) => {
     case 'UPDATE_CODE_OUTPUT':
       return {
         ...state,
-        codeOutput: [...state.codeOutput, action.payload],
+        codeOutput: action.payload,
       };
     case 'UPDATE_LANGUAGE':
       return {

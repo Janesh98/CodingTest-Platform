@@ -28,7 +28,7 @@ const CodeEditor = () => {
   const classes = useStyles();
   const {
     language,
-    updateCodeOuput,
+    updateCodeOutput,
     codingTest,
     currentChallengeIndex,
   } = useContext(CodingTestContext);
@@ -36,6 +36,7 @@ const CodeEditor = () => {
   const handleSubmitCode = async (e) => {
     e.preventDefault();
 
+    const codeOutputList = [];
     // encode to base64 string
     const base64Code = btoa(code);
     codingTest.challenges[currentChallengeIndex].testCases.map(async (test) => {
@@ -46,8 +47,9 @@ const CodeEditor = () => {
         stdin: base64Stdin,
       });
 
-      updateCodeOuput(output.data);
+      codeOutputList.push(output.data);
     });
+    updateCodeOutput(codeOutputList);
   };
 
   return (

@@ -17,7 +17,7 @@ export const CodingTestProvider = ({ children }) => {
   const [state, dispatch] = useReducer(CodingTestReducer, initialState);
 
   // Actions
-  const updateCodeOuput = (output) => {
+  const updateCodeOutput = (output) => {
     dispatch({
       type: 'UPDATE_CODE_OUTPUT',
       payload: output,
@@ -52,7 +52,7 @@ export const CodingTestProvider = ({ children }) => {
         language: state.language,
         codingTest: state.codingTest,
         currentChallengeIndex: state.currentChallengeIndex,
-        updateCodeOuput,
+        updateCodeOutput,
         updateLanguage,
         updateCodingTest,
         updateCurrentChallengeIndex,
