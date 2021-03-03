@@ -73,7 +73,7 @@ export default function Card(){
     </DialogTitle>
     <DialogContent dividers>
     <form>
-        <Typography component="h10">
+        <Typography component="h1">
           Challenge Title 
         </Typography>
         <Box color="black" bgcolor="lightgray" p={1}>
@@ -81,7 +81,7 @@ export default function Card(){
           Arrays: Left Rotation
           </Typography>
         </Box>
-          <Typography component="h10">
+          <Typography component="h1">
             Problem Description
           </Typography> 
           <Box color="black" bgcolor="lightgray" p={1}>
@@ -93,7 +93,7 @@ export default function Card(){
             Complete the function rotLeft in the editor below.
             </Typography>
           </Box>
-          <Typography component="h10">
+          <Typography component="h1">
             Input Format
           </Typography> 
           <Box color="black" bgcolor="lightgray" p={1}>
@@ -102,7 +102,7 @@ export default function Card(){
               The second line contains n space-separated integers, each an a[i].
             </Typography> 
           </Box>
-          <Typography component="h10">
+          <Typography component="h1">
             Return Format
           </Typography> 
           <Box color="black" bgcolor="lightgray" p={1}>
@@ -110,7 +110,7 @@ export default function Card(){
               int a'[n]: the rotated array
             </Typography>
           </Box>
-          <Typography component="h10">
+          <Typography component="h1">
             Constraints
           </Typography> 
           <Box color="black" bgcolor="lightgray" p={1}>
@@ -124,7 +124,7 @@ export default function Card(){
               1 ≤ a[i] ≤ 10^6
             </Typography>
           </Box>
-          <Typography component="h10">
+          <Typography component="h1">
             Sample Input 
           </Typography> 
           <Box color="black" bgcolor="lightgray" p={1}>
@@ -135,7 +135,7 @@ export default function Card(){
               1 2 3 4 5
             </Typography>
           </Box>
-          <Typography component="h10">
+          <Typography component="h1">
             Sample Output 
           </Typography> 
           <Box color="black" bgcolor="lightgray" p={1}>
@@ -143,7 +143,7 @@ export default function Card(){
               5 1 2 3 4
             </Typography>
           </Box>
-          <Typography component="h10">
+          <Typography component="h1">
             Example with Explanation  
           </Typography> 
           <Box color="black" bgcolor="lightgray" p={1}>
