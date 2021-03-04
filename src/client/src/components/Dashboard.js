@@ -53,12 +53,13 @@ export default function Dashboard() {
                 Dashboard
               </Typography>
               <form>
-                <Card raised = "true" id="setup-test-card">
+                <Card raised = {true} id="setup-test-card">
                   <CardActionArea>
                   <CardContent>
                     <Typography variant="h6">Setup a New Coding Test</Typography>
                     <Typography variant="body2">Create a new coding test with challenges and the option of adding video interview questions</Typography>
                   </CardContent>
+                  </CardActionArea>
                   <CardActions>
                     <Button
                       id="setup-test"
@@ -72,14 +73,14 @@ export default function Dashboard() {
                       Setup
                     </Button>
                   </CardActions>
-                  </CardActionArea>
                 </Card>
-                <Card raised = "true" id="edit-test-card">
+                <Card raised = {true} id="edit-test-card">
                   <CardActionArea>
                   <CardContent>
                     <Typography variant="h6">Edit Existing Coding Test</Typography>
                     <Typography variant="body2">Edit or add new challenges and questions to an existing coding test and send email invites to participants</Typography>
                   </CardContent>
+                  </CardActionArea>
                   <CardActions>
                     <Button
                       id="edit-test"
@@ -93,14 +94,14 @@ export default function Dashboard() {
                       Edit
                     </Button>
                   </CardActions>
-                  </CardActionArea>
                 </Card>
-                <Card raised = "true" id="history-results-card">
+                <Card raised = {true} id="history-results-card">
                   <CardActionArea>
                   <CardContent>
                     <Typography variant="h6">View Previous Tests History/Results</Typography>
                     <Typography variant="body2">See the results from coding tests taken by participants including analytics</Typography>
                   </CardContent>
+                  </CardActionArea>
                   <CardActions>
                     <Button
                      id="history-results"
@@ -114,7 +115,6 @@ export default function Dashboard() {
                      Results
                    </Button>
                   </CardActions>
-                  </CardActionArea>
                 </Card>
               </form>
             </div>
