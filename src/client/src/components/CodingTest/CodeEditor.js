@@ -84,6 +84,7 @@ const CodeEditor = () => {
           language={language.toLowerCase()}
           theme="vs-dark"
           onChange={(value, event) => updateCode(value)}
+          value={code}
         />
       </div>
       <Paper square className={classes.run}>
