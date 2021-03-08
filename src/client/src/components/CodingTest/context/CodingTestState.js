@@ -8,6 +8,7 @@ const initialState = {
   codingTest: null,
   currentChallengeIndex: 0,
   testResults: [],
+  code: '',
 };
 
 // Create context
@@ -39,6 +40,13 @@ export const CodingTestProvider = ({ children }) => {
     });
   };
 
+  const updateCode = (code) => {
+    dispatch({
+      type: 'UPDATE_CODE',
+      payload: code,
+    });
+  };
+
   const updateCodingTest = (codingTest) => {
     dispatch({
       type: 'UPDATE_CODING_TEST',
@@ -61,11 +69,13 @@ export const CodingTestProvider = ({ children }) => {
         codingTest: state.codingTest,
         currentChallengeIndex: state.currentChallengeIndex,
         testResults: state.testResults,
+        code: state.code,
         updateCodeOutput,
         updateLanguage,
         updateCodingTest,
         updateCurrentChallengeIndex,
         updateTestResults,
+        updateCode,
       }}
     >
       {children}

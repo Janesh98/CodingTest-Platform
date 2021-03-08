@@ -1,5 +1,10 @@
 export const CodingTestReducer = (state, action) => {
   switch (action.type) {
+    case 'UPDATE_CODE':
+      return {
+        ...state,
+        code: action.payload,
+      };
     case 'UPDATE_CODE_OUTPUT':
       return {
         ...state,

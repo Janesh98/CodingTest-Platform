@@ -62,12 +62,37 @@ const Problem = () => {
     updateCurrentChallengeIndex,
     updateCodeOutput,
     updateTestResults,
+    testResults,
+    codeOutput,
+    updateCode,
   } = useContext(CodingTestContext);
   const classes = useStyles();
 
+  const saveProgress = () => {
+    const ct = codingTest.challenges[currentChallengeIndex];
+    ct.testResults = testResults;
+    ct.codeOutput = codeOutput;
+  };
+
+  // if qs already attempted, updates to previous save state
+  // updates code, test results & outputs
+  const fetchProgress = (index) => {
+    const ct = codingTest.challenges[index];
+
+    if (ct.testResults && ct.testResults !== [])
+      updateTestResults(ct.testResults);
+    else updateTestResults([]);
+
+    if (ct.codeOutput && ct.codeOutput !== []) updateCodeOutput(ct.codeOutput);
+    else updateCodeOutput([]);
+
+    if (ct.code && ct.code !== '') updateCode(ct.code);
+    else updateCode('');
+  };
+
   const handleTabChange = (event, newTab) => {
-    updateCodeOutput([]);
-    updateTestResults([]);
+    saveProgress();
+    fetchProgress(newTab);
     updateCurrentChallengeIndex(newTab);
   };
 
@@ -88,10 +113,19 @@ const Problem = () => {
   const parseProblemDescription = (index) => {
     const ct = codingTest.challenges[index];
     let s = '';
-    for (const [key, value] of Object.entries(ct)) {
-      // only print non test entries as tests are displayed in terminal
-      if (!key.includes('test')) s += `${key}\n${value}\n\n`;
-    }
+    // for (const [key, value] of Object.entries(ct)) {
+    //   // only print non test entries as tests are displayed in terminal
+    //   if (!key.includes('test')) s += `${key}\n${value}\n\n`;
+    // }
+    s +=
+      `Title\n${ct.title}\n\n` +
+      `Problem Description\n${ct.problemDescription}\n\n` +
+      `Input Format\n${ct.inputFormat}\n\n` +
+      `Return Format\n${ct.returnFormat}\n\n` +
+      `Constraints\n${ct.constraints}\n\n` +
+      `Sample Input\n${ct.sampleInput}\n\n` +
+      `Sample Output\n${ct.sampleOutput}\n\n` +
+      `Example Explanation\n${ct.exampleExplanation}\n\n`;
 
     return s;
   };

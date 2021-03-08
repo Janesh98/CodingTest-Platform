@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import Editor from '@monaco-editor/react';
 import {
   makeStyles,
@@ -24,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CodeEditor = () => {
-  const [code, setCode] = useState('');
   const classes = useStyles();
   const {
     language,
@@ -32,10 +31,18 @@ const CodeEditor = () => {
     codingTest,
     currentChallengeIndex,
     updateTestResults,
+    code,
+    updateCode,
   } = useContext(CodingTestContext);
+
+  // saves code to global memory
+  const saveCodeProgress = () => {
+    codingTest.challenges[currentChallengeIndex].code = code;
+  };
 
   const handleSubmitCode = async (e) => {
     e.preventDefault();
+    saveCodeProgress();
 
     const codeOutputList = [];
     const testResults = [];
@@ -76,7 +83,7 @@ const CodeEditor = () => {
           defaultLanguage={language.toLowerCase()}
           language={language.toLowerCase()}
           theme="vs-dark"
-          onChange={(value, event) => setCode(value)}
+          onChange={(value, event) => updateCode(value)}
         />
       </div>
       <Paper square className={classes.run}>
