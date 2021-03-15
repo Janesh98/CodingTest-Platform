@@ -9,6 +9,7 @@ const initialState = {
   currentChallengeIndex: 0,
   testResults: [],
   code: '',
+  currentQuestionIndex: 1,
 };
 
 // Create context
@@ -61,6 +62,13 @@ export const CodingTestProvider = ({ children }) => {
     });
   };
 
+  const updateCurrentQuestionIndex = (currentQuestionIndex) => {
+    dispatch({
+      type: 'UPDATE_CURRENT_QUESTION_INDEX',
+      payload: currentQuestionIndex,
+    });
+  };
+
   return (
     <CodingTestContext.Provider
       value={{
@@ -68,12 +76,14 @@ export const CodingTestProvider = ({ children }) => {
         language: state.language,
         codingTest: state.codingTest,
         currentChallengeIndex: state.currentChallengeIndex,
+        currentQuestionIndex: state.currentQuestionIndex,
         testResults: state.testResults,
         code: state.code,
         updateCodeOutput,
         updateLanguage,
         updateCodingTest,
         updateCurrentChallengeIndex,
+        updateCurrentQuestionIndex,
         updateTestResults,
         updateCode,
       }}

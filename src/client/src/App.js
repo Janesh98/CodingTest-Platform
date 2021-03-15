@@ -17,6 +17,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
 import CodingTest from './components/CodingTest/CodingTest';
+import VideoRecord from './components/CodingTest/VideoInterview/VideoRecord';
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
             path="/codingtest/:codingTestId/:participantId"
             component={CodingTest}
           />
+          <Route path="/videointerview/:codingTestId/:participantId" component={VideoRecord} />
         </Switch>
       </AuthProvider>
     </Router>

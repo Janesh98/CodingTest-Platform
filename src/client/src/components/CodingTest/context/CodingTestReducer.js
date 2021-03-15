@@ -32,6 +32,12 @@ export const CodingTestReducer = (state, action) => {
         ...state,
         currentChallengeIndex: action.payload,
       };
+
+    case 'UPDATE_CURRENT_QUESTION_INDEX':
+      return {
+        ...state,
+        currentQuestionIndex: action.payload,
+      };
     default:
       return state;
   }
