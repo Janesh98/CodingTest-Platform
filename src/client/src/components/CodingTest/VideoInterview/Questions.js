@@ -20,18 +20,16 @@ const useStyles = makeStyles((theme) => ({
 
 const Questions = () => {
   const { codingTestId, participantId } = useParams();
-  const {
-    updateCodingTest,
-    codingTest,
-    currentQuestionIndex,
-  } = useContext(CodingTestContext);
+  const { updateCodingTest, codingTest, currentQuestionIndex } = useContext(
+    CodingTestContext
+  );
   const classes = useStyles();
 
-//  const saveProgress = () => {
-//    const ct = codingTest.questions[0][currentQuestionIndex];
-//   // ct.questionAnswers = questionAnswers;
-//  };
-  
+  //  const saveProgress = () => {
+  //    const ct = codingTest.questions[0][currentQuestionIndex];
+  //   // ct.questionAnswers = questionAnswers;
+  //  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -46,19 +44,20 @@ const Questions = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const fetchProgress = (index) => {
-    const ct = codingTest.challenges[index];
+  // const fetchProgress = (index) => {
+  //   const ct = codingTest.challenges[index];
 
-  };
+  // };
 
   return (
     <>
       <div className={classes.root}>
-        <AppBar position="static" color="transparent">
-        </AppBar>
+        <AppBar position="static" color="transparent"></AppBar>
         <Typography>
-         {codingTest !== null ? codingTest.questions[0]['question' + currentQuestionIndex] : ''}
-         </Typography>
+          {codingTest !== null
+            ? codingTest.questions[0]['question' + currentQuestionIndex]
+            : ''}
+        </Typography>
       </div>
     </>
   );

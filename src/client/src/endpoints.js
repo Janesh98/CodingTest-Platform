@@ -41,3 +41,6 @@ export const getCodingTest = async (codingTestId, participantId) => {
     .httpsCallable(`api/codingTest/${codingTestId}/${participantId}`);
   return await data();
 };
+export const submitCodingTest = firebase
+  .functions()
+  .httpsCallable('api/codingTest/submit');

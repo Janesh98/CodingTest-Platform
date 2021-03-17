@@ -159,33 +159,32 @@ exports.newChallenge = (req, res) => {
   const testInput5 = challenge.testInput5;
   const testOutput5 = challenge.testOutput5;
 
-
-  const unfilteredTestCases = [{
-    input: testInput1,
-    output: testOutput1
-  },
-  {
-    input: testInput2,
-    output: testOutput2
-  },
-  {
-    input: testInput3,
-    output: testOutput3
-  },
-  {
-    input: testInput4,
-    output: testOutput4
-  },
-  {
-    input: testInput5,
-    output: testOutput5
-  }
+  const unfilteredTestCases = [
+    {
+      input: testInput1,
+      output: testOutput1,
+    },
+    {
+      input: testInput2,
+      output: testOutput2,
+    },
+    {
+      input: testInput3,
+      output: testOutput3,
+    },
+    {
+      input: testInput4,
+      output: testOutput4,
+    },
+    {
+      input: testInput5,
+      output: testOutput5,
+    },
   ];
 
   var testCases = unfilteredTestCases.filter(function (el) {
     return el.input != null || el.output != null;
   });
-
 
   // Add CHallenge to MongoDB
   const newChallengeEntry = new CodingChallengeDB({
@@ -209,7 +208,7 @@ exports.newChallenge = (req, res) => {
     testOutput4,
     testInput5,
     testOutput5,
-    testCases
+    testCases,
   });
 
   newChallengeEntry.save(function (err, room) {
@@ -400,6 +399,23 @@ exports.getCodingTest = async (req, res) => {
   }
 };
 
+exports.submitCodingTest = async (req, res) => {
+  console.log('code submission');
+  try {
+    const id = req.body.data.participantId;
+    const codingTestResults = req.body.data.codingTestResults;
+
+    const filter = { _id: id };
+    const update = { codingTestResults };
+    await ParticipantDB.findOneAndUpdate(filter, update);
+    return res.status(200).json({
+      data: null,
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 exports.getQuestions = (req, res) => {
   const user = {
     googleId: req.body.data.googleId,
@@ -500,26 +516,27 @@ exports.updateChallenge = (req, res) => {
     testOutput5: req.body.data.testOutput5,
   };
 
-  const unfilteredTestCases = [{
-    input: challenge.testInput1,
-    output: challenge.testOutput1
-  },
-  {
-    input: challenge.testInput2,
-    output: challenge.testOutput2
-  },
-  {
-    input: challenge.testInput3,
-    output: challenge.testOutput3
-  },
-  {
-    input: challenge.testInput4,
-    output: challenge.testOutput4
-  },
-  {
-    input: challenge.testInput5,
-    output: challenge.testOutput5
-  }
+  const unfilteredTestCases = [
+    {
+      input: challenge.testInput1,
+      output: challenge.testOutput1,
+    },
+    {
+      input: challenge.testInput2,
+      output: challenge.testOutput2,
+    },
+    {
+      input: challenge.testInput3,
+      output: challenge.testOutput3,
+    },
+    {
+      input: challenge.testInput4,
+      output: challenge.testOutput4,
+    },
+    {
+      input: challenge.testInput5,
+      output: challenge.testOutput5,
+    },
   ];
 
   var testCases = unfilteredTestCases.filter(function (el) {

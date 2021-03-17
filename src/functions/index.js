@@ -34,6 +34,7 @@ const {
   deleteQuestions,
   updateChallenge,
   updateQuestions,
+  submitCodingTest,
 } = require('./controllers/users');
 const { executeCode } = require('./controllers/code');
 const { sendEmail } = require('./controllers/email');
@@ -62,6 +63,7 @@ app.post('/tests', getTests);
 app.post('/delete', deleteTest);
 app.post('/challenges', getChallenges);
 app.post('/codingtest/:codingTestId/:participantId', getCodingTest);
+app.post('/codingtest/submit', submitCodingTest);
 app.post('/getQuestions', getQuestions);
 app.post('/deleteChallenge', deleteChallenge);
 app.post('/deleteQuestions', deleteQuestions);
