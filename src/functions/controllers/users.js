@@ -273,9 +273,27 @@ exports.getTests = (req, res) => {
 
   CodingTestDB.find(
     { googleId: user.googleId },
-    { __v: 0, challenges: 0, googleId: 0, questions: 0 },
+    { __v: 0, googleId: 0, questions: 0 },
     function (err, result) {
       if (err) throw err;
+      return res.status(200).json({
+        data: result,
+      });
+    }
+  );
+};
+
+exports.getParticipants = (req, res) => {
+  const test = {
+    TestId: req.body.data.TestId,
+  };
+
+  ParticipantDB.find(
+    { TestId: test.TestId },
+    { __v: 0 },
+    function (err, result) {
+      if (err) throw err;
+      console.log(result);
       return res.status(200).json({
         data: result,
       });

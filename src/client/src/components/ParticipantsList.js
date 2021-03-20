@@ -14,26 +14,26 @@ import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
-import { useAuth } from '../contexts/AuthContext';
-import { getTests } from '../endpoints';
+import { getParticipants } from '../endpoints';
 
-const Results = () => {
-  const { currentUser } = useAuth();
-  const [tableData, setTableData] = useState([]);
-  const history = useHistory();
+const ParticipantsList = () => {
+    const [tableData, setTableData] = useState([]);
+    const history = useHistory();
+    const id = history.location.state._id;
 
-  useEffect(() => {
-  const rows = async () => {
-    var res = await getTests({
-      googleId: currentUser.uid,
+
+    useEffect(() => {
+     const rows = async () => {
+    var res = await getParticipants({
+      TestId: id,
     });
-    await setTableData(res.data.map(item => ({_id: item._id, testName: item.testName, createdAt: item.createdAt, participants: item.participants, challenges: item.challenges.length})));
+    await setTableData(res.data.map(item => ({email: item.email})));
   };
 
-  rows();
-}, [currentUser.uid]);
+    rows();
+    }, [id]);
 
-const useStyles = makeStyles({
+    const useStyles = makeStyles({
     table: {
       minWidth: 300,
     },
@@ -41,15 +41,7 @@ const useStyles = makeStyles({
 
   const classes = useStyles();
 
-  const handleOnClickView = async (e, _id, participants) => {
-    history.push({
-      pathname: '/participantsresults',
-      state:{ 
-              _id: _id
-         }});
-  };
-
-  return (
+    return(
     <Container>
     <NavBar/>
     <div id="results-container">
@@ -57,37 +49,30 @@ const useStyles = makeStyles({
           <Container component="main" maxWidth="md">
             <div>
               <Typography component="h1" variant="h5">
-              Previous Coding Tests Results
+              Coding Test Participants
               </Typography>
               </div>
                 <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Test Name</TableCell>
-            <TableCell>Date Created</TableCell>
-            <TableCell>No. of Participants</TableCell>
-            <TableCell>No. of Challenges</TableCell>
+            <TableCell>Participant</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {tableData.map((row) => (
-            <TableRow key={row.testName}>
+            <TableRow key={row.email}>
               <TableCell component="th" scope="row">
-                {row.testName}
+                {row.email}
               </TableCell>
-              <TableCell>{row.createdAt}</TableCell>
-               <TableCell>{row.participants.length}</TableCell>
-               <TableCell>{row.challenges}</TableCell>
               <TableCell>
               <Button
                   id = "addParticipants"
                   variant="contained"
                   color="secondary"
                   size="small"
-                  onClick={(e) => handleOnClickView(row.testName, row._id, row.participants)}
                   >
-                    View
+                    View Results 
                   </Button>
               </TableCell>
               
@@ -101,7 +86,7 @@ const useStyles = makeStyles({
       </div>
   
     </Container>
-  );
+    );
 };
 
-export default Results;
+export default ParticipantsList;
