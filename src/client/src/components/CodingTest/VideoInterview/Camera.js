@@ -3,6 +3,9 @@ import { CodingTestContext } from '../context/CodingTestState';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Button } from '@material-ui/core';
 import Webcam from "react-webcam";
+import { storage } from "../../../firebase"
+import { useParams } from 'react-router-dom';
+import { CountdownCircleTimer } from 'react-countdown-circle-timer'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,45 +23,37 @@ const Camera = () => {
     codingTest,
     currentQuestionIndex,
     updateCurrentQuestionIndex,
-  } = useContext(CodingTestContext);
+      } = useContext(CodingTestContext);
   const classes = useStyles();
   const webcamRef = useRef(null);
   const mediaRecorderRef = useRef(null);
   const [capturing, setCapturing] = useState(false);
   const [responded, setResponded] = useState(false);
- // const [recordedChunks, setRecordedChunks] = useState([]);
-  var recording = false;
+  const [recordedChunks, setRecordedChunks] = useState([]);
   const [finished, setFinished] = useState(false);
+  const { codingTestId, participantId } = useParams();
 
   const handleStartCaptureClick = () => {
     setCapturing(true);
-    recording = true;
-
+  
     mediaRecorderRef.current = new MediaRecorder(webcamRef.current.stream, {
       mimeType: "video/webm"
     });
-  //  mediaRecorderRef.current.addEventListener(
-  //    "dataavailable",
-  //    handleDataAvailable
-  //  );
+    mediaRecorderRef.current.addEventListener(
+      "dataavailable",
+      handleDataAvailable
+    );
     mediaRecorderRef.current.start();
-    setTimeout(event => {
-     if(recording === true){
-       recording = false;
-       handleStopCaptureClick()
-     };
-      }, 9000);
   };
-
-  
- // const handleDataAvailable = useCallback(
- //   ({ data }) => {
- //     if (data.size > 0) {
- //       setRecordedChunks((prev) => prev.concat(data));
- //     }
- //   },
- //   [setRecordedChunks]
- // );
+ 
+  const handleDataAvailable = useCallback(
+    ({ data }) => {
+      if (data.size > 0) {
+        setRecordedChunks((prev) => prev.concat(data));
+      }
+    },
+    [setRecordedChunks]
+  );
 
   const handleStopCaptureClick = useCallback(() => {
     if(mediaRecorderRef.current.state === "recording"){
@@ -68,24 +63,20 @@ const Camera = () => {
     }
   }, [mediaRecorderRef, setCapturing]);
 
-//  const handleDownload = useCallback(() => {
-//    if (recordedChunks.length) {
-//      const blob = new Blob(recordedChunks, {
-//        type: "video/webm"
-//      });
-//      const url = URL.createObjectURL(blob);
-//      const a = document.createElement("a");
-//      document.body.appendChild(a);
-//      a.style = "display: none";
-//      a.href = url;
-//      a.download = "react-webcam-stream-capture.mp4";
-//      a.click();
-//      window.URL.revokeObjectURL(url);
-//      setRecordedChunks([]);
-//    }
-//  }, [recordedChunks]);
+  const handleFile= useCallback(() => {
+    if (recordedChunks.length) {
+      const blob = new Blob(recordedChunks, {
+        type: ".mpeg"
+      });
+      setRecordedChunks([]);
+      return blob
+    }
+  }, [recordedChunks]);
 
   const handleContinue = () => {
+    const file = handleFile();
+    storage.ref().child(`${codingTestId}/${participantId}/${currentQuestionIndex}.mp4`).put(file);
+
     updateCurrentQuestionIndex(currentQuestionIndex + 1);
     if(Object.keys(codingTest.questions[0]).length === currentQuestionIndex){
       setFinished(true);
@@ -93,12 +84,12 @@ const Camera = () => {
     setResponded(false);
   };
 
-
   const videoConstraints = {
     width: 1280,
     height: 720,
     facingMode: "user"
     };
+
   return (
     <>
       <div className={classes.root}>
@@ -109,19 +100,30 @@ const Camera = () => {
                   <Typography>Thank you! Your response has been recorded.</Typography>
                   <Button color="secondary" variant="contained" onClick={handleContinue}>Continue</Button>
                   </div>
-                 :(capturing ? (   
+                 :(capturing ? (
+                   <div>    
                    <Button color="secondary" variant="contained" onClick={handleStopCaptureClick}>Stop Recording</Button>
+                   <CountdownCircleTimer
+                     isPlaying
+                     duration={60}
+                     colors={[
+                       ['#004777', 0.33],
+                       ['#F7B801', 0.33],
+                       ['#A30000', 0.33],
+                     ]}
+                     onComplete={handleStopCaptureClick}
+                      >
+                     {({ remainingTime }) => remainingTime}
+                    </CountdownCircleTimer>
+                    </div>
                    ) : ( !finished ? 
-                   <Button color="primary" variant="contained" onClick={handleStartCaptureClick}>Start Recording</Button> : ''
+                   <Button   color="primary" variant="contained" onClick={handleStartCaptureClick}>Start Recording</Button> : ''
                  ))}
                  {finished ?
                  <div>
                   <Typography>Thank you! Your response has been recorded and your video interview is complete</Typography>
                   </div> : ''
                   }
-                 {/* {recordedChunks.length > 0 && ( */}
-                   {/* <Button color="secondary" variant="contained" onClick={handleContinue}>Continue</Button> */}
-                 {/* )} */}
       </div>
     </>
   );
