@@ -1,9 +1,20 @@
 export const CodingTestReducer = (state, action) => {
   switch (action.type) {
+    case 'UPDATE_CODE':
+      return {
+        ...state,
+        code: action.payload,
+      };
     case 'UPDATE_CODE_OUTPUT':
       return {
         ...state,
         codeOutput: action.payload,
+      };
+
+    case 'UPDATE_TEST_RESULTS':
+      return {
+        ...state,
+        testResults: action.payload,
       };
     case 'UPDATE_LANGUAGE':
       return {
@@ -14,6 +25,18 @@ export const CodingTestReducer = (state, action) => {
       return {
         ...state,
         codingTest: action.payload,
+      };
+
+    case 'UPDATE_CURRENT_CHALLENGE_INDEX':
+      return {
+        ...state,
+        currentChallengeIndex: action.payload,
+      };
+
+    case 'UPDATE_CURRENT_QUESTION_INDEX':
+      return {
+        ...state,
+        currentQuestionIndex: action.payload,
       };
     default:
       return state;

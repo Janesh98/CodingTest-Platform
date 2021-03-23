@@ -27,6 +27,7 @@ const challengeSchema = new Schema({
   testOutput4: { type: String, required: false },
   testInput5: { type: String, required: false },
   testOutput5: { type: String, required: false },
+  testCases: {type: Array, required: false}
 });
 
 const CodingChallengeDB = mongoose.model('CodingChallengeDB', challengeSchema);

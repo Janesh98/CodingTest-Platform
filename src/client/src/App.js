@@ -11,11 +11,14 @@ import EditChallenge from './components/EditChallenge';
 import NewChallenge from './components/NewChallenge';
 import EditQuestions from './components/EditQuestions';
 import Results from './components/Results';
+import ParticipantsList from './components/ParticipantsList';
 import Create from './components/Create';
+import AddParticipants from './components/AddParticipants';
 import { AuthProvider } from './contexts/AuthContext';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
 import CodingTest from './components/CodingTest/CodingTest';
+import VideoRecord from './components/CodingTest/VideoInterview/VideoRecord';
 
 function App() {
   return (
@@ -35,7 +38,13 @@ function App() {
           <PrivateRoute path="/newchallenge" component={NewChallenge} />
           <PrivateRoute path="/editquestions" component={EditQuestions} />
           <PrivateRoute path="/results" component={Results} />
-          <Route path="/codingtest/:id" component={CodingTest} />
+          <PrivateRoute path="/participantsresults" component={ParticipantsList} />
+          <PrivateRoute path="/addparticipants" component={AddParticipants} />
+          <Route
+            path="/codingtest/:codingTestId/:participantId"
+            component={CodingTest}
+          />
+          <Route path="/videointerview/:codingTestId/:participantId" component={VideoRecord} />
         </Switch>
       </AuthProvider>
     </Router>

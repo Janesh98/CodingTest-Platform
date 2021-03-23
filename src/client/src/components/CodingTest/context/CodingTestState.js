@@ -3,9 +3,13 @@ import { CodingTestReducer } from './CodingTestReducer';
 
 // Initial State
 const initialState = {
-  codeOutput: {},
+  codeOutput: [],
   language: 'Python',
   codingTest: null,
+  currentChallengeIndex: 0,
+  testResults: [],
+  code: '',
+  currentQuestionIndex: 1,
 };
 
 // Create context
@@ -16,10 +20,17 @@ export const CodingTestProvider = ({ children }) => {
   const [state, dispatch] = useReducer(CodingTestReducer, initialState);
 
   // Actions
-  const updateCodeOuput = (output) => {
+  const updateCodeOutput = (output) => {
     dispatch({
       type: 'UPDATE_CODE_OUTPUT',
       payload: output,
+    });
+  };
+
+  const updateTestResults = (testResultList) => {
+    dispatch({
+      type: 'UPDATE_TEST_RESULTS',
+      payload: testResultList,
     });
   };
 
@@ -30,10 +41,31 @@ export const CodingTestProvider = ({ children }) => {
     });
   };
 
+  const updateCode = (code) => {
+    dispatch({
+      type: 'UPDATE_CODE',
+      payload: code,
+    });
+  };
+
   const updateCodingTest = (codingTest) => {
     dispatch({
       type: 'UPDATE_CODING_TEST',
       payload: codingTest,
+    });
+  };
+
+  const updateCurrentChallengeIndex = (currentChallengeIndex) => {
+    dispatch({
+      type: 'UPDATE_CURRENT_CHALLENGE_INDEX',
+      payload: currentChallengeIndex,
+    });
+  };
+
+  const updateCurrentQuestionIndex = (currentQuestionIndex) => {
+    dispatch({
+      type: 'UPDATE_CURRENT_QUESTION_INDEX',
+      payload: currentQuestionIndex,
     });
   };
 
@@ -43,9 +75,17 @@ export const CodingTestProvider = ({ children }) => {
         codeOutput: state.codeOutput,
         language: state.language,
         codingTest: state.codingTest,
-        updateCodeOuput,
+        currentChallengeIndex: state.currentChallengeIndex,
+        currentQuestionIndex: state.currentQuestionIndex,
+        testResults: state.testResults,
+        code: state.code,
+        updateCodeOutput,
         updateLanguage,
         updateCodingTest,
+        updateCurrentChallengeIndex,
+        updateCurrentQuestionIndex,
+        updateTestResults,
+        updateCode,
       }}
     >
       {children}

@@ -20,7 +20,8 @@
     "firebase": "^8.2.3",
     "firebase-admin": "^9.2.0",
     "firebase-functions": "^3.13.2",
-    "mongoose": "^5.11.12"
+    "mongoose": "^5.11.12",
+    "nodemailer": "^6.5.0"
   },
   "devDependencies": {
     "firebase-functions-test": "^0.2.0",

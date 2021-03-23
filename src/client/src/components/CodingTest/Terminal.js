@@ -6,6 +6,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import CancelIcon from '@material-ui/icons/Cancel';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -52,31 +54,97 @@ const useStyles = makeStyles((theme) => ({
   tabPanels: {
     overflow: 'auto',
   },
+  correctIcon: {
+    color: theme.palette.success.main,
+    fontSize: 'medium',
+  },
+  incorrectIcon: {
+    color: theme.palette.error.main,
+    fontSize: 'medium',
+  },
 }));
 
 const Terminal = () => {
-  const { codeOutput, codingTest } = useContext(CodingTestContext);
+  const {
+    codeOutput,
+    codingTest,
+    currentChallengeIndex,
+    testResults,
+  } = useContext(CodingTestContext);
   const classes = useStyles();
   const [value, setValue] = useState(0);
-  // eslint-disable-next-line no-unused-vars
-  const [currentChallengeIndex, setCurrentChallengeIndex] = useState(0);
 
-  const parseCodeOutput = () => {
-    if (codeOutput.compile_output && codeOutput.compile_output != null)
-      return atob(codeOutput.compile_output);
-    else if (codeOutput.stderr && codeOutput.stderr != null)
-      return atob(codeOutput.stderr);
-    else return codeOutput.stdout ? atob(codeOutput.stdout) : '';
+  const parseCodeOutput = (i) => {
+    if (codeOutput.length <= 0) {
+      return '';
+    } else if (
+      codeOutput[i].compile_output &&
+      codeOutput[i].compile_output != null
+    )
+      return atob(codeOutput[i].compile_output);
+    else if (codeOutput[i].stderr && codeOutput[i].stderr != null)
+      return atob(codeOutput[i].stderr);
+    else return codeOutput[i].stdout ? atob(codeOutput[i].stdout) : '';
   };
 
   const getCodeTestInput = (index) => {
     return (
-      '\n' + codingTest.challenges[currentChallengeIndex].testInput1 + '\n\n'
+      '\n' +
+      codingTest.challenges[currentChallengeIndex].testCases[index].input +
+      '\n\n'
     );
   };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+  };
+
+  const createTabs = () => {
+    const tabList = [];
+    codingTest.challenges[currentChallengeIndex].testCases.map((test, i) => {
+      return tabList.push(
+        <Tab
+          icon={
+            codeOutput.length > 0 && testResults[i] === true ? (
+              <CheckCircleIcon className={classes.correctIcon} />
+            ) : testResults[i] === undefined ? (
+              ''
+            ) : (
+              <CancelIcon className={classes.incorrectIcon} />
+            )
+          }
+          key={i}
+          label={'Test ' + (i + 1)}
+          {...a11yProps(i)}
+        />
+      );
+    });
+
+    return tabList;
+  };
+
+  const createTabPanels = () => {
+    const tabPanelList = [];
+    codingTest.challenges[currentChallengeIndex].testCases.map((test, i) => {
+      return tabPanelList.push(
+        <TabPanel
+          value={value}
+          index={i}
+          key={i}
+          align="left"
+          variant="body1"
+          style={{ whiteSpace: 'pre-line' }}
+          className={classes.tabPanels}
+        >
+          Input
+          {getCodeTestInput(i)}
+          Output
+          {'\n' + parseCodeOutput(i)}
+        </TabPanel>
+      );
+    });
+
+    return tabPanelList;
   };
 
   return (
@@ -89,77 +157,9 @@ const Terminal = () => {
         aria-label="Terminal test tabs"
         className={classes.tabs}
       >
-        <Tab label="Test 1" {...a11yProps(0)} />
-        <Tab label="Test 2" {...a11yProps(1)} />
-        <Tab label="Test 3" {...a11yProps(2)} />
-        <Tab label="Test 4" {...a11yProps(3)} />
-        <Tab label="Test 5" {...a11yProps(4)} />
+        {codingTest !== null ? createTabs() : ''}
       </Tabs>
-      <TabPanel
-        value={value}
-        index={0}
-        align="left"
-        variant="body1"
-        style={{ whiteSpace: 'pre-line' }}
-        className={classes.tabPanels}
-      >
-        Input
-        {codingTest !== null ? getCodeTestInput() : ''}
-        Output
-        {'\n' + parseCodeOutput()}
-      </TabPanel>
-      <TabPanel
-        value={value}
-        index={1}
-        align="left"
-        variant="body1"
-        style={{ whiteSpace: 'pre-line' }}
-        className={classes.tabPanels}
-      >
-        Input
-        {codingTest !== null ? getCodeTestInput() : ''}
-        Output
-        {'\n' + parseCodeOutput()}
-      </TabPanel>
-      <TabPanel
-        value={value}
-        index={2}
-        align="left"
-        variant="body1"
-        style={{ whiteSpace: 'pre-line' }}
-        className={classes.tabPanels}
-      >
-        Input
-        {codingTest !== null ? getCodeTestInput() : ''}
-        Output
-        {'\n' + parseCodeOutput()}
-      </TabPanel>
-      <TabPanel
-        value={value}
-        index={3}
-        align="left"
-        variant="body1"
-        style={{ whiteSpace: 'pre-line' }}
-        className={classes.tabPanels}
-      >
-        Input
-        {codingTest !== null ? getCodeTestInput() : ''}
-        Output
-        {'\n' + parseCodeOutput()}
-      </TabPanel>
-      <TabPanel
-        value={value}
-        index={4}
-        align="left"
-        variant="body1"
-        style={{ whiteSpace: 'pre-line' }}
-        className={classes.tabPanels}
-      >
-        Input
-        {codingTest !== null ? getCodeTestInput() : ''}
-        Output
-        {'\n' + parseCodeOutput()}
-      </TabPanel>
+      {codingTest !== null ? createTabPanels() : ''}
     </div>
   );
 };

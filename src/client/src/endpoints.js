@@ -1,36 +1,24 @@
-import firebase from 'firebase/app';
-import 'firebase/functions';
+const baseUrl =
+  process.env.REACT_APP_ENV === 'development'
+    ? 'http://localhost:5001/coding-test-platform/us-central1/api'
+    : 'https://us-central1-coding-test-platform.cloudfunctions.net/api';
 
-if (process.env.REACT_APP_ENV === 'development')
-  firebase.functions().useEmulator('localhost', 5000);
-
-export const callCompany = firebase
-  .functions()
-  .httpsCallable('api/company/all');
-export const updateCompany = firebase.functions().httpsCallable('api/company');
-export const callRegister = firebase.functions().httpsCallable('api/register');
-export const executeCode = firebase.functions().httpsCallable('api/code');
-export const addTest = firebase.functions().httpsCallable('api/test');
-export const addChallenge = firebase.functions().httpsCallable('api/challenge');
-export const addQs = firebase.functions().httpsCallable('api/questions');
-export const getTests = firebase.functions().httpsCallable('api/tests');
-export const deleteTest = firebase.functions().httpsCallable('api/delete');
-export const updateChallenge = firebase.functions().httpsCallable('api/updateChallenge');
-export const updateQuestions = firebase.functions().httpsCallable('api/updateQuestions');
-
-export const getChallenges = firebase
-  .functions()
-  .httpsCallable('api/challenges');
-export const getQuestions = firebase
-  .functions()
-  .httpsCallable('api/getQuestions');
-export const deleteChallenge = firebase
-  .functions()
-  .httpsCallable('api/deleteChallenge');
-export const deleteQuestions = firebase
-  .functions()
-  .httpsCallable('api/deleteQuestions');
-export const getCodingTest = async (id) => {
-  const data = await firebase.functions().httpsCallable(`api/codingTest/${id}`);
-  return await data();
-};
+export const callCompany = `${baseUrl}/company/all`;
+export const updateCompany = `${baseUrl}/company`;
+export const callRegister = `${baseUrl}/register`;
+export const executeCode = `${baseUrl}/code`;
+export const addTest = `${baseUrl}/test`;
+export const addChallenge = `${baseUrl}/challenge`;
+export const addQs = `${baseUrl}/questions`;
+export const getTests = `${baseUrl}/tests`;
+export const getParticipants = `${baseUrl}/getParticipants`;
+export const deleteTest = `${baseUrl}/delete`;
+export const updateChallenge = `${baseUrl}/updateChallenge`;
+export const updateQuestions = `${baseUrl}/updateQuestions`;
+export const sendEmail = `${baseUrl}/email`;
+export const getChallenges = `${baseUrl}/challenges`;
+export const getQuestions = `${baseUrl}/getQuestions`;
+export const deleteChallenge = `${baseUrl}/deleteChallenge`;
+export const deleteQuestions = `${baseUrl}/deleteQuestions`;
+export const getCodingTest = `${baseUrl}/codingTest`;
+export const submitCodingTest = `${baseUrl}/codingTest/submit`;

@@ -12,6 +12,7 @@ import Card from './Card';
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { addChallenge } from '../endpoints';
+import axios from 'axios';
 // import Alert from '@material-ui/lab/Alert';
 
 const NewChallenge = () => {
@@ -39,38 +40,40 @@ const NewChallenge = () => {
   const history = useHistory();
   const testName = history.location.state.newTestName;
 
-
   const handleOnClickSave = async (e) => {
     e.preventDefault();
     if (title.length === 0 || probDesc.length === 0 || inFormat === 0) {
       setISError(true);
       return setError('All highlighted fields must not be empty');
     } else {
-      await addChallenge({
-        googleId: currentUser.uid,
-        testName: testName,
-        title: title,
-        problemDescription: probDesc,
-        inputFormat: inFormat,
-        returnFormat: returnFormat,
-        constraints: constraints,
-        sampleInput: sampleIn,
-        sampleOutput: sampleOut,
-        exampleExplanation: exampleExplanation,
-        testInput1: testIn1,
-        testOutput1: testOut1,
-        testInput2: testIn2,
-        testOutput2: testOut2,
-        testInput3: testIn3,
-        testOutput3: testOut3,
-        testInput4: testIn4,
-        testOutput4: testOut4,
-        testInput5: testIn5,
-        testOutput5: testOut5,
+      await axios.post(addChallenge, {
+        data: {
+          googleId: currentUser.uid,
+          testName: testName,
+          title: title,
+          problemDescription: probDesc,
+          inputFormat: inFormat,
+          returnFormat: returnFormat,
+          constraints: constraints,
+          sampleInput: sampleIn,
+          sampleOutput: sampleOut,
+          exampleExplanation: exampleExplanation,
+          testInput1: testIn1,
+          testOutput1: testOut1,
+          testInput2: testIn2,
+          testOutput2: testOut2,
+          testInput3: testIn3,
+          testOutput3: testOut3,
+          testInput4: testIn4,
+          testOutput4: testOut4,
+          testInput5: testIn5,
+          testOutput5: testOut5,
+        },
       });
       history.push({
         pathname: '/edittest',
-        state:{ TestName : testName}});
+        state: { TestName: testName },
+      });
     }
   };
 
@@ -79,7 +82,8 @@ const NewChallenge = () => {
       e.preventDefault();
       history.push({
         pathname: '/edittest',
-        state:{ TestName : testName}});
+        state: { TestName: testName },
+      });
     } catch {
       console.log('error');
     }

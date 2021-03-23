@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { getCodingTest } from '../../endpoints';
 import { CodingTestContext } from './context/CodingTestState';
@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import axios from 'axios';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -54,20 +55,58 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Problem = () => {
-  const { id } = useParams();
-  const { updateCodingTest, codingTest } = useContext(CodingTestContext);
+  const { codingTestId, participantId } = useParams();
+  const {
+    updateCodingTest,
+    codingTest,
+    currentChallengeIndex,
+    updateCurrentChallengeIndex,
+    updateCodeOutput,
+    updateTestResults,
+    testResults,
+    codeOutput,
+    updateCode,
+  } = useContext(CodingTestContext);
   const classes = useStyles();
-  const [currentTab, setCurrentTab] = useState(0);
+
+  const saveProgress = () => {
+    const ct = codingTest.challenges[currentChallengeIndex];
+    ct.testResults = testResults;
+    ct.codeOutput = codeOutput;
+  };
+
+  // if qs already attempted, updates to previous save state
+  // updates code, test results & outputs
+  const fetchProgress = (index) => {
+    const ct = codingTest.challenges[index];
+
+    if (ct.testResults && ct.testResults !== [])
+      updateTestResults(ct.testResults);
+    else updateTestResults([]);
+
+    if (ct.codeOutput && ct.codeOutput !== []) updateCodeOutput(ct.codeOutput);
+    else updateCodeOutput([]);
+
+    if (ct.code && ct.code !== '') updateCode(ct.code);
+    else updateCode('');
+  };
 
   const handleTabChange = (event, newTab) => {
-    setCurrentTab(newTab);
+    saveProgress();
+    fetchProgress(newTab);
+    updateCurrentChallengeIndex(newTab);
   };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await getCodingTest(id);
-        updateCodingTest(res.data);
+        const res = await axios.post(
+          `${getCodingTest}/${codingTestId}/${participantId}`,
+          {
+            data: { codingTestId, participantId },
+          }
+        );
+        updateCodingTest(res.data.data);
       } catch (err) {
         console.error(err);
       }
@@ -80,10 +119,19 @@ const Problem = () => {
   const parseProblemDescription = (index) => {
     const ct = codingTest.challenges[index];
     let s = '';
-    for (const [key, value] of Object.entries(ct)) {
-      // only print non test entries as tests are displayed in terminal
-      if (!key.includes('test')) s += `${key}\n${value}\n\n`;
-    }
+    // for (const [key, value] of Object.entries(ct)) {
+    //   // only print non test entries as tests are displayed in terminal
+    //   if (!key.includes('test')) s += `${key}\n${value}\n\n`;
+    // }
+    s +=
+      `Title\n${ct.title}\n\n` +
+      `Problem Description\n${ct.problemDescription}\n\n` +
+      `Input Format\n${ct.inputFormat}\n\n` +
+      `Return Format\n${ct.returnFormat}\n\n` +
+      `Constraints\n${ct.constraints}\n\n` +
+      `Sample Input\n${ct.sampleInput}\n\n` +
+      `Sample Output\n${ct.sampleOutput}\n\n` +
+      `Example Explanation\n${ct.exampleExplanation}\n\n`;
 
     return s;
   };
@@ -106,7 +154,7 @@ const Problem = () => {
     codingTest.challenges.map((ct, i) => {
       return collectionOfTabPanels.push(
         <TabPanel
-          value={currentTab}
+          value={currentChallengeIndex}
           index={i}
           key={i}
           className={classes.description}
@@ -126,7 +174,7 @@ const Problem = () => {
       <div className={classes.root}>
         <AppBar position="static" color="transparent">
           <Tabs
-            value={currentTab}
+            value={currentChallengeIndex}
             onChange={handleTabChange}
             indicatorColor="primary"
             variant="scrollable"

@@ -14,33 +14,24 @@ import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
-import { useAuth } from '../contexts/AuthContext';
-import { getTests } from '../endpoints';
+import { getParticipants } from '../endpoints';
 import axios from 'axios';
 
-const Results = () => {
-  const { currentUser } = useAuth();
+const ParticipantsList = () => {
   const [tableData, setTableData] = useState([]);
   const history = useHistory();
+  const id = history.location.state._id;
 
   useEffect(() => {
     const rows = async () => {
-      var res = await axios.post(getTests, {
-        data: { googleId: currentUser.uid },
+      var res = await axios.post(getParticipants, {
+        data: { TestId: id },
       });
-      await setTableData(
-        res.data.data.map((item) => ({
-          _id: item._id,
-          testName: item.testName,
-          createdAt: item.createdAt,
-          participants: item.participants,
-          challenges: item.challenges.length,
-        }))
-      );
+      await setTableData(res.data.data.map((item) => ({ email: item.email })));
     };
 
     rows();
-  }, [currentUser.uid]);
+  }, [id]);
 
   const useStyles = makeStyles({
     table: {
@@ -50,15 +41,6 @@ const Results = () => {
 
   const classes = useStyles();
 
-  const handleOnClickView = async (e, _id, participants) => {
-    history.push({
-      pathname: '/participantsresults',
-      state: {
-        _id: _id,
-      },
-    });
-  };
-
   return (
     <Container>
       <NavBar />
@@ -67,43 +49,30 @@ const Results = () => {
           <Container component="main" maxWidth="md">
             <div>
               <Typography component="h1" variant="h5">
-                Previous Coding Tests Results
+                Coding Test Participants
               </Typography>
             </div>
             <TableContainer component={Paper}>
               <Table className={classes.table} aria-label="simple table">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Test Name</TableCell>
-                    <TableCell>Date Created</TableCell>
-                    <TableCell>No. of Participants</TableCell>
-                    <TableCell>No. of Challenges</TableCell>
+                    <TableCell>Participant</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {tableData.map((row) => (
-                    <TableRow key={row.testName}>
+                    <TableRow key={row.email}>
                       <TableCell component="th" scope="row">
-                        {row.testName}
+                        {row.email}
                       </TableCell>
-                      <TableCell>{row.createdAt}</TableCell>
-                      <TableCell>{row.participants.length}</TableCell>
-                      <TableCell>{row.challenges}</TableCell>
                       <TableCell>
                         <Button
                           id="addParticipants"
                           variant="contained"
                           color="secondary"
                           size="small"
-                          onClick={(e) =>
-                            handleOnClickView(
-                              row.testName,
-                              row._id,
-                              row.participants
-                            )
-                          }
                         >
-                          View
+                          View Results
                         </Button>
                       </TableCell>
                     </TableRow>
@@ -118,4 +87,4 @@ const Results = () => {
   );
 };
 
-export default Results;
+export default ParticipantsList;

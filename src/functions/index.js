@@ -9,14 +9,14 @@ app.use(cors());
 // SET CORS for PREFLIGHT OPTIONS
 app.options('*', cors());
 
-const API_PREFIX = 'api';
-// Rewrite Firebase hosting requests: /api/:path => /:path
-app.use((req, res, next) => {
-  if (req.url.indexOf(`/${API_PREFIX}/`) === 0) {
-    req.url = req.url.substring(API_PREFIX.length + 1);
-  }
-  next();
-});
+// const API_PREFIX = 'api';
+// // Rewrite Firebase hosting requests: /api/:path => /:path
+// app.use((req, res, next) => {
+//   if (req.url.indexOf(`/${API_PREFIX}/`) === 0) {
+//     req.url = req.url.substring(API_PREFIX.length + 1);
+//   }
+//   next();
+// });
 
 const {
   register,
@@ -26,6 +26,7 @@ const {
   newChallenge,
   addQs,
   getTests,
+  getParticipants,
   deleteTest,
   getChallenges,
   getCodingTest,
@@ -34,8 +35,10 @@ const {
   deleteQuestions,
   updateChallenge,
   updateQuestions,
+  submitCodingTest,
 } = require('./controllers/users');
 const { executeCode } = require('./controllers/code');
+const { sendEmail } = require('./controllers/email');
 
 const uri = functions.config().app.atlas_uri;
 mongoose.connect(uri, {
@@ -58,13 +61,19 @@ app.post('/test', newTest);
 app.post('/challenge', newChallenge);
 app.post('/questions', addQs);
 app.post('/tests', getTests);
+app.post('/getParticipants', getParticipants);
 app.post('/delete', deleteTest);
 app.post('/challenges', getChallenges);
-app.post('/codingtest/:codingTestId', getCodingTest);
+app.post('/codingtest/:codingTestId/:participantId', getCodingTest);
+app.post('/codingtest/submit', submitCodingTest);
 app.post('/getQuestions', getQuestions);
 app.post('/deleteChallenge', deleteChallenge);
 app.post('/deleteQuestions', deleteQuestions);
 app.post('/updateChallenge', updateChallenge);
 app.post('/updateQuestions', updateQuestions);
+app.post('/email', sendEmail);
+app.post('/testy', (req, res) => {
+  res.send('Test Successful');
+});
 
-exports[API_PREFIX] = functions.https.onRequest(app);
+exports.api = functions.https.onRequest(app);
