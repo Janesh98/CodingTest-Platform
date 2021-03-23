@@ -15,25 +15,25 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import { getParticipants } from '../endpoints';
+import axios from 'axios';
 
 const ParticipantsList = () => {
-    const [tableData, setTableData] = useState([]);
-    const history = useHistory();
-    const id = history.location.state._id;
+  const [tableData, setTableData] = useState([]);
+  const history = useHistory();
+  const id = history.location.state._id;
 
-
-    useEffect(() => {
-     const rows = async () => {
-    var res = await getParticipants({
-      TestId: id,
-    });
-    await setTableData(res.data.map(item => ({email: item.email})));
-  };
+  useEffect(() => {
+    const rows = async () => {
+      var res = await axios.post(getParticipants, {
+        data: { TestId: id },
+      });
+      await setTableData(res.data.data.map((item) => ({ email: item.email })));
+    };
 
     rows();
-    }, [id]);
+  }, [id]);
 
-    const useStyles = makeStyles({
+  const useStyles = makeStyles({
     table: {
       minWidth: 300,
     },
@@ -41,52 +41,50 @@ const ParticipantsList = () => {
 
   const classes = useStyles();
 
-    return(
+  return (
     <Container>
-    <NavBar/>
-    <div id="results-container">
+      <NavBar />
+      <div id="results-container">
         <Grid container align="center" justify="center" direction="column">
           <Container component="main" maxWidth="md">
             <div>
               <Typography component="h1" variant="h5">
-              Coding Test Participants
+                Coding Test Participants
               </Typography>
-              </div>
-                <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Participant</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {tableData.map((row) => (
-            <TableRow key={row.email}>
-              <TableCell component="th" scope="row">
-                {row.email}
-              </TableCell>
-              <TableCell>
-              <Button
-                  id = "addParticipants"
-                  variant="contained"
-                  color="secondary"
-                  size="small"
-                  >
-                    View Results 
-                  </Button>
-              </TableCell>
-              
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-              </Container>
+            </div>
+            <TableContainer component={Paper}>
+              <Table className={classes.table} aria-label="simple table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Participant</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {tableData.map((row) => (
+                    <TableRow key={row.email}>
+                      <TableCell component="th" scope="row">
+                        {row.email}
+                      </TableCell>
+                      <TableCell>
+                        <Button
+                          id="addParticipants"
+                          variant="contained"
+                          color="secondary"
+                          size="small"
+                        >
+                          View Results
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Container>
         </Grid>
       </div>
-  
     </Container>
-    );
+  );
 };
 
 export default ParticipantsList;

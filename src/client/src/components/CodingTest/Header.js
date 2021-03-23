@@ -10,6 +10,7 @@ import { CodingTestContext } from './context/CodingTestState';
 import { submitCodingTest } from '../../endpoints';
 import { useParams } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,9 +39,8 @@ const Header = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await submitCodingTest({
-        participantId,
-        codingTestResults: codingTest,
+      await axios.post(submitCodingTest, {
+        data: { participantId, codingTestResults: codingTest },
       });
       history.push(`/videointerview/${codingTestId}/${participantId}`);
     } catch (error) {

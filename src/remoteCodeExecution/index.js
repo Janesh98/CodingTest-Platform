@@ -3,6 +3,7 @@ const app = express();
 const port = 8000;
 const Docker = require('dockerode');
 const docker = new Docker();
+const streams = require('memory-streams');
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
@@ -10,29 +11,34 @@ app.get('/', (req, res) => {
 
 // example creates hello world python file and executes it
 app.get('/container', (req, res) => {
-  try {
-    //callback
-    docker.run(
+  var stdout = new streams.WritableStream();
+  var stderr = new streams.WritableStream();
+
+  docker
+    .run(
       'python:3-alpine',
       [
         '/bin/sh',
         '-c',
-        'echo "print(\'hello world\')" > test.py && python3 test.py',
+        'echo "print(\'hello world)" > test.py && python3 test.py',
       ],
-      process.stdout,
-      (err, data, container) => {
-        container.remove();
-        return res.json({
-          err,
-          data,
-          container,
-        });
-      }
-    );
-  } catch (err) {
-    console.error(err);
-    res.send('Failed to execute');
-  }
+      [stdout, stderr],
+      { Tty: false }
+    )
+    .then(([result, container]) => {
+      console.log(result);
+      stdout = stdout.toString().trim();
+      stderr = stderr.toString().trim();
+      container.remove();
+      return res.status(200).json({
+        stdout: stdout,
+        stderr: stderr,
+      });
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(404).json(err);
+    });
 });
 
 app.listen(port, () => {

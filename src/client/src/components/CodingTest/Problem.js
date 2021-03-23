@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import axios from 'axios';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -99,8 +100,13 @@ const Problem = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await getCodingTest(codingTestId, participantId);
-        updateCodingTest(res.data);
+        const res = await axios.post(
+          `${getCodingTest}/${codingTestId}/${participantId}`,
+          {
+            data: { codingTestId, participantId },
+          }
+        );
+        updateCodingTest(res.data.data);
       } catch (err) {
         console.error(err);
       }

@@ -10,6 +10,7 @@ import {
 import CodeIcon from '@material-ui/icons/Code';
 import { executeCode } from '../../endpoints';
 import { CodingTestContext } from './context/CodingTestState';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -51,18 +52,20 @@ const CodeEditor = () => {
     codingTest.challenges[currentChallengeIndex].testCases.map(
       async (test, i) => {
         const base64Stdin = btoa(test.input);
-        const output = await executeCode({
-          language: language.toLowerCase(),
-          code: base64Code,
-          stdin: base64Stdin,
+        const output = await axios.post(executeCode, {
+          data: {
+            language: language.toLowerCase(),
+            code: base64Code,
+            stdin: base64Stdin,
+          },
         });
 
-        codeOutputList[i] = output.data;
+        codeOutputList[i] = output.data.data;
 
         var testResult = false;
         if (
-          output.data.stdout !== null &&
-          atob(output.data.stdout).trim() === test.output
+          output.data.data.stdout !== null &&
+          atob(output.data.data.stdout).trim() === test.output
         ) {
           testResult = true;
         }

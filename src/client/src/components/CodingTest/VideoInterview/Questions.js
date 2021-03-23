@@ -4,6 +4,7 @@ import { getCodingTest } from '../../../endpoints';
 import { CodingTestContext } from '../context/CodingTestState';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
+import axios from 'axios';
 
 import AppBar from '@material-ui/core/AppBar';
 
@@ -33,8 +34,13 @@ const Questions = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await getCodingTest(codingTestId, participantId);
-        updateCodingTest(res.data);
+        const res = await axios.post(
+          `${getCodingTest}/${codingTestId}/${participantId}`,
+          {
+            data: { codingTestId, participantId },
+          }
+        );
+        updateCodingTest(res.data.data);
       } catch (err) {
         console.error(err);
       }

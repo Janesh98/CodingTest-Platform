@@ -9,6 +9,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import { callCompany, updateCompany } from '../endpoints';
+import axios from 'axios';
 
 const CompanyInput = () => {
   const [companies, setCompanies] = useState([]);
@@ -21,8 +22,8 @@ const CompanyInput = () => {
   useEffect(() => {
     const getCompanies = async () => {
       try {
-        const res = await callCompany();
-        setCompanies(res.data.map((item) => item.company.toLowerCase()));
+        const res = await axios.post(callCompany, {});
+        setCompanies(res.data.data.map((item) => item.company.toLowerCase()));
       } catch {
         console.log(
           'error in CompanyInput.js getting list of companies from backend api'
@@ -47,9 +48,8 @@ const CompanyInput = () => {
       setISError(true);
       return setError('Company already exists');
     } else {
-      await updateCompany({
-        googleId: currentUser.uid,
-        company,
+      await axios.post(updateCompany, {
+        data: { googleId: currentUser.uid, company },
       });
       return history.push('/');
     }

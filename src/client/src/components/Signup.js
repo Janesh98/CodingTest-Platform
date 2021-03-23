@@ -9,6 +9,7 @@ import './css/Signup.css';
 import { useAuth } from '../contexts/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
 import { callRegister } from '../endpoints';
+import axios from 'axios';
 
 export default function Signup() {
   const [email, setEmail] = useState('');
@@ -35,9 +36,8 @@ export default function Signup() {
   };
 
   const postUserDetails = async (user) => {
-    await callRegister({
-      googleId: user.uid,
-      email: user.email,
+    await axios.post(callRegister, {
+      data: { googleId: user.uid, email: user.email },
     });
   };
 
@@ -47,7 +47,7 @@ export default function Signup() {
 
       if (isError !== false) return;
       setLoading(true);
-      const res = await signup(email, password);
+      const res = await axios.post(signup, { email, password });
       postUserDetails(res.user);
 
       setLoading(false);

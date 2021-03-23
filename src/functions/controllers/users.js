@@ -54,6 +54,7 @@ exports.company = (req, res) => {
 };
 
 exports.addCompany = (req, res) => {
+  console.log(req);
   const newCompany = {
     googleId: req.body.data.googleId,
     company: req.body.data.company,
