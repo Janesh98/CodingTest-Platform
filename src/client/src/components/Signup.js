@@ -80,7 +80,7 @@ export default function Signup() {
 
   return (
     <Container>
-      <div id="signup">
+      <div data-testid="signup" id="signup">
         <Grid container align="center" justify="center" direction="column">
           <Container component="main" maxWidth="xs">
             <div>

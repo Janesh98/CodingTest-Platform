@@ -84,7 +84,7 @@ const Edit = () => {
   return (
     <Container>
       <NavBar />
-      <div id="edit-container">
+      <div data-testid="edit-container" id="edit-container">
         <Grid container align="center" justify="center" direction="column">
           <Container component="main" maxWidth="md">
             <div>
