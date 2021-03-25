@@ -1,13 +1,10 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { shallow } from 'enzyme';
 import App from './App';
 import Signup  from './components/Signup';
 import Edit  from './components/Edit';
 import Dashboard  from './components/Dashboard';
-import AuthProvider from './contexts/AuthContext';
-import firebase from 'firebase/app';
-import { useAuth } from './contexts/AuthContext';
-import { act, render, screen, getTestById } from "./test-utils";
+import { render} from "./test-utils";
 
 //////////////////
 describe('rendering components', () => {
@@ -24,9 +21,9 @@ describe('rendering components', () => {
 
  it('renders <Edit /> without crashing', () => {
 
-  render(<Edit />);
+  const wrapper = render(<Edit />);
   //console.log(wrapper);
-  //expect(getTestById("edit-container")).toBeInTheDocument();
+  //expect(wrapper("edit-container")).toBeInTheDocument();
   //const wrapper = shallow(render(<Edit />));
 
    ///expect(wrapper.length).toBe(1);
