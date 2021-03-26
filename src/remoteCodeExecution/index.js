@@ -4,13 +4,24 @@ const port = 8000;
 const Docker = require('dockerode');
 const docker = new Docker();
 const streams = require('memory-streams');
+const { Base64 } = require('js-base64');
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+app.use(express.json());
 
-// example creates hello world python file and executes it
-app.get('/container', (req, res) => {
+// executes code in docker container, deleting container afterwards.
+app.post('/container', (req, res) => {
+  // code is a Base64 encoded string
+  const code = req.body.data.code;
+  // input passed to program as command line args
+  const input = req.body.data.input;
+  var decoded = Base64.decode(code);
+  // TODO issue with quotes that need to be escaped in code
+  // e.g echo command converts print("hello world") to print(hello world),
+  // removing quotes, they need to be escaped with a \.
+  // console.log(decoded);
+  // // decoded = decoded.replace(/(["'])/g, '\\$1');
+  // console.log(decoded);
+
   var stdout = new streams.WritableStream();
   var stderr = new streams.WritableStream();
 
@@ -20,13 +31,12 @@ app.get('/container', (req, res) => {
       [
         '/bin/sh',
         '-c',
-        'echo "print(\'hello world)" > test.py && python3 test.py',
+        `echo "${decoded}" > test.py && python3 test.py ${input}`,
       ],
       [stdout, stderr],
       { Tty: false }
     )
     .then(([result, container]) => {
-      console.log(result);
       stdout = stdout.toString().trim();
       stderr = stderr.toString().trim();
       container.remove();
@@ -42,5 +52,5 @@ app.get('/container', (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`Server listening on port: ${port}`);
 });
