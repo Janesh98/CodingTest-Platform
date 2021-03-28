@@ -5,17 +5,21 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server",
-    "dev": "nodemon server"
+    "server": "node server",
+    "worker": "node worker",
+    "dev:server": "nodemon server",
+    "dev:worker": "nodemon worker"
   },
   "author": "Janesh Sharma & Paul McNally",
   "license": "ISC",
   "dependencies": {
+    "bull": "^3.22.0",
     "dockerode": "^3.2.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "js-base64": "^3.6.0",
-    "memory-streams": "^0.1.3"
+    "memory-streams": "^0.1.3",
+    "throng": "^5.0.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"
