@@ -31,20 +31,23 @@ const Edit = () => {
   }
 
   useEffect(() => {
+    let mounted = true;
     const rows = async () => {
       var res = await axios.post(getTests, {
         data: { googleId: currentUser.uid },
       });
+      if(mounted){
       setTableData(
         res.data.data.map((item) => ({
           _id: item._id,
           testName: item.testName,
           createdAt: item.createdAt,
         }))
-      );
+      )};
     };
 
     rows();
+    return () => { mounted = false;}
   }, [currentUser.uid]);
 
   const useStyles = makeStyles({

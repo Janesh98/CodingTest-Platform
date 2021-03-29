@@ -20,14 +20,23 @@ describe('rendering components', () => {
 
     it('renders <Create /> without crashing', async () => {
     render(<Create />);
- 
     expect(screen.queryByTestId("create-container")).not.toBeNull();
+    cleanup();
+ });
+
+ it('renders text without crashing', async () => {
+    render(<Create />);
     expect(screen.getByText("New Coding Test Name")).toBeInTheDocument();
+    cleanup();
+ });
+
+ it('renders button and button text without crashing', async () => {
+    render(<Create />);
     expect(screen.getByText("Continue to Setup")).toBeInTheDocument();
     expect(screen.queryByTestId("continue")).toBeInTheDocument();
     cleanup();
-
  });
+
 
     it('TextField update', async ()=> {
     const wrapper = render(<Create />);

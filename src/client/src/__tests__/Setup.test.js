@@ -8,91 +8,315 @@ describe('rendering components', () => {
     const history = createBrowserHistory();
     const state = { testName: 'testName1' }
     history.push("/", state);
-    it('renders <Create /> without crashing', async () => {
+    it('renders <Setup /> without crashing', () => {
+        render(<Setup history={createBrowserHistory(history.push("/", state))}/>);
+        expect(screen.queryByTestId("setup-container")).not.toBeNull();
+ });
+
+ it('renders setup test text', () => {
+        render(<Setup history={createBrowserHistory(history.push("/", state))}/>);
+        expect(screen.getByText("Setup A New Coding Test")).toBeInTheDocument();
+ });
+
+ it('renders title text', () => {
+        render(<Setup history={createBrowserHistory(history.push("/", state))}/>);
+        expect(screen.getByText("Challenge Title")).toBeInTheDocument();
+ });
+ it('renders problem text', () => {
+        render(<Setup history={createBrowserHistory(history.push("/", state))}/>);
+        expect(screen.queryByTestId("Problem Description typography")).toHaveTextContent("Problem Description");
+ });
+ it('renders input format test text', () => {
+        render(<Setup history={createBrowserHistory(history.push("/", state))}/>);
+        expect(screen.queryByTestId("Input Format typography")).toHaveTextContent("Input Format");
+ });
+
+ it('renders return format text', () => {
+        render(<Setup history={createBrowserHistory(history.push("/", state))}/>);
+        expect(screen.queryByTestId("Return Format typography")).toHaveTextContent("Return Format");
+ });
+ it('renders constraints text', () => {
+        render(<Setup history={createBrowserHistory(history.push("/", state))}/>);
+        expect(screen.queryByTestId("Constraints typography")).toHaveTextContent("Constraints");
+ });
+ it('renders sample input text', () => {
+        render(<Setup history={createBrowserHistory(history.push("/", state))}/>);
+        expect(screen.queryByTestId("Sample Input typography")).toHaveTextContent("Sample Input");
+ });
+
+ it('renders sample output text', () => {
+        render(<Setup history={createBrowserHistory(history.push("/", state))}/>);
+        expect(screen.queryByTestId("Sample Output typography")).toHaveTextContent("Sample Output");
+ });
+
+ it('renders example text', () => {
+        render(<Setup history={createBrowserHistory(history.push("/", state))}/>);
+        expect(screen.queryByTestId("Example with Explanation typography")).toHaveTextContent("Example with Explanation");
+ });
+
+  it('renders test cases text', () => {
+        render(<Setup history={createBrowserHistory(history.push("/", state))}/>);
+        expect(screen.getByText("Test Cases (Please provide at least 1 test case)")).toBeInTheDocument();
+ });
+
+   it('renders problem box without crashing', () => {
+        render(<Setup history={createBrowserHistory(history.push("/", state))}/>);
+        expect(screen.getByLabelText("Problem Description")).toBeInTheDocument();
+ });
+
+ it('renders input format text box without crashing', () => {
+        render(<Setup history={createBrowserHistory(history.push("/", state))}/>);
+        expect(screen.getByLabelText("Input Format")).toBeInTheDocument();
+ });
+ it('renders return format text box without crashing', () => {
+        render(<Setup history={createBrowserHistory(history.push("/", state))}/>);
+        expect(screen.getByLabelText("Return Format")).toBeInTheDocument();
+ });
+ it('renders constraints text box without crashing', () => {
+        render(<Setup history={createBrowserHistory(history.push("/", state))}/>);
+        expect(screen.getByLabelText("Constraints")).toBeInTheDocument();
+ });
+ it('renders sample input text box without crashing', () => {
+        render(<Setup history={createBrowserHistory(history.push("/", state))}/>)
+        expect(screen.getByLabelText("Sample Input")).toBeInTheDocument();
+ });
+ it('renders sample output text box without crashing', () => {
+        render(<Setup history={createBrowserHistory(history.push("/", state))}/>);
+
+        expect(screen.getByLabelText("Sample Output")).toBeInTheDocument();
+ });
+ it('renders example text box without crashing', () => {
+        render(<Setup history={createBrowserHistory(history.push("/", state))}/>);
+        expect(screen.getByLabelText("Example with Explanation")).toBeInTheDocument();
+ });
+
+    it('renders save button without crashing', async () => {
     
     render(<Setup history={createBrowserHistory(history.push("/", state))} />);
  
-    expect(screen.queryByTestId("setup-container")).not.toBeNull();
-    expect(screen.getByText("Setup A New Coding Test")).toBeInTheDocument();
-    expect(screen.getByText("Challenge Title")).toBeInTheDocument();
-    expect(screen.queryByTestId("Problem Description typography")).toHaveTextContent("Problem Description");
-    expect(screen.queryByTestId("Input Format typography")).toHaveTextContent("Input Format");
-    expect(screen.queryByTestId("Return Format typography")).toHaveTextContent("Return Format");
-    expect(screen.queryByTestId("Constraints typography")).toHaveTextContent("Constraints");
-    expect(screen.queryByTestId("Sample Input typography")).toHaveTextContent("Sample Input");
-    expect(screen.queryByTestId("Sample Output typography")).toHaveTextContent("Sample Output");
-    expect(screen.queryByTestId("Example with Explanation typography")).toHaveTextContent("Example with Explanation");
-    expect(screen.queryByTestId("continue")).toBeInTheDocument();
     expect(screen.queryByTestId("save")).toBeInTheDocument();
-    expect(screen.queryByTestId("exit")).toBeInTheDocument();
-
-    expect(screen.getByLabelText("Problem Description")).toBeInTheDocument();
-    expect(screen.getByLabelText("Input Format")).toBeInTheDocument();
-    expect(screen.getByLabelText("Return Format")).toBeInTheDocument();
-    expect(screen.getByLabelText("Constraints")).toBeInTheDocument();
-    expect(screen.getByLabelText("Sample Input")).toBeInTheDocument();
-    expect(screen.getByLabelText("Sample Output")).toBeInTheDocument();
-    expect(screen.getByLabelText("Example with Explanation")).toBeInTheDocument();
-    expect(screen.getByText("Test Cases (Please provide at least 1 test case)")).toBeInTheDocument();
 
     });
 
-    it('TextFields update', async ()=> {
+    it('renders continue button without crashing', async () => {
+    
+    render(<Setup history={createBrowserHistory(history.push("/", state))} />);
+ 
+    expect(screen.queryByTestId("continue")).toBeInTheDocument();
+
+    });
+
+    it('renders exit button without crashing', async () => {
+    
+    render(<Setup history={createBrowserHistory(history.push("/", state))} />);
+ 
+    expect(screen.queryByTestId("exit")).toBeInTheDocument();
+
+    });
+
+it('Problem TextField update', async ()=> {
     const wrapper = render(<Setup />);
     const problem = wrapper.queryByTestId("Problem Description");
-    const input = wrapper.queryByTestId("Input Format");
-    const returnFormat = wrapper.queryByTestId("Return Format");
-    const constraints = wrapper.queryByTestId("Constraints");
-    const sampleIn = wrapper.queryByTestId("Sample Input");
-    const sampleOut = wrapper.queryByTestId("Sample Output");
-    const example = wrapper.queryByTestId("Example with Explanation");
-    const in1 = wrapper.queryByTestId("test input 1");
-    const in2 = wrapper.queryByTestId("test input 2");
-    const in3 = wrapper.queryByTestId("test input 3");
-    const in4 = wrapper.queryByTestId("test input 4");
-    const in5 = wrapper.queryByTestId("test input 5");
-    const out1 = wrapper.queryByTestId("test output 1");
-    const out2 = wrapper.queryByTestId("test output 2");
-    const out3 = wrapper.queryByTestId("test output 3");
-    const out4 = wrapper.queryByTestId("test output 4");
-    const out5 = wrapper.queryByTestId("test output 5");
 
     act(() => {
         fireEvent.change(problem, { target: { value: 'test problem' } })
-        fireEvent.change(input, { target: { value: 'test input' } })
-        fireEvent.change(returnFormat, { target: { value: 'test return' } })
-        fireEvent.change(constraints, { target: { value: 'test constraints' } })
-        fireEvent.change(sampleIn, { target: { value: 'test sample input' } })
-        fireEvent.change(sampleOut, { target: { value: 'test sample output' } })
-        fireEvent.change(example, { target: { value: 'test example' } })
-        fireEvent.change(in1, { target: { value: '1' } })
-        fireEvent.change(in2, { target: { value: '2' } })
-        fireEvent.change(in3, { target: { value: '3' } })
-        fireEvent.change(in4, { target: { value: '4' } })
-        fireEvent.change(in5, { target: { value: '5' } })
-        fireEvent.change(out1, { target: { value: '1' } })
-        fireEvent.change(out2, { target: { value: '2' } })
-        fireEvent.change(out3, { target: { value: '3' } })
-        fireEvent.change(out4, { target: { value: '4' } })
-        fireEvent.change(out5, { target: { value: '5' } })
-
     });
+
     expect(problem.value).toBe('test problem');
+    cleanup();
+});
+
+it('input format TextField update', async ()=> {
+    const wrapper = render(<Setup />);
+    const input = wrapper.queryByTestId("Input Format");
+   
+
+    act(() => {
+        fireEvent.change(input, { target: { value: 'test input' } })
+    });
+
     expect(input.value).toBe('test input');
+
+
+    cleanup();
+});
+
+it('return format TextField update', async ()=> {
+    const wrapper = render(<Setup />);
+    const returnFormat = wrapper.queryByTestId("Return Format");
+
+    act(() => {
+        fireEvent.change(returnFormat, { target: { value: 'test return' } })
+    });
+
     expect(returnFormat.value).toBe('test return');
+    cleanup();
+});
+
+it('Constraints TextField update', async ()=> {
+    const wrapper = render(<Setup />);
+    const constraints = wrapper.queryByTestId("Constraints");
+
+    act(() => {
+        fireEvent.change(constraints, { target: { value: 'test constraints' } })
+    });
     expect(constraints.value).toBe('test constraints');
+    cleanup();
+});
+
+
+it('Sample Input TextField update', async ()=> {
+    const wrapper = render(<Setup />);
+    const sampleIn = wrapper.queryByTestId("Sample Input");   
+
+    act(() => {
+        fireEvent.change(sampleIn, { target: { value: 'test sample input' } })
+    });
+
     expect(sampleIn.value).toBe('test sample input');
+    cleanup();
+});
+
+
+it('Sample Output TextField update', async ()=> {
+    const wrapper = render(<Setup />);
+    const sampleOut = wrapper.queryByTestId("Sample Output");
+
+    act(() => {
+        fireEvent.change(sampleOut, { target: { value: 'test sample output' } })
+    });
+
     expect(sampleOut.value).toBe('test sample output');
+    cleanup();
+});
+
+
+it('Example update', async ()=> {
+    const wrapper = render(<Setup />);
+    const example = wrapper.queryByTestId("Example with Explanation");
+
+    act(() => {
+        fireEvent.change(example, { target: { value: 'test example' } })
+    });
+
     expect(example.value).toBe('test example');
+    cleanup();
+});
+
+
+it('Test input 1 update', async ()=> {
+    const wrapper = render(<Setup />);
+    const in1 = wrapper.queryByTestId("test input 1");
+
+    act(() => {
+        fireEvent.change(in1, { target: { value: '1' } })
+    });
+
     expect(in1.value).toBe('1');
+    cleanup();
+});
+
+it('Test input 2 update', async ()=> {
+    const wrapper = render(<Setup />);
+    const in2 = wrapper.queryByTestId("test input 2");
+
+    act(() => {
+        fireEvent.change(in2, { target: { value: '2' } })
+    });
+
     expect(in2.value).toBe('2');
+    cleanup();
+});
+
+it('Test input 3 update', async ()=> {
+    const wrapper = render(<Setup />);
+    const in3 = wrapper.queryByTestId("test input 3");
+
+    act(() => {
+        fireEvent.change(in3, { target: { value: '3' } })
+    });
+
     expect(in3.value).toBe('3');
+    cleanup();
+});
+
+it('Test input 4 update', async ()=> {
+    const wrapper = render(<Setup />);
+    const in4 = wrapper.queryByTestId("test input 4");
+
+    act(() => {
+        fireEvent.change(in4, { target: { value: '4' } })
+    });
+
     expect(in4.value).toBe('4');
+    cleanup();
+});
+
+it('Test input 5 update', async ()=> {
+    const wrapper = render(<Setup />);
+    const in5 = wrapper.queryByTestId("test input 5");
+
+    act(() => {
+        fireEvent.change(in5, { target: { value: '5' } })
+    });
+
     expect(in5.value).toBe('5');
+    cleanup();
+});
+
+it('test output 1 update', async ()=> {
+    const wrapper = render(<Setup />);
+    const out1 = wrapper.queryByTestId("test output 1");
+
+    act(() => {
+        fireEvent.change(out1, { target: { value: '1' } })
+    });
+
     expect(out1.value).toBe('1');
+    cleanup();
+});
+
+it('test output 2 update', async ()=> {
+    const wrapper = render(<Setup />);
+    const out2 = wrapper.queryByTestId("test output 2");
+    act(() => {
+        fireEvent.change(out2, { target: { value: '2' } })
+    });
+
     expect(out2.value).toBe('2');
+    cleanup();
+});
+
+it('test output 3 update', async ()=> {
+    const wrapper = render(<Setup />);
+    const out3 = wrapper.queryByTestId("test output 3");
+
+    act(() => {
+        fireEvent.change(out3, { target: { value: '3' } })
+    });
     expect(out3.value).toBe('3');
+    cleanup();
+});
+
+it('test output 4 update', async ()=> {
+    const wrapper = render(<Setup />);
+    const out4 = wrapper.queryByTestId("test output 4");
+
+    act(() => {
+        fireEvent.change(out4, { target: { value: '4' } })
+    });
     expect(out4.value).toBe('4');
+
+    cleanup();
+});
+
+it('test output 5 update', async ()=> {
+    const wrapper = render(<Setup />);
+    const out5 = wrapper.queryByTestId("test output 5");
+
+    act(() => {
+        fireEvent.change(out5, { target: { value: '5' } })
+    });
     expect(out5.value).toBe('5');
 
     cleanup();

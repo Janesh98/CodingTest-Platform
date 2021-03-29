@@ -267,7 +267,7 @@ const Setup = () => {
                 required
                 id="test output 1"
                 inputProps={{ "data-testid": "test output 1" }}
-                label="Expected Output"
+                aria-label="Expected Output"
                 placeholder="Expected Output"
                 name="Output"
                 error={isError}
