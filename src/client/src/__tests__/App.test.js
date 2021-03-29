@@ -3,9 +3,8 @@ import { shallow } from 'enzyme';
 import App from '../App';
 import Signup  from '../components/Signup';
 import Login  from '../components/Login';
-import Edit  from '../components/Edit';
 import Dashboard  from '../components/Dashboard';
-import { render} from "../test-utils";
+import { render } from "../test-utils";
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
@@ -30,13 +29,5 @@ describe('rendering components', () => {
    const wrapper = shallow(<Dashboard />);
    expect(wrapper.find('#dashboard-container').length).toBe(1);
  });
-
- it('renders <Edit /> without crashing', () => {
-  const wrapper = render(<Edit />);
-  expect(wrapper.queryByTestId("edit-container")).not.toBeNull();
- });
-
-
-
 
 });
