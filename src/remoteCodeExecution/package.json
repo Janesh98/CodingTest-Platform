@@ -4,7 +4,7 @@
   "description": "Remote code execution system",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "server": "node server",
     "worker": "node worker",
     "dev:server": "nodemon server",
@@ -22,6 +22,7 @@
     "throng": "^5.0.0"
   },
   "devDependencies": {
+    "jest": "^26.6.3",
     "nodemon": "^2.0.7"
   }
 }
