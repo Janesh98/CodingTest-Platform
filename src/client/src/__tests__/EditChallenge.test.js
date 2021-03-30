@@ -1,6 +1,6 @@
 import React from 'react';
 import EditChallenge  from '../components/EditChallenge';
-import { render, screen, fireEvent, act, cleanup, waitFor } from "../test-utils";
+import { render, screen, fireEvent, act, cleanup,} from "../test-utils";
 import '@testing-library/jest-dom'
 import { createBrowserHistory } from "history";
 

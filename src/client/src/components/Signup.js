@@ -84,7 +84,7 @@ export default function Signup() {
         <Grid container align="center" justify="center" direction="column">
           <Container component="main" maxWidth="xs">
             <div>
-              <Typography component="h1" variant="h5">
+              <Typography component="h1" variant="h5" data-testid="Sign up typography">
                 Sign Up
               </Typography>
               {isformError ? (
@@ -104,7 +104,8 @@ export default function Signup() {
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  inputProps={{ "data-testid": "Email Address" }}
+                  aria-label="Email Address"
                   name="email"
                   autoComplete="email"
                   autoFocus
@@ -116,7 +117,8 @@ export default function Signup() {
                   required
                   fullWidth
                   name="password"
-                  label="Password"
+                  inputProps={{ "data-testid": "Password" }}
+                  aria-label="Password"
                   type="password"
                   id="password"
                   autoComplete="current-password"
@@ -128,7 +130,8 @@ export default function Signup() {
                   required
                   fullWidth
                   name="password"
-                  label="Confirm Password"
+                  inputProps={{ "data-testid": "Confirm Password" }}
+                  aria-label="Confirm Password"
                   type="password"
                   id="confirm-password"
                   error={isError}
@@ -138,6 +141,7 @@ export default function Signup() {
                 />
                 <Button
                   id="sign-up"
+                  data-testid="sign-up"
                   type="submit"
                   fullWidth
                   variant="contained"
@@ -149,6 +153,7 @@ export default function Signup() {
                 </Button>
                 <Button
                   id="sign-up-google"
+                  data-testid="sign-up-google"
                   type="submit"
                   fullWidth
                   variant="contained"

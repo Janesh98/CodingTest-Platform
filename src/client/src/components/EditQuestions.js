@@ -50,7 +50,7 @@ const EditQuestions = () => {
   return (
     <Container>
       <NavBar />
-      <div id="questions-container">
+      <div id="questions-container" data-testid="questions-container">
         <Grid container align="center" justify="center" direction="column">
           <Container component="main" maxWidth="xs">
             <div>
@@ -59,7 +59,7 @@ const EditQuestions = () => {
               </Typography>
             </div>
             <form>
-              <Typography component="h1">Question 1</Typography>
+              <Typography component="h1" data-testid = "Question 1 typography">Question 1</Typography>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -68,12 +68,13 @@ const EditQuestions = () => {
                 rows={2}
                 id="question1"
                 defaultValue={questionsData[0].question1}
-                label="Question 1"
+                inputProps={{ "data-testid": "Question 1" }}
+                aria-label="Question 1"
                 placeholder="Question 1"
                 name="question1"
                 onChange={(input) => setQuestion1(input.target.value)}
               />
-              <Typography component="h1">Question 2</Typography>
+              <Typography component="h1" data-testid = "Question 2 typography">Question 2</Typography>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -82,12 +83,13 @@ const EditQuestions = () => {
                 rows={2}
                 id="question2"
                 defaultValue={questionsData[0].question2}
-                label="Question 2"
+                inputProps={{ "data-testid": "Question 2" }}
+                aria-label="Question 2"
                 placeholder="Question 2"
                 name="question2"
                 onChange={(input) => setQuestion2(input.target.value)}
               />
-              <Typography component="h1">Question 3</Typography>
+              <Typography component="h1" data-testid = "Question 3 typography">Question 3</Typography>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -96,13 +98,15 @@ const EditQuestions = () => {
                 rows={2}
                 id="question3"
                 defaultValue={questionsData[0].question3}
-                label="Question 3"
+                inputProps={{ "data-testid": "Question 3" }}
+                aria-label="Question 3"
                 placeholder="Question 3"
                 name="question3"
                 onChange={(input) => setQuestion3(input.target.value)}
               />
               <Button
                 id="save"
+                data-testid="save"
                 variant="contained"
                 color="secondary"
                 size="large"
@@ -113,6 +117,7 @@ const EditQuestions = () => {
               </Button>
               <Button
                 id="exit"
+                data-testid="exit"
                 variant="contained"
                 color="primary"
                 size="large"

@@ -53,7 +53,7 @@ export default function Login() {
         <Grid container align="center" justify="center" direction="column">
           <Container component="main" maxWidth="xs">
             <div>
-              <Typography component="h1" variant="h5">
+              <Typography component="h1" variant="h5" data-testid="Sign in typography">
                 Sign In
               </Typography>
               {isformError ? (
@@ -73,7 +73,8 @@ export default function Login() {
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  inputProps={{ "data-testid": "Email Address" }}
+                  aria-label="Email Address"
                   name="email"
                   autoComplete="email"
                   autoFocus
@@ -85,7 +86,8 @@ export default function Login() {
                   required
                   fullWidth
                   name="password"
-                  label="Password"
+                  inputProps={{ "data-testid": "Password" }}
+                  aria-label="Password"
                   type="password"
                   id="password"
                   autoComplete="current-password"
@@ -93,6 +95,7 @@ export default function Login() {
                 />
                 <Button
                   id="sign-in"
+                  data-testid="sign-in"
                   type="submit"
                   fullWidth
                   variant="contained"
@@ -104,6 +107,7 @@ export default function Login() {
                 </Button>
                 <Button
                   id="sign-in-google"
+                  data-testid="sign-in-google"
                   type="submit"
                   fullWidth
                   variant="contained"

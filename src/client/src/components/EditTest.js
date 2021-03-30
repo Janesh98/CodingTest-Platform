@@ -35,10 +35,12 @@ const EditTest = () => {
   const [QuestionsTableData, setQuestionsTableData] = useState([]);
 
   useEffect(() => {
+    let mounted = true;
     const rows = async () => {
       var res = await axios.post(getChallenges, {
         data: { googleId: currentUser.uid, testName: TestName },
       });
+      if(mounted){
       setTableData(
         res.data.data.map((item) => ({
           _id: item._id,
@@ -62,17 +64,20 @@ const EditTest = () => {
           testOutput5: item.testOutput5,
           createdAt: item.createdAt,
         }))
-      );
+      )};
     };
 
     rows();
+    return () => { mounted = false;}
   }, [currentUser.uid, TestName]);
 
   useEffect(() => {
+    let mounted = true;
     const questionRows = async () => {
       var res = await axios.post(getQuestions, {
         data: { googleId: currentUser.uid, testName: TestName },
       });
+      if(mounted){
       await setQuestionsTableData(
         res.data.data.map((item) => ({
           _id: item._id,
@@ -80,10 +85,11 @@ const EditTest = () => {
           question2: item.question2,
           question3: item.question3,
         }))
-      );
+      )};
     };
 
     questionRows();
+    return () => { mounted = false;}
   }, [currentUser.uid, TestName]);
 
   const useStyles = makeStyles({
@@ -207,7 +213,7 @@ const EditTest = () => {
   return (
     <Container>
       <NavBar />
-      <div id="results-container">
+      <div id="results-container" data-testid="editTest-container">
         <Grid container align="center" justify="center" direction="column">
           <Container component="main" maxWidth="md">
             <div>
@@ -216,6 +222,7 @@ const EditTest = () => {
               </Typography>
               <Button
                 id="addParticipants"
+                data-testid="addParticipants"
                 variant="contained"
                 color="secondary"
                 size="small"
@@ -238,6 +245,7 @@ const EditTest = () => {
                       <Button
                         id="addQs"
                         variant="contained"
+                        data-testid="addChallenge"
                         color="primary"
                         size="small"
                         onClick={(e) => handleOnClickAddChallenge(e)}
