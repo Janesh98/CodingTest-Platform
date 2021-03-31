@@ -302,6 +302,23 @@ exports.getParticipants = (req, res) => {
   );
 };
 
+exports.getParticipantResults = (req, res) => {
+  const participant = {
+    _id: req.body.data._id,
+  };
+
+  ParticipantDB.find(
+    { _id: participant._id },
+    { __v: 0 },
+    function (err, result) {
+      if (err) throw err;
+      console.log(result);
+      return res.status(200).json({
+        data: result,
+      });
+    }
+  );
+};
 exports.deleteTest = (req, res) => {
   const test = {
     googleId: req.body.data.googleId,

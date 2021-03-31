@@ -27,6 +27,7 @@ const {
   addQs,
   getTests,
   getParticipants,
+  getParticipantResults,
   deleteTest,
   getChallenges,
   getCodingTest,
@@ -62,6 +63,7 @@ app.post('/challenge', newChallenge);
 app.post('/questions', addQs);
 app.post('/tests', getTests);
 app.post('/getParticipants', getParticipants);
+app.post('/getParticipantResults', getParticipantResults);
 app.post('/delete', deleteTest);
 app.post('/challenges', getChallenges);
 app.post('/codingtest/:codingTestId/:participantId', getCodingTest);

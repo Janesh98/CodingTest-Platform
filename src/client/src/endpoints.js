@@ -12,6 +12,7 @@ export const addChallenge = `${baseUrl}/challenge`;
 export const addQs = `${baseUrl}/questions`;
 export const getTests = `${baseUrl}/tests`;
 export const getParticipants = `${baseUrl}/getParticipants`;
+export const getParticipantResults = `${baseUrl}/getParticipantResults`;
 export const deleteTest = `${baseUrl}/delete`;
 export const updateChallenge = `${baseUrl}/updateChallenge`;
 export const updateQuestions = `${baseUrl}/updateQuestions`;
