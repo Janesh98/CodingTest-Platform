@@ -20,6 +20,7 @@ class ExecutorService {
       { Tty: false }
     );
     const container = data[1];
+
     const stats = await container.inspect();
     const runTime = getRunTime(stats.State.StartedAt, stats.State.FinishedAt);
     await container.remove();
@@ -46,7 +47,7 @@ class ExecutorService {
         break;
       case 'java':
         context.image = 'openjdk:8-alpine';
-        context.cmd = `echo "${decoded}" > Main.java && javac *.java && java Main ${input}`;
+        context.cmd = `echo "${decoded}" > Main.java && javac Main.java && java Main ${input}`;
         break;
       default:
         throw new Error(`Error: '${language}' is not a supported language.`);
