@@ -7,20 +7,15 @@ const { getRunTime } = require('../utils/runTime');
 
 // executes code submitted in docker container, deleting container afterwards.
 class ExecutorService {
-  async execute(code, input) {
-    var decoded = Base64.decode(code);
-    decoded = escapeQuotes(decoded);
-
+  async execute(code, input, language) {
     var stdout = new streams.WritableStream();
     var stderr = new streams.WritableStream();
 
+    const context = this.createContext(code, input, language);
+
     const data = await docker.run(
-      'python:3-alpine',
-      [
-        '/bin/sh',
-        '-c',
-        `echo "${decoded}" > test.py && python3 test.py ${input}`,
-      ],
+      context.image,
+      ['/bin/sh', '-c', context.cmd],
       [stdout, stderr],
       { Tty: false }
     );
@@ -35,6 +30,28 @@ class ExecutorService {
       stdout,
       stderr,
     };
+  }
+
+  // returns correct docker image name and command to execute
+  createContext(code, input, language) {
+    var decoded = Base64.decode(code);
+    decoded = escapeQuotes(decoded);
+
+    var context = {};
+    language = language.toLowerCase();
+    switch (language) {
+      case 'python3':
+        context.image = 'python:3-alpine';
+        context.cmd = `echo "${decoded}" > test.py && python3 test.py ${input}`;
+        break;
+      case 'java':
+        context.image = 'openjdk:8-alpine';
+        context.cmd = `echo "${decoded}" > Main.java && javac *.java && java Main ${input}`;
+        break;
+      default:
+        throw new Error(`Error: '${language}' is not a supported language.`);
+    }
+    return context;
   }
 }
 

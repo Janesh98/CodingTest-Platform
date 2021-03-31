@@ -13,8 +13,9 @@ const start = async () => {
     try {
       const code = job.data.code;
       const input = job.data.input;
+      const language = job.data.language;
 
-      const output = await new ExecutorService().execute(code, input);
+      const output = await new ExecutorService().execute(code, input, language);
       await job.update(output);
       return { data: output };
     } catch (err) {
