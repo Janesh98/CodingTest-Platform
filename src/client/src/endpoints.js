@@ -1,6 +1,6 @@
 const baseUrl =
   process.env.REACT_APP_ENV === 'development'
-    ? 'http://localhost:5001/coding-test-platform/us-central1/api'
+    ? 'http://localhost:5000/coding-test-platform/us-central1/api'
     : 'https://us-central1-coding-test-platform.cloudfunctions.net/api';
 
 export const callCompany = `${baseUrl}/company/all`;
