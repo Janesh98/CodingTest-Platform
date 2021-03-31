@@ -13,6 +13,7 @@ import EditQuestions from './components/EditQuestions';
 import Results from './components/Results';
 import ParticipantsList from './components/ParticipantsList';
 import ParticipantsResults from './components/ParticipantsResults';
+import ChallengeResult from './components/ChallengeResult';
 import Create from './components/Create';
 import AddParticipants from './components/AddParticipants';
 import { AuthProvider } from './contexts/AuthContext';
@@ -41,6 +42,7 @@ function App() {
           <PrivateRoute path="/results" component={Results} />
           <PrivateRoute path="/participantsresults" component={ParticipantsList} />
           <PrivateRoute path="/IndividualResults" component={ParticipantsResults} />
+          <PrivateRoute path="/ChallengeResult" component={ChallengeResult} />
           <PrivateRoute path="/addparticipants" component={AddParticipants} />
           <Route
             path="/codingtest/:codingTestId/:participantId"

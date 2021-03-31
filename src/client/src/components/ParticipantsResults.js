@@ -31,12 +31,20 @@ const ParticipantsResults = () => {
       var res = await axios.post(getParticipantResults, {
         data: { _id: id },
       });
-   
-      await setTableData(res.data.data[0].codingTestResults[0].challenges.map((item) => ({ title: item.title, testCases : item.testResults.reduce(reducer)/item.testResults.length})));
+      console.log(res.data.data)
+      await setTableData(res.data.data[0].codingTestResults[0].challenges.map((item) => ({ title: item.title, testCases : item.testResults.reduce(reducer)/item.testResults.length, challengeData: item})));
     };
-
     rows();
   }, [id]);
+
+  const handleOnClickSeeMore = async (challengeData) => {
+    history.push({
+      pathname: '/ChallengeResult',
+      state: {
+        challengeData: challengeData
+      },
+    });
+  };
 
   const useStyles = makeStyles({
     table: {
@@ -83,6 +91,7 @@ const ParticipantsResults = () => {
                           variant="contained"
                           color="secondary"
                           size="small"
+                          onClick={(e)=> handleOnClickSeeMore(row.challengeData)}
                         >
                           See More
                         </Button>
