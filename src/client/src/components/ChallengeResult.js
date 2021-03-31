@@ -33,8 +33,6 @@ const ChallengeResult = () => {
   }
   console.log(data);
 
-  const reducer = (accumulator, currentValue) => accumulator + currentValue;
-
   
   useEffect(() => {
     const rows = () => {
