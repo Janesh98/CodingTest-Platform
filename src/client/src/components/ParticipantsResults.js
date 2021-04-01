@@ -19,11 +19,15 @@ import axios from 'axios';
 
 const ParticipantsResults = () => {
   const [tableData, setTableData] = useState([]);
+  const [questionsTableData, setQuestionsTableData] = useState([]);
   const history = useHistory();
   const id = history.location.state.id;
   const email = history.location.state.email;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  var questionsList = []
 
   const reducer = (accumulator, currentValue) => accumulator + currentValue;
+  
 
   
   useEffect(() => {
@@ -31,11 +35,24 @@ const ParticipantsResults = () => {
       var res = await axios.post(getParticipantResults, {
         data: { _id: id },
       });
-      console.log(res.data.data)
       await setTableData(res.data.data[0].codingTestResults[0].challenges.map((item) => ({ title: item.title, testCases : item.testResults.reduce(reducer)/item.testResults.length, challengeData: item})));
+
+      var key;
+      var i = 1;
+      for (key in res.data.data[0].codingTestResults[0].questions[0]){
+        var question = {};
+        question = {
+          question: res.data.data[0].codingTestResults[0].questions[0][key],
+          id: i
+        }
+        i ++;
+        questionsList.push(question)
+      }
+      await setQuestionsTableData(questionsList.map((item) => ({ id: item.id, question: item.question })));
     };
     rows();
-  }, [id]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleOnClickSeeMore = async (challengeData) => {
     history.push({
@@ -94,6 +111,41 @@ const ParticipantsResults = () => {
                           onClick={(e)=> handleOnClickSeeMore(row.challengeData)}
                         >
                           See More
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <Typography component="h1" variant="h5">
+                Question Responses
+              </Typography>
+            <TableContainer component={Paper}>
+              <Table className={classes.table} aria-label="simple table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>No.</TableCell>
+                    <TableCell>Question</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {questionsTableData.map((row) => (
+                    <TableRow key={row.id}>
+                      <TableCell component="th" scope="row">
+                        {row.id}
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        {row.question}
+                      </TableCell>
+                      <TableCell>
+                        <Button
+                          id="addParticipants"
+                          variant="contained"
+                          color="primary"
+                          size="small"
+                        >
+                          View Response
                         </Button>
                       </TableCell>
                     </TableRow>
