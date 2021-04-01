@@ -1,6 +1,4 @@
-const Queue = require('bull');
-const REDIS_URL = process.env.REDIS_URL || 'redis://127.0.0.1:6379';
-const submissionQueue = new Queue('submissions', REDIS_URL);
+const submissionQueue = require('../config/queueSetup');
 
 // add submission to queue
 exports.addSubmission = async (req, res) => {
@@ -43,7 +41,6 @@ exports.getSubmission = async (req, res) => {
       }
     }
   } catch (err) {
-    console.error(err);
-    res.json(404).json({ data: err });
+    res.status(404).json({ data: err });
   }
 };

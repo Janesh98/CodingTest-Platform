@@ -4,7 +4,7 @@
   "description": "Remote code execution system",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --coverage",
     "server": "node server",
     "worker": "node worker",
     "dev:server": "nodemon server",

@@ -41,7 +41,7 @@ test-backend:
   stage: test
   script:
     - cd src/functions
-    - npm ci
+    - npm i
     - npm test
   only:
     changes:
@@ -51,7 +51,7 @@ test-RCE:
   stage: test
   script:
     - cd src/remoteCodeExecution
-    - npm ci
+    - npm i
     - npm test
   only:
     changes:
