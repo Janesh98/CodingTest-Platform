@@ -1,5 +1,5 @@
-const { escapeQuotes } = require('../utils/escape');
-const { getRunTime } = require('../utils/runTime');
+const { escapeQuotes } = require('../../utils/escape');
+const { getRunTime } = require('../../utils/runTime');
 
 describe('Utility functions test', () => {
   it('should escape all quotes', () => {
