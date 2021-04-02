@@ -1,17 +1,6 @@
-const { escapeQuotes } = require('../../utils/escape');
 const { getRunTime } = require('../../utils/runTime');
 
-describe('Utility functions test', () => {
-  it('should escape all quotes', () => {
-    testCmd = 'print("hello world")';
-    result = escapeQuotes(testCmd);
-    expect(result).toBe('print(\\"hello world\\")');
-  });
-  it('should not escape an empty string', () => {
-    testCmd = '';
-    result = escapeQuotes(testCmd);
-    expect(result).toBe('');
-  });
+describe('Utility functions - runTime', () => {
   it('should calculate difference between two datetimes', () => {
     startDt = '2021-03-31T21:34:44.0019025Z';
     endDt = '2021-03-31T21:34:44.4301028Z';

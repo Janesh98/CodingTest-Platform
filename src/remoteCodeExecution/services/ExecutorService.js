@@ -4,6 +4,7 @@ const streams = require('memory-streams');
 const { Base64 } = require('js-base64');
 const { escapeQuotes } = require('../utils/escape');
 const { getRunTime } = require('../utils/runTime');
+const { extractMemory } = require('../utils/extractMemory');
 
 // executes code submitted in docker container, deleting container afterwards.
 class ExecutorService {
@@ -26,10 +27,12 @@ class ExecutorService {
     await container.remove();
     stdout = stdout.toString().trim();
     stderr = stderr.toString().trim();
+    const output = extractMemory(stderr);
     return {
       time: runTime,
+      memory: output.memory,
       stdout,
-      stderr,
+      stderr: output.stderr,
     };
   }
 
@@ -37,17 +40,18 @@ class ExecutorService {
   createContext(code, input, language) {
     var decoded = Base64.decode(code);
     decoded = escapeQuotes(decoded);
+    const getMem = "time -f 'MEM: %M'";
 
     var context = {};
     language = language.toLowerCase();
     switch (language) {
       case 'python3':
         context.image = 'python:3-alpine';
-        context.cmd = `echo "${decoded}" > test.py && python3 test.py ${input}`;
+        context.cmd = `echo "${decoded}" > test.py && ${getMem} python3 test.py ${input}`;
         break;
       case 'java':
         context.image = 'openjdk:8-alpine';
-        context.cmd = `echo "${decoded}" > Main.java && javac Main.java && java Main ${input}`;
+        context.cmd = `echo "${decoded}" > Main.java && javac Main.java && ${getMem} java Main ${input}`;
         break;
       default:
         throw new Error(`Error: '${language}' is not a supported language.`);
