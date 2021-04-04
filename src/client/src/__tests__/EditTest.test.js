@@ -1,6 +1,6 @@
 import React from 'react';
 import EditTest  from '../components/EditTest';
-import { render, screen } from "../test-utils";
+import { render, screen, fireEvent, act } from "../test-utils";
 import '@testing-library/jest-dom'
 import { createBrowserHistory } from "history";
 
@@ -69,4 +69,25 @@ it('renders add challenge without crashing', async () => {
     expect(screen.queryByTestId("addChallenge")).toBeInTheDocument();
 });
 
+it('Add Challenge Button click', async ()=> {
+    const mockHandleOnClick = jest.fn()
+    const  wrapper  = render(<EditTest onClick={mockHandleOnClick()}/>);
+
+    const button = wrapper.queryByTestId("addChallenge");
+    act(() => {
+    fireEvent.click(button);
+     });
+     expect(mockHandleOnClick).toHaveBeenCalledTimes(1);
+ });
+
+  it('Add Participants Button click', async ()=> {
+    const mockHandleOnClick = jest.fn()
+    const  wrapper  = render(<EditTest onClick={mockHandleOnClick()}/>);
+
+    const button = wrapper.queryByTestId("addParticipants");
+    act(() => {
+    fireEvent.click(button);
+     });
+     expect(mockHandleOnClick).toHaveBeenCalledTimes(1);
+ });
 });

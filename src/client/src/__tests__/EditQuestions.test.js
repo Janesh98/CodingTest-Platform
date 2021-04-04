@@ -124,5 +124,26 @@ it('Question 3 TextField update', async ()=> {
     cleanup();
 });
 
+it('Save Button click', async ()=> {
+    const mockHandleOnClick = jest.fn()
+    const  wrapper  = render(<EditQuestions onClick={mockHandleOnClick()}/>);
+
+    const button = wrapper.queryByTestId("save");
+    act(() => {
+    fireEvent.click(button);
+     });
+     expect(mockHandleOnClick).toHaveBeenCalledTimes(1);
+ });
+
+  it('Exit Button click', async ()=> {
+    const mockHandleOnClick = jest.fn()
+    const  wrapper  = render(<EditQuestions onClick={mockHandleOnClick()}/>);
+
+    const button = wrapper.queryByTestId("exit");
+    act(() => {
+    fireEvent.click(button);
+     });
+     expect(mockHandleOnClick).toHaveBeenCalledTimes(1);
+ });
 
 });

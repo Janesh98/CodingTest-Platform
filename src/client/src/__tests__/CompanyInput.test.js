@@ -39,4 +39,16 @@ describe('rendering components', () => {
     cleanup();
 });
 
+it('Submit Button click', async ()=> {
+    const mockHandleOnClick = jest.fn()
+    const  wrapper  = render(<CompanyInput onClick={mockHandleOnClick()}/>);
+
+    const button = wrapper.queryByTestId("submit");
+    act(() => {
+    fireEvent.click(button);
+     });
+     expect(mockHandleOnClick).toHaveBeenCalledTimes(1);
+ });
+
+
 });

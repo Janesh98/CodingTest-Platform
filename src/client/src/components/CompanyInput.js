@@ -89,6 +89,7 @@ const CompanyInput = () => {
                 />
                 <Button
                   id="submit-company"
+                  data-testid="submit"
                   type="submit"
                   fullWidth
                   variant="contained"

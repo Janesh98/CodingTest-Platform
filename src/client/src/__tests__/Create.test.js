@@ -48,54 +48,16 @@ describe('rendering components', () => {
     cleanup();
 });
 
-// it('Button click', async ()=> {
-//    const wrapper = render(<Create/>);
-//   // const logSpy = jest.spyOn(wrapper.prototype, 'handleOnClick');
-//    
-//
-//
-//    const button = wrapper.queryByTestId("continue");
-//    act(() => {
-//    fireEvent.click(button);
-//     });
-//    expect(jest.fn()).toHaveBeenCalledTimes(1);
-//
-// });
+ it('Button click', async ()=> {
+    const mockHandleOnClick = jest.fn()
+    const  wrapper  = render(<Create onClick={mockHandleOnClick()}/>);
 
-// it('Button click', async ()=> {
-//  //   const historyMock = { push: jest.fn() };
-//     const wrapper = render(<Create />);
-//   //  const mockedEvent = { target: {}, preventDefault: () => {} }
-//    //  const spy = jest.spyOn(wrapper, 'continue')
-//
-//     await new Promise((resolve) => setTimeout(resolve))
-//     const mockHandleOnClick = jest.fn()
-//
-//    const button = wrapper.queryByTestId("continue")
-//    waitFor(() => fireEvent.click(button))
-//
-//    await new Promise((resolve) => setTimeout(resolve))
-//    expect(mockHandleOnClick.mock.calls.length).toBe(1);
-   // expect(spy).toHaveBeenCalled()
-    //console.log(historyMock.push.mock.calls[0]);
-   // expect(historyMock.push.mock.calls[0]).toBeCalledWith( "/setup ");
-   // expect(historyMock.push.mock.calls[0]).toEqual([ "/setup "]);
-    //expect(mockHistoryPush).toHaveBeenCalledWith('/setup')
-// });
-// it('Button click', async ()=> {
-//     const wrapper = render(<Create />);
-//
-//     const labelBeforeGet = wrapper.queryByLabelText(/created/i);
-//     expect(labelBeforeGet).toBeNull()
-//
-//     const button = wrapper.queryByLabelText(/continue/i);
-//     fireEvent.click(button);
-//
-//     const labelAfterGet = await waitFor(() => wrapper.queryByLabelText(/created/i));
-//
-//     
-//     expect(labelAfterGet.textContent).toEqual(successResult); 
-// });
+    const button = wrapper.queryByTestId("continue");
+    act(() => {
+    fireEvent.click(button);
+     });
+     expect(mockHandleOnClick).toHaveBeenCalledTimes(1);
+ });
 
 });
 
