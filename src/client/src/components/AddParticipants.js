@@ -74,7 +74,8 @@ const AddParticipants = () => {
               required
               fullWidth
               id="email"
-              label="Email"
+              aria-label="Email"
+              inputProps={{ "data-testid": "Email" }}
               placeholder="Email"
               name="Email"
               autoFocus
@@ -84,6 +85,7 @@ const AddParticipants = () => {
             />
             <Button
               id="send-invitation"
+              data-testid="send"
               variant="contained"
               color="primary"
               size="large"
