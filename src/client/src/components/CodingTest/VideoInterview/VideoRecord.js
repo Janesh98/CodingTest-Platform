@@ -13,16 +13,17 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     margin: '0px',
   },
+
   problem: {
     textAlign: 'center',
     color: theme.palette.common.white,
-    background: theme.palette.success.contrastText,
+    background:"#1d1d1d",
     height: '100%',
   },
   terminal: {
     textAlign: 'center',
     color: theme.palette.common.white,
-    background: theme.palette.success.contrastText,
+    background: "#1d1d1d",
     height: '100%',
   },
 }));
@@ -32,20 +33,24 @@ const VideoRecord = () => {
 
   return (
     <CodingTestProvider>
-      <Grid container className={classes.root} spacing={0}>
+      <Grid container direction={"column"} style={{ "background-color": "#1d1d1d" }} spacing={0}>
+      <Grid item>
         <Grid item xs={12} sm={12}>
         <Header />
         </Grid>
-        <Grid item xs={12} sm={5}>
+          <Grid container className={classes.root} spacing={0}>
+        <Grid item xs={12} sm={4}>
           <Paper square className={classes.problem}>
             <Questions />
           </Paper>
         </Grid>
-          <Grid item xs={12} sm={7}>
+          <Grid item xs={12} sm={8}>
               <Paper square className={classes.terminal}>
                 <Camera />
              </Paper>
           </Grid>
+      </Grid>
+      </Grid>
       </Grid>
      </CodingTestProvider>
   );
