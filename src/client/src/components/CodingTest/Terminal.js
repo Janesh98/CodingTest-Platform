@@ -75,16 +75,13 @@ const Terminal = () => {
   const [value, setValue] = useState(0);
 
   const parseCodeOutput = (i) => {
-    if (codeOutput.length <= 0) {
+    if (codeOutput?.length <= 0) {
       return '';
-    } else if (
-      codeOutput[i].compile_output &&
-      codeOutput[i].compile_output != null
-    )
-      return atob(codeOutput[i].compile_output);
-    else if (codeOutput[i].stderr && codeOutput[i].stderr != null)
-      return atob(codeOutput[i].stderr);
-    else return codeOutput[i].stdout ? atob(codeOutput[i].stdout) : '';
+    } else if (codeOutput[i]?.compile_output)
+      return atob(codeOutput[i]?.compile_output);
+    else if (codeOutput[i]?.stderr && codeOutput[i]?.stderr != null)
+      return atob(codeOutput[i]?.stderr);
+    else return codeOutput[i]?.stdout ? atob(codeOutput[i]?.stdout) : '';
   };
 
   const getCodeTestInput = (index) => {
