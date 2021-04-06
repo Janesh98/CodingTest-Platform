@@ -3,10 +3,15 @@ const baseUrl =
     ? 'http://localhost:5000/coding-test-platform/us-central1/api'
     : 'https://us-central1-coding-test-platform.cloudfunctions.net/api';
 
+const rceBaseUrl = 'http://localhost:8000';
+
+export const submission =
+  process.env.REACT_APP_ALT_RCE_API === 'false'
+    ? `${rceBaseUrl}/submission`
+    : `${baseUrl}/code`;
 export const callCompany = `${baseUrl}/company/all`;
 export const updateCompany = `${baseUrl}/company`;
 export const callRegister = `${baseUrl}/register`;
-export const executeCode = `${baseUrl}/code`;
 export const addTest = `${baseUrl}/test`;
 export const addChallenge = `${baseUrl}/challenge`;
 export const addQs = `${baseUrl}/questions`;

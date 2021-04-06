@@ -31,30 +31,31 @@ class ExecutorService {
     return {
       time: runTime,
       memory: output.memory,
-      stdout,
-      stderr: output.stderr,
+      stdout: Base64.encode(stdout),
+      stderr: Base64.encode(output.stderr),
     };
   }
 
   // returns correct docker image name and command to execute
   createContext(code, input, language) {
-    var decoded = Base64.decode(code);
-    decoded = escapeQuotes(decoded);
+    code = Base64.decode(code);
+    input = Base64.decode(input);
+    code = escapeQuotes(code);
     const getMem = "time -f 'MEM: %M'";
 
     var context = {};
     language = language.toLowerCase();
     switch (language) {
-      case 'python3':
+      case 'python':
         context.image = 'python:3-alpine';
-        context.cmd = `echo "${decoded}" > test.py && ${getMem} python3 test.py ${input}`;
+        context.cmd = `echo "${code}" > test.py && ${getMem} python3 test.py ${input}`;
         break;
       case 'java':
         context.image = 'openjdk:8-alpine';
-        context.cmd = `echo "${decoded}" > Main.java && javac Main.java && ${getMem} java Main ${input}`;
+        context.cmd = `echo "${code}" > Main.java && javac Main.java && ${getMem} java Main ${input}`;
         break;
       default:
-        throw new Error(`Error: '${language}' is not a supported language.`);
+        throw new Error(`'${language}' is not a supported language.`);
     }
     return context;
   }
