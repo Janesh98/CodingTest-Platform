@@ -9,15 +9,6 @@ app.use(cors());
 // SET CORS for PREFLIGHT OPTIONS
 app.options('*', cors());
 
-// const API_PREFIX = 'api';
-// // Rewrite Firebase hosting requests: /api/:path => /:path
-// app.use((req, res, next) => {
-//   if (req.url.indexOf(`/${API_PREFIX}/`) === 0) {
-//     req.url = req.url.substring(API_PREFIX.length + 1);
-//   }
-//   next();
-// });
-
 const {
   register,
   company,
