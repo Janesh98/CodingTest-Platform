@@ -33,7 +33,7 @@ const VideoRecord = () => {
 
   return (
     <CodingTestProvider>
-      <Grid container direction={"column"} style={{ "background-color": "#1d1d1d" }} spacing={0}>
+      <Grid container direction={"column"} style={{ "backgroundColor": "#1d1d1d" }} spacing={0}>
       <Grid item>
         <Grid item xs={12} sm={12}>
         <Header />

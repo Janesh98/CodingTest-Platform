@@ -71,7 +71,6 @@ exports.company = (req, res) => {
 };
 
 exports.addCompany = (req, res) => {
-  console.log(req);
   const newCompany = {
     googleId: req.body.data.googleId,
     company: req.body.data.company,
@@ -311,7 +310,6 @@ exports.getParticipants = (req, res) => {
     { __v: 0 },
     function (err, result) {
       if (err) throw err;
-      console.log(result);
       return res.status(200).json({
         data: result,
       });
@@ -329,7 +327,6 @@ exports.getParticipantResults = (req, res) => {
     { __v: 0 },
     function (err, result) {
       if (err) throw err;
-      console.log(result);
       return res.status(200).json({
         data: result,
       });
@@ -349,17 +346,14 @@ exports.deleteTest = (req, res) => {
   };
   CodingTestDB.deleteOne(query, function (err, obj) {
     if (err) throw err;
-    console.log('1 document deleted');
   });
 
   CodingChallengeDB.deleteMany(query, function (err, obj) {
     if (err) throw err;
-    console.log('Many document(s) deleted');
   });
 
   QuestionsDB.deleteMany(query, function (err, obj) {
     if (err) throw err;
-    console.log('Many document(s) deleted');
   });
 
   NewUserDB.updateOne(
@@ -453,7 +447,6 @@ exports.getCodingTest = async (req, res) => {
 };
 
 exports.submitCodingTest = async (req, res) => {
-  console.log('code submission');
   try {
     const id = req.body.data.participantId;
     const codingTestResults = req.body.data.codingTestResults;
@@ -502,7 +495,6 @@ exports.deleteChallenge = (req, res) => {
   };
   CodingChallengeDB.deleteOne(query, function (err, obj) {
     if (err) throw err;
-    console.log('1 document deleted');
   });
   CodingTestDB.updateOne(
     { googleId: challenge.googleId, testName: challenge.testName },
@@ -530,7 +522,6 @@ exports.deleteQuestions = (req, res) => {
 
   QuestionsDB.deleteOne(query, function (err, obj) {
     if (err) throw err;
-    console.log('1 document deleted');
   });
   CodingTestDB.updateOne(
     { googleId: questions.googleId, testName: questions.testName },

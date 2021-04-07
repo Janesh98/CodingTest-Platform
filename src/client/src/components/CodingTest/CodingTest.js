@@ -33,7 +33,7 @@ export default function CodingTest() {
 
   return (
     <CodingTestProvider>
-      <Grid container className={classes.root} style={{ "background-color": "#1d1d1d" }} spacing={0}>
+      <Grid container className={classes.root} style={{ "backgroundColor": "#1d1d1d" }} spacing={0}>
         <Grid item xs={12} sm={12}>
           <Header />
         </Grid>
