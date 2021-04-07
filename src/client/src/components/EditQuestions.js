@@ -19,7 +19,7 @@ const EditQuestions = () => {
   const questionsId = history.location.state.questionsId;
   const [question1, setQuestion1] = useState(questionsData.length >= 1 ? questionsData[0].question : '');
   const [question2, setQuestion2] = useState(questionsData.length >= 2 ? questionsData[1].question : '');
-  const [question3, setQuestion3] = useState(questionsData.length === 3 ? questionsData[3].question : '');
+  const [question3, setQuestion3] = useState(questionsData.length === 3 ? questionsData[2].question : '');
 
   const handleOnClickSave = async (e) => {
     e.preventDefault();
