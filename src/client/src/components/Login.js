@@ -4,11 +4,13 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Alert from '@material-ui/lab/Alert';
-
+import { callRegister, checkRegister } from '../endpoints';
 import './css/Login.css';
 import { useAuth } from '../contexts/AuthContext';
 import { Link, useHistory } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
+import axios from 'axios';
+
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -18,6 +20,19 @@ export default function Login() {
   const [isformError, setIsFormError] = useState(false);
   const { login, signInWithGoogle } = useAuth();
   const history = useHistory();
+
+  const checkUserDetails = async (user) => {
+    const result = await axios.post(checkRegister, {
+      data: { email: user.email },
+    });
+    return result.data.data;
+  };
+
+  const postUserDetails = async (user) => {
+    await axios.post(callRegister, {
+      data: { googleId: user.uid, email: user.email },
+    });
+  };
 
   const handleSubmitLogin = async (e) => {
     try {
@@ -37,9 +52,17 @@ export default function Login() {
     try {
       e.preventDefault();
       setLoading(true);
-      await signInWithGoogle();
-      setLoading(false);
-      history.push('/');
+      const res = await signInWithGoogle();
+      const result = await checkUserDetails(res.user);
+      if(result.length === 0){
+        postUserDetails(res.user);
+        setLoading(false);
+        history.push('/signup/company');
+      }
+      else{
+        setLoading(false);
+        history.push('/');
+      }
     } catch (error) {
       setIsFormError(true);
       setFormError(error.message);

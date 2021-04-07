@@ -11,6 +11,7 @@ app.options('*', cors());
 
 const {
   register,
+  checkRegister,
   company,
   addCompany,
   newTest,
@@ -46,6 +47,7 @@ connection.once('open', () => {
 // all firebase functions must be a post request
 // Registration route
 app.post('/register', register);
+app.post('/checkRegister', checkRegister);
 app.post('/company/all', company);
 app.post('/company', addCompany);
 app.post('/code', executeCode);

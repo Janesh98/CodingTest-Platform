@@ -38,6 +38,23 @@ exports.register = (req, res) => {
   });
 };
 
+exports.checkRegister = (req, res) => {
+  const newUser = {
+    email: req.body.data.email,
+  };
+  NewUserDB.find(
+    { email: newUser.email },
+    function (err, result) {
+      if (err) throw err;
+      // need to return data as key in response for firebase functions
+      return res.status(200).json({
+        status: 'success',
+        data: result,
+      });
+    }
+  );
+};
+
 exports.company = (req, res) => {
   NewUserDB.find(
     { company: { $ne: null } },
