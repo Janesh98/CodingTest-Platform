@@ -44,20 +44,11 @@ describe('rendering components', () => {
   expect(screen.getByText("Date Created")).toBeInTheDocument();
  });
 
- it('renders Question 1 table column without crashing', () => {
+ it('renders Question table column without crashing', () => {
   render(<EditTest history={createBrowserHistory(history.push("/", state))}/>);
-  expect(screen.getByText("Question 1")).toBeInTheDocument();
+  expect(screen.getByText("Question")).toBeInTheDocument();
  });
 
- it('renders Question 2 table column without crashing', () => {
-  render(<EditTest history={createBrowserHistory(history.push("/", state))}/>);
-  expect(screen.getByText("Question 2")).toBeInTheDocument();
- });
-
- it('renders Question 3 table column without crashing', () => {
-  render(<EditTest history={createBrowserHistory(history.push("/", state))}/>);
-  expect(screen.getByText("Question 3")).toBeInTheDocument();
- });
 
  it('renders add participants button without crashing', async () => {
     render(<EditTest history={createBrowserHistory(history.push("/", state))} />);

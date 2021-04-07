@@ -8,11 +8,9 @@ describe('rendering components', () => {
 
     const history = createBrowserHistory();
     const state = { testName: 'testName1',
-                    questionsData: [{ _id: 1,
-          question1: "who?",
-          question2: "what?",
-          question3: "where?",
-        } ]}
+                    questionsData: [
+          {question: "who?"}, {question: "what?"}, {question: "where?"},
+         ]}
     history.push("/", state);
     it('renders <EditQuestions /> without crashing', () => {
         render(<EditQuestions history={createBrowserHistory(history.push("/", state))}/>);
@@ -86,8 +84,7 @@ it('Question 3 TextField have correct value', async ()=> {
 
     expect(problem.value).toBe('where?');
     cleanup();
-});
-
+})
 it('Question 1 TextField update', async ()=> {
     const wrapper = render(<EditQuestions />);
     const problem = wrapper.queryByTestId("Question 1");
