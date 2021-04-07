@@ -37,6 +37,8 @@ const ParticipantsResults = () => {
       var res = await axios.post(getParticipantResults, {
         data: { _id: id },
       });
+     
+      if(res.data.data[0].codingTestResults.length > 0){
       setTestId(res.data.data[0].TestId);
       await setTableData(res.data.data[0].codingTestResults[0].challenges.map((item) => ({ title: item.title, testCases : item.testResults.reduce(reducer)/item.testResults.length, challengeData: item})));
 
@@ -57,7 +59,7 @@ const ParticipantsResults = () => {
       }
       await setQuestionsTableData(questionsList.map((item) => ({ id: item.id, question: item.question, videoUrl: item.videoUrl })));
 
-    
+      }
     };
     rows();
   // eslint-disable-next-line react-hooks/exhaustive-deps
