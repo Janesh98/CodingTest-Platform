@@ -61,7 +61,7 @@ const Questions = () => {
         <AppBar position="static" color="transparent"></AppBar>
         <Typography>
           {codingTest !== null
-            ? codingTest.questions[0]['question' + currentQuestionIndex]
+            ? codingTest.questions[0].questions[currentQuestionIndex]
             : ''}
         </Typography>
       </div>

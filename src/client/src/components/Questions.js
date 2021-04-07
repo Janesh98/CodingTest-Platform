@@ -23,13 +23,21 @@ const Questions = () => {
 
   const handleOnClickSave = async (e) => {
     e.preventDefault();
+    var questions = []
+    if(question1 !== ''){
+      questions.push(question1)
+    }
+    if(question2 !== ''){
+      questions.push(question2)
+    }
+    if(question3 !== ''){
+      questions.push(question3)
+    }
     await axios.post(addQs, {
       data: {
         googleId: currentUser.uid,
         testName: testName,
-        question1: question1,
-        question2: question2,
-        question3: question3,
+        questions: questions
       },
     });
     history.push('/');

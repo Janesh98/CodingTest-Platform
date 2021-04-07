@@ -16,18 +16,27 @@ const EditQuestions = () => {
   const history = useHistory();
   const testName = history.location.state.testName;
   const questionsData = history.location.state.questionsData;
-  const [question1, setQuestion1] = useState(questionsData[0].question1);
-  const [question2, setQuestion2] = useState(questionsData[0].question2);
-  const [question3, setQuestion3] = useState(questionsData[0].question3);
+  const questionsId = history.location.state.questionsId;
+  const [question1, setQuestion1] = useState(questionsData.length >= 1 ? questionsData[0].question : '');
+  const [question2, setQuestion2] = useState(questionsData.length >= 2 ? questionsData[1].question : '');
+  const [question3, setQuestion3] = useState(questionsData.length === 3 ? questionsData[3].question : '');
 
   const handleOnClickSave = async (e) => {
     e.preventDefault();
+    var questions = []
+    if(question1 !== ''){
+      questions.push(question1)
+    }
+    if(question2 !== ''){
+      questions.push(question2)
+    }
+    if(question3 !== ''){
+      questions.push(question3)
+    }
     await axios.post(updateQuestions, {
       data: {
-        _id: questionsData[0]._id,
-        question1: question1,
-        question2: question2,
-        question3: question3,
+        _id: questionsId,
+        questions: questions
       },
     });
     history.push({
@@ -67,7 +76,7 @@ const EditQuestions = () => {
                 multiline
                 rows={2}
                 id="question1"
-                defaultValue={questionsData[0].question1}
+                defaultValue={questionsData.length >= 1 ? questionsData[0].question : ''}
                 inputProps={{ "data-testid": "Question 1" }}
                 aria-label="Question 1"
                 placeholder="Question 1"
@@ -82,7 +91,7 @@ const EditQuestions = () => {
                 multiline
                 rows={2}
                 id="question2"
-                defaultValue={questionsData[0].question2}
+                defaultValue={questionsData.length >= 2 ? questionsData[1].question : ''}
                 inputProps={{ "data-testid": "Question 2" }}
                 aria-label="Question 2"
                 placeholder="Question 2"
@@ -97,7 +106,7 @@ const EditQuestions = () => {
                 multiline
                 rows={2}
                 id="question3"
-                defaultValue={questionsData[0].question3}
+                defaultValue={questionsData.length === 3 ? questionsData[2].question : ''}
                 inputProps={{ "data-testid": "Question 3" }}
                 aria-label="Question 3"
                 placeholder="Question 3"

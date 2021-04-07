@@ -9,7 +9,7 @@ const initialState = {
   currentChallengeIndex: 0,
   testResults: [],
   code: '',
-  currentQuestionIndex: 1,
+  currentQuestionIndex: 0,
 };
 
 // Create context

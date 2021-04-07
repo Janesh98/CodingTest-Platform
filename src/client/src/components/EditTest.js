@@ -31,6 +31,7 @@ const EditTest = () => {
   const { currentUser } = useAuth();
   const TestName = history.location.state.TestName;
   const id = history.location.state._id;
+  const [questionsId, setQuestionsId] = useState('');
   const [tableData, setTableData] = useState([]);
   const [QuestionsTableData, setQuestionsTableData] = useState([]);
 
@@ -77,13 +78,11 @@ const EditTest = () => {
       var res = await axios.post(getQuestions, {
         data: { googleId: currentUser.uid, testName: TestName },
       });
-      if(mounted){
+      if(mounted && res.data.data[0] !== undefined){
+        setQuestionsId(res.data.data[0]._id);
       await setQuestionsTableData(
-        res.data.data.map((item) => ({
-          _id: item._id,
-          question1: item.question1,
-          question2: item.question2,
-          question3: item.question3,
+        res.data.data[0].questions.map((item) => ({
+          question: item,
         }))
       )};
     };
@@ -137,7 +136,7 @@ const EditTest = () => {
   const handleOnClickEditQuestions = async (e) => {
     history.push({
       pathname: '/editquestions',
-      state: { testName: TestName, questionsData: QuestionsTableData },
+      state: { testName: TestName, questionsData: QuestionsTableData, questionsId: questionsId },
     });
   };
 
@@ -182,10 +181,10 @@ const EditTest = () => {
     }
   };
 
-  const handleOnClickDeleteQuestions = async (e) => {
+  const handleOnClickDeleteQuestions = async () => {
     try {
       await axios.post(deleteQuestions, {
-        data: { googleId: currentUser.uid, testName: TestName, _id: e },
+        data: { googleId: currentUser.uid, testName: TestName },
       });
       return refreshPage();
     } catch {
@@ -305,29 +304,8 @@ const EditTest = () => {
               <Table className={classes.table} aria-label="simple table">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Question 1</TableCell>
-                    <TableCell>Question 2</TableCell>
-                    <TableCell>Question 3</TableCell>
-                    {addButton}
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {QuestionsTableData.map((row) => (
-                    <TableRow key={row.question1}>
-                      <TableCell
-                        className={classes.cell_short}
-                        component="th"
-                        scope="row"
-                      >
-                        {row.question1}
-                      </TableCell>
-                      <TableCell className={classes.cell_short}>
-                        {row.question2}
-                      </TableCell>
-                      <TableCell className={classes.cell_short}>
-                        {row.question3}
-                      </TableCell>
-                      <TableCell>
+                    <TableCell>Question</TableCell>
+                     <TableCell>
                         <IconButton
                           aria-label="edit"
                           className={classes.margin}
@@ -335,7 +313,7 @@ const EditTest = () => {
                           variant="contained"
                           color="primary"
                           size="small"
-                          onClick={(e) => handleOnClickEditQuestions(row.title)}
+                          onClick={(e) => handleOnClickEditQuestions()}
                         >
                           <EditIcon />
                         </IconButton>
@@ -348,10 +326,24 @@ const EditTest = () => {
                           variant="contained"
                           color="secondary"
                           size="small"
-                          onClick={(e) => handleOnClickDeleteQuestions(row._id)}
+                          onClick={(e) => handleOnClickDeleteQuestions()}
                         >
                           <DeleteIcon />
                         </IconButton>
+                      </TableCell>
+                 
+                    {addButton}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {QuestionsTableData.map((row) => (
+                    <TableRow key={row.question}>
+                      <TableCell
+                        className={classes.cell_short}
+                        component="th"
+                        scope="row"
+                      >
+                        {row.question}
                       </TableCell>
                     </TableRow>
                   ))}

@@ -90,6 +90,7 @@ const Camera = () => {
     facingMode: "user"
     };
 
+    console.log(codingTest.questions[0].questions[currentQuestionIndex]);
   return (
     <>
       <div className={classes.root}>

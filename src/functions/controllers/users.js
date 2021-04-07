@@ -248,23 +248,18 @@ exports.addQs = (req, res) => {
   const Qs = {
     googleId: req.body.data.googleId,
     testName: req.body.data.testName,
-    question1: req.body.data.question1,
-    question2: req.body.data.question2,
-    question3: req.body.data.question3,
+    questions: req.body.data.questions,
+ 
   };
 
   const googleId = Qs.googleId;
   const testName = Qs.testName;
-  const question1 = Qs.question1;
-  const question2 = Qs.question2;
-  const question3 = Qs.question3;
+  const questions = Qs.questions;
 
   const newQuestionsEntry = new QuestionsDB({
     googleId,
     testName,
-    question1,
-    question2,
-    question3,
+    questions
   });
 
   newQuestionsEntry.save(function (err, room) {
@@ -623,17 +618,13 @@ exports.updateChallenge = (req, res) => {
 exports.updateQuestions = (req, res) => {
   const Qs = {
     _id: req.body.data._id,
-    question1: req.body.data.question1,
-    question2: req.body.data.question2,
-    question3: req.body.data.question3,
+    questions: req.body.data.questions,
   };
 
   QuestionsDB.updateOne(
     { _id: Qs._id },
     {
-      question1: Qs.question1,
-      question2: Qs.question2,
-      question3: Qs.question3,
+      questions: Qs.questions,
     },
     function (err, res) {
       if (err) throw err;
