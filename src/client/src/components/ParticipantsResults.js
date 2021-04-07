@@ -40,22 +40,16 @@ const ParticipantsResults = () => {
       setTestId(res.data.data[0].TestId);
       await setTableData(res.data.data[0].codingTestResults[0].challenges.map((item) => ({ title: item.title, testCases : item.testResults.reduce(reducer)/item.testResults.length, challengeData: item})));
 
-      var key;
+      var index;
       var i = 1;
-      for (key in res.data.data[0].codingTestResults[0].questions[0]){
+      for (index in res.data.data[0].codingTestResults[0].questions[0].questions){
         var question = {};
 
         question = {
-          question: res.data.data[0].codingTestResults[0].questions[0][key],
+          question: res.data.data[0].codingTestResults[0].questions[0].questions[index],
           id: i,
         }
 
-
-     //   question = {
-     //     question: res.data.data[0].codingTestResults[0].questions[0][key],
-     //     id: i,
-     //     videoUrl: videoUrl
-     //   }
         i ++;
 
         questionsList.push(question);
@@ -63,10 +57,6 @@ const ParticipantsResults = () => {
       }
       await setQuestionsTableData(questionsList.map((item) => ({ id: item.id, question: item.question, videoUrl: item.videoUrl })));
 
-   //   storage.ref().child(`${res.data.data[0].TestId}/${id}/1.mp4`).getDownloadURL()
-   //   .then((url) => {
-   //     setVideoUrl(url);
-   //   })
     
     };
     rows();
@@ -158,7 +148,7 @@ const ParticipantsResults = () => {
                         {row.question}
                       </TableCell>
                       <TableCell>
-                        <PlayerCard testId={testId} participantId={id} id={row.id} question={row.question}/>
+                        <PlayerCard testId={testId} participantId={id} id={row.id - 1} question={row.question}/>
                       </TableCell>
                     </TableRow>
                   ))}
