@@ -32,12 +32,30 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = () => {
   const classes = useStyles();
-  const { updateLanguage, codingTest } = useContext(CodingTestContext);
+  const {
+    updateLanguage,
+    codingTest,
+    currentChallengeIndex,
+    code,
+  } = useContext(CodingTestContext);
   const { codingTestId, participantId } = useParams();
   const history = useHistory();
 
+  // saves code to global memory
+  const saveCodeProgress = () => {
+    codingTest.challenges[currentChallengeIndex].code = code;
+  };
+
+  const convertCodeToBase64 = () => {
+    codingTest?.challenges.map((test, i) => {
+      return (codingTest.challenges[i].code = btoa(test.code));
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    saveCodeProgress();
+    convertCodeToBase64();
     try {
       await axios.post(submitCodingTest, {
         data: { participantId, codingTestResults: codingTest },
@@ -72,7 +90,6 @@ const Header = () => {
               }}
             >
               {Object.entries(languages).map(([key, value]) => {
-                // console.log(key, value);
                 return (
                   <MenuItem key={key} value={key}>
                     {value}

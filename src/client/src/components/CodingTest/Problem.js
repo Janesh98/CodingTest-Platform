@@ -70,9 +70,8 @@ const Problem = () => {
   const classes = useStyles();
 
   const saveProgress = () => {
-    const ct = codingTest.challenges[currentChallengeIndex];
-    ct.testResults = testResults;
-    ct.codeOutput = codeOutput;
+    codingTest.challenges[currentChallengeIndex].testResults = testResults;
+    codingTest.challenges[currentChallengeIndex].codeOutput = codeOutput;
   };
 
   // if qs already attempted, updates to previous save state

@@ -40,6 +40,11 @@ const CodeEditor = () => {
     codingTest.challenges[currentChallengeIndex].code = code;
   };
 
+  const saveResults = (codeOutput, testResults) => {
+    codingTest.challenges[currentChallengeIndex].codeOutput = codeOutput;
+    codingTest.challenges[currentChallengeIndex].testResults = testResults;
+  };
+
   const handleSubmitCode = async (e) => {
     e.preventDefault();
     saveCodeProgress();
@@ -74,6 +79,7 @@ const CodeEditor = () => {
     );
     updateCodeOutput(codeOutputList);
     updateTestResults(testResults);
+    saveResults(codeOutputList, testResults);
   };
 
   return (

@@ -87,7 +87,7 @@ const Terminal = () => {
   const getCodeTestInput = (index) => {
     return (
       '\n' +
-      codingTest.challenges[currentChallengeIndex].testCases[index].input +
+      codingTest?.challenges[currentChallengeIndex].testCases[index].input +
       '\n\n'
     );
   };
@@ -98,7 +98,7 @@ const Terminal = () => {
 
   const createTabs = () => {
     const tabList = [];
-    codingTest.challenges[currentChallengeIndex].testCases.map((test, i) => {
+    codingTest?.challenges[currentChallengeIndex].testCases.map((test, i) => {
       return tabList.push(
         <Tab
           icon={
@@ -122,7 +122,7 @@ const Terminal = () => {
 
   const createTabPanels = () => {
     const tabPanelList = [];
-    codingTest.challenges[currentChallengeIndex].testCases.map((test, i) => {
+    codingTest?.challenges[currentChallengeIndex].testCases.map((test, i) => {
       return tabPanelList.push(
         <TabPanel
           value={value}
