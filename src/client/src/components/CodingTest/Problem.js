@@ -66,6 +66,7 @@ const Problem = () => {
     testResults,
     codeOutput,
     updateCode,
+    language,
   } = useContext(CodingTestContext);
   const classes = useStyles();
 
@@ -105,6 +106,10 @@ const Problem = () => {
             data: { codingTestId, participantId },
           }
         );
+        // set language for each test to inital default
+        res.data.data.challenges.map((item, i) => {
+          return (res.data.data.challenges[i].language = language);
+        });
         updateCodingTest(res.data.data);
       } catch (err) {
         console.error(err);

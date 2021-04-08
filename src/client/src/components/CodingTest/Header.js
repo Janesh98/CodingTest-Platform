@@ -66,6 +66,11 @@ const Header = () => {
     }
   };
 
+  const onLanguageChange = async (language) => {
+    updateLanguage(language);
+    codingTest.challenges[currentChallengeIndex].language = language;
+  };
+
   return (
     <div className={classes.root}>
       <AppBar className={classes.appBar} position="static">
@@ -83,7 +88,7 @@ const Header = () => {
               label="Language"
               defaultValue={10}
               color="primary"
-              onChange={(e) => updateLanguage(languages[e.target.value])}
+              onChange={(e) => onLanguageChange(languages[e.target.value])}
               classes={{
                 root: classes.selector,
                 icon: classes.selector,
