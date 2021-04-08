@@ -13,7 +13,10 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
-import TextField from '@material-ui/core/TextField';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import Box from '@material-ui/core/Box';
+
 
 const ChallengeResult = () => {
   const [tableData, setTableData] = useState([]);
@@ -70,16 +73,22 @@ const ChallengeResult = () => {
               </Typography>
             </div>
             <Typography component="h1" variant="h5">
-                Code
+                Code for Solution:
               </Typography>
-              <TextField 
-                className={classes.textField} 
-                disabled 
-                id="code" 
-                defaultValue={atob(challengeData.code)} 
-                multiline
-                size='medium'
-                />
+              <Container component="main" maxWidth="xs">
+            <SyntaxHighlighter
+                language="python"
+                style={docco}
+                wrapLongLines
+                showLineNumbers={true}
+                customStyle={{
+                    backgroundColor: "transparent",
+                    textAlign: 'left'
+                }}
+                >
+                {atob(challengeData.code)} 
+            </SyntaxHighlighter>
+            </Container>
             <TableContainer component={Paper}>
               <Table className={classes.table} aria-label="simple table">
                 <TableHead>
