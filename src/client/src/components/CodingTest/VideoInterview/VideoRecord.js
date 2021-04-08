@@ -39,12 +39,12 @@ const VideoRecord = () => {
         <Header />
         </Grid>
           <Grid container className={classes.root} spacing={0}>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} sm={6}>
           <Paper square className={classes.problem}>
             <Questions />
           </Paper>
         </Grid>
-          <Grid item xs={12} sm={8}>
+          <Grid item xs={12} sm={6}>
               <Paper square className={classes.terminal}>
                 <Camera />
              </Paper>

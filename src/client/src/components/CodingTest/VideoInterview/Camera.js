@@ -78,7 +78,7 @@ const Camera = () => {
     storage.ref().child(`${codingTestId}/${participantId}/${currentQuestionIndex}.mp4`).put(file);
 
     updateCurrentQuestionIndex(currentQuestionIndex + 1);
-    if(Object.keys(codingTest.questions[0]).length === currentQuestionIndex){
+    if(Object.keys(codingTest.questions[0].questions).length - 1 === currentQuestionIndex){
       setFinished(true);
     };
     setResponded(false);

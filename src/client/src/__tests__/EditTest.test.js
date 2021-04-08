@@ -7,7 +7,7 @@ import { createBrowserHistory } from "history";
 describe('rendering components', () => {
 
     const history = createBrowserHistory();
-    const state = { TestName: 'testName1' }
+    const state = { testName: 'testName1' }
     history.push("/", state);
     it('renders <EditTest /> without crashing', () => {
         render(<EditTest history={createBrowserHistory(history.push("/", state))}/>);
