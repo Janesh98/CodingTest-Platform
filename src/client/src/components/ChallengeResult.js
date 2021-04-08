@@ -14,8 +14,6 @@ import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-import Box from '@material-ui/core/Box';
 
 
 const ChallengeResult = () => {
@@ -78,7 +76,6 @@ const ChallengeResult = () => {
               <Container component="main" maxWidth="xs">
             <SyntaxHighlighter
                 language="python"
-                style={docco}
                 wrapLongLines
                 showLineNumbers={true}
                 customStyle={{

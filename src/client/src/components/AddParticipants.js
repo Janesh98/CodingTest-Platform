@@ -20,9 +20,6 @@ const AddParticipants = () => {
   const TestName = history.location.state.testName;
   const id = history.location.state._id;
 
-  console.log(TestName);
-  console.log(id);
-
   function refreshPage() {
     window.location.reload(false);
   }
