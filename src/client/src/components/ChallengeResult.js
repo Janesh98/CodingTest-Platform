@@ -76,7 +76,7 @@ const ChallengeResult = () => {
                 className={classes.textField} 
                 disabled 
                 id="code" 
-                defaultValue={challengeData.code} 
+                defaultValue={atob(challengeData.code)} 
                 multiline
                 size='medium'
                 />
