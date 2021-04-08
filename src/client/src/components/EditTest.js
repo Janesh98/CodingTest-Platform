@@ -23,13 +23,13 @@ import { useHistory } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import Button from '@material-ui/core/Button';
+import Button from '@material-ui/core/Button'; 
 import axios from 'axios';
 
 const EditTest = () => {
   const history = useHistory();
   const { currentUser } = useAuth();
-  const TestName = history.location.state.TestName;
+  const testName = history.location.state.testName;
   const id = history.location.state._id;
   const [questionsId, setQuestionsId] = useState('');
   const [tableData, setTableData] = useState([]);
@@ -39,7 +39,7 @@ const EditTest = () => {
     let mounted = true;
     const rows = async () => {
       var res = await axios.post(getChallenges, {
-        data: { googleId: currentUser.uid, testName: TestName },
+        data: { googleId: currentUser.uid, testName: testName },
       });
       if(mounted){
       setTableData(
@@ -70,13 +70,13 @@ const EditTest = () => {
 
     rows();
     return () => { mounted = false;}
-  }, [currentUser.uid, TestName]);
+  }, [currentUser.uid, testName]);
 
   useEffect(() => {
     let mounted = true;
     const questionRows = async () => {
       var res = await axios.post(getQuestions, {
-        data: { googleId: currentUser.uid, testName: TestName },
+        data: { googleId: currentUser.uid, testName: testName },
       });
       if(mounted && res.data.data[0] !== undefined){
         setQuestionsId(res.data.data[0]._id);
@@ -89,7 +89,7 @@ const EditTest = () => {
 
     questionRows();
     return () => { mounted = false;}
-  }, [currentUser.uid, TestName]);
+  }, [currentUser.uid, testName]);
 
   const useStyles = makeStyles({
     table: {
@@ -112,7 +112,7 @@ const EditTest = () => {
   const handleOnClickAddParticipants = async (e) => {
     history.push({
       pathname: '/addparticipants',
-      state: { testName: TestName, _id: id },
+      state: { testName: testName, _id: id },
     });
   };
 
@@ -126,7 +126,7 @@ const EditTest = () => {
     history.push({
       pathname: '/editchallenge',
       state: {
-        testName: TestName,
+        testName: testName,
         title: e,
         challengeData: tableData,
         index: i,
@@ -136,7 +136,7 @@ const EditTest = () => {
   const handleOnClickEditQuestions = async (e) => {
     history.push({
       pathname: '/editquestions',
-      state: { testName: TestName, questionsData: QuestionsTableData, questionsId: questionsId },
+      state: { testName: testName, questionsData: QuestionsTableData, questionsId: questionsId },
     });
   };
 
@@ -146,7 +146,7 @@ const EditTest = () => {
       await axios.post(deleteChallenge, {
         data: {
           googleId: currentUser.uid,
-          testName: TestName,
+          testName: testName,
           title: title,
           _id: _id,
         },
@@ -162,7 +162,7 @@ const EditTest = () => {
       e.preventDefault();
       history.push({
         pathname: '/questions',
-        state: { newTestName: TestName },
+        state: { newTestName: testName },
       });
     } catch {
       console.log('error');
@@ -174,7 +174,7 @@ const EditTest = () => {
       e.preventDefault();
       history.push({
         pathname: '/newchallenge',
-        state: { newTestName: TestName },
+        state: { newTestName: testName },
       });
     } catch {
       console.log('error');
@@ -184,7 +184,7 @@ const EditTest = () => {
   const handleOnClickDeleteQuestions = async () => {
     try {
       await axios.post(deleteQuestions, {
-        data: { googleId: currentUser.uid, testName: TestName },
+        data: { googleId: currentUser.uid, testName: testName },
       });
       return refreshPage();
     } catch {
@@ -217,7 +217,7 @@ const EditTest = () => {
           <Container component="main" maxWidth="md">
             <div>
               <Typography component="h1" variant="h5">
-                Coding Test: {TestName}
+                Coding Test: {testName}
               </Typography>
               <Button
                 id="addParticipants"
