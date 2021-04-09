@@ -41,7 +41,7 @@ const EditQuestions = () => {
     });
     history.push({
       pathname: '/edittest',
-      state: { TestName: testName },
+      state: { testName: testName },
     });
   };
 
@@ -50,7 +50,7 @@ const EditQuestions = () => {
       e.preventDefault();
       history.push({
         pathname: '/edittest',
-        state: { TestName: testName },
+        state: { testName: testName },
       });
     } catch {
       console.log('error');

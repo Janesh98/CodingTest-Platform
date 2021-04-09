@@ -32,7 +32,6 @@ const ChallengeResult = () => {
       }
       data.push(test);
   }
-  console.log(data);
 
   
   useEffect(() => {
@@ -75,7 +74,7 @@ const ChallengeResult = () => {
               </Typography>
               <Container component="main" maxWidth="xs">
             <SyntaxHighlighter
-                language="python"
+                language={challengeData.language.toLowerCase()}
                 wrapLongLines
                 showLineNumbers={true}
                 customStyle={{
