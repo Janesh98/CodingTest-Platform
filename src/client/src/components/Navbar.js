@@ -145,7 +145,7 @@ export default function NavBar() {
           <Typography variant="h6" style={{ flexGrow: 1 }}>
             Coding Test Platform
           </Typography>
-          <Button color="inherit" onClick={(e) => handleSubmitLogout(e)}>
+          <Button color="inherit" data-testid="logout" onClick={(e) => handleSubmitLogout(e)}>
             Logout
           </Button>
         </Toolbar>
