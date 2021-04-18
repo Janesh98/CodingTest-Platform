@@ -268,7 +268,7 @@ const EditTest = () => {
                         <IconButton
                           aria-label="edit"
                           className={classes.margin}
-                          id="edit"
+                          id="edit-challenge"
                           variant="contained"
                           color="primary"
                           size="small"
@@ -309,7 +309,7 @@ const EditTest = () => {
                         <IconButton
                           aria-label="edit"
                           className={classes.margin}
-                          id="edit"
+                          id="edit-questions"
                           variant="contained"
                           color="primary"
                           size="small"

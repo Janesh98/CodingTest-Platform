@@ -55,7 +55,7 @@ const AddParticipants = () => {
     e.preventDefault();
     history.push({
       pathname: '/edittest',
-      state: { TestName: TestName, _id: id },
+      state: { testName: TestName, _id: id },
     });
   };
 
@@ -96,6 +96,7 @@ const AddParticipants = () => {
             </Button>
             <Button
               id="exit"
+              data-testid="exit"
               variant="contained"
               color="secondary"
               size="large"

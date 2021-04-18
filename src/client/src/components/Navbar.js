@@ -136,6 +136,7 @@ export default function NavBar() {
         <Toolbar>
           <IconButton
             onClick={handleDrawerOpen}
+            data-testid="open-menu"
             color="inherit"
             edge="start"
             aria-label="menu"
@@ -179,7 +180,7 @@ export default function NavBar() {
             Setup New Coding Test
           </ListItem>
           <Divider />
-          <ListItem button color="primary" onClick={(e) => handleSubmitEdit(e)}>
+          <ListItem button color="primary" data-testid="edit-test-menu" onClick={(e) => handleSubmitEdit(e)}>
             Edit Existing Test
           </ListItem>
           <Divider />

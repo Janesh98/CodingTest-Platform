@@ -72,7 +72,7 @@ const NewChallenge = () => {
       });
       history.push({
         pathname: '/edittest',
-        state: { TestName: testName },
+        state: { testName: testName },
       });
     }
   };
@@ -82,7 +82,7 @@ const NewChallenge = () => {
       e.preventDefault();
       history.push({
         pathname: '/edittest',
-        state: { TestName: testName },
+        state: { testName: testName },
       });
     } catch {
       console.log('error');
