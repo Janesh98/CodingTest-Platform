@@ -96,6 +96,7 @@ export default function Login() {
                   required
                   fullWidth
                   id="email"
+                  placeholder="Email"
                   inputProps={{ "data-testid": "Email Address" }}
                   aria-label="Email Address"
                   name="email"
@@ -109,6 +110,7 @@ export default function Login() {
                   required
                   fullWidth
                   name="password"
+                  placeholder="Password"
                   inputProps={{ "data-testid": "Password" }}
                   aria-label="Password"
                   type="password"

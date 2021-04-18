@@ -47,7 +47,7 @@ export default function Signup() {
 
       if (isError !== false) return;
       setLoading(true);
-      const res = await axios.post(signup, { email, password });
+      const res = await signup(email, password);
       postUserDetails(res.user);
 
       setLoading(false);
@@ -104,6 +104,7 @@ export default function Signup() {
                   required
                   fullWidth
                   id="email"
+                  placeholder="Email"
                   inputProps={{ "data-testid": "Email Address" }}
                   aria-label="Email Address"
                   name="email"
@@ -117,6 +118,7 @@ export default function Signup() {
                   required
                   fullWidth
                   name="password"
+                  placeholder="Password"
                   inputProps={{ "data-testid": "Password" }}
                   aria-label="Password"
                   type="password"
@@ -130,6 +132,7 @@ export default function Signup() {
                   required
                   fullWidth
                   name="password"
+                  placeholder="Confirm Password"
                   inputProps={{ "data-testid": "Confirm Password" }}
                   aria-label="Confirm Password"
                   type="password"
