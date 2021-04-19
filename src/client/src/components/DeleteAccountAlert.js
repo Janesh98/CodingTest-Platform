@@ -53,6 +53,7 @@ export default function DeleteAccountAlert() {
               aria-label="close"
               color="inherit"
               size="small"
+              data-testid="yes"
               onClick={(e) => {
                 handleSubmitDelete(e);
               }}
@@ -63,6 +64,7 @@ export default function DeleteAccountAlert() {
               aria-label="close"
               color="inherit"
               size="small"
+              data-testid="cancel"
               onClick={() => {
                 setOpen(false);
               }}
@@ -79,6 +81,7 @@ export default function DeleteAccountAlert() {
       <Button
         disabled={open}
         variant="outlined"
+        data-testid="delete"
         onClick={() => {
           setOpen(true);
         }}
