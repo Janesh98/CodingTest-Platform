@@ -351,6 +351,14 @@ exports.deleteTest = (req, res) => {
     if (err) throw err;
   });
 
+  var newQuery = {
+    googleId: test.googleId,
+  };
+
+  ParticipantDB.deleteMany(newQuery, function (err, obj) {
+    if (err) throw err;
+  });
+
   NewUserDB.updateOne(
     { googleId: test.googleId },
     { $pull: { codingTests: test._id } },
