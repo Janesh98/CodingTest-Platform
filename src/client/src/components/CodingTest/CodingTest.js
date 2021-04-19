@@ -17,13 +17,13 @@ const useStyles = makeStyles((theme) => ({
   problem: {
     textAlign: 'center',
     color: theme.palette.common.white,
-    background: theme.palette.success.contrastText,
+    background: '#1d1d1d',
     height: '100%',
   },
   terminal: {
     textAlign: 'center',
     color: theme.palette.common.white,
-    background: theme.palette.success.contrastText,
+    background: '#1d1d1d',
     height: '30.6%',
   },
 }));
@@ -33,7 +33,12 @@ export default function CodingTest() {
 
   return (
     <CodingTestProvider>
-      <Grid container className={classes.root} spacing={0}>
+      <Grid
+        container
+        className={classes.root}
+        style={{ backgroundColor: '#1d1d1d' }}
+        spacing={0}
+      >
         <Grid item xs={12} sm={12}>
           <Header />
         </Grid>

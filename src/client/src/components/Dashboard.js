@@ -10,6 +10,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
+import DeleteAccountAlert from './DeleteAccountAlert'
+
 
 export default function Dashboard() {
   const history = useHistory();
@@ -42,6 +44,8 @@ export default function Dashboard() {
     }
   };
 
+  
+
   return (
     <Container>
       <NavBar />
@@ -49,7 +53,7 @@ export default function Dashboard() {
         <Grid container align="center" justify="center" direction="column">
           <Container component="main" maxWidth="xs">
             <div>
-              <Typography component="h1" variant="h5">
+              <Typography component="h1" variant="h5" data-testid="Dashboard typography">
                 Dashboard
               </Typography>
               <form>
@@ -68,6 +72,7 @@ export default function Dashboard() {
                   <CardActions>
                     <Button
                       id="setup-test"
+                      data-testid="setup-test"
                       type="submit"
                       size="small"
                       variant="contained"
@@ -94,6 +99,7 @@ export default function Dashboard() {
                   <CardActions>
                     <Button
                       id="edit-test"
+                      data-testid="edit-test"
                       type="submit"
                       size="small"
                       variant="contained"
@@ -120,6 +126,7 @@ export default function Dashboard() {
                   <CardActions>
                     <Button
                       id="history-results"
+                      data-testid="history-results"
                       type="submit"
                       size="small"
                       variant="contained"
@@ -134,6 +141,7 @@ export default function Dashboard() {
               </form>
             </div>
           </Container>
+          <DeleteAccountAlert />
         </Grid>
       </div>
     </Container>

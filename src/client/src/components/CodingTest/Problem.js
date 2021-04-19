@@ -66,13 +66,13 @@ const Problem = () => {
     testResults,
     codeOutput,
     updateCode,
+    language,
   } = useContext(CodingTestContext);
   const classes = useStyles();
 
   const saveProgress = () => {
-    const ct = codingTest.challenges[currentChallengeIndex];
-    ct.testResults = testResults;
-    ct.codeOutput = codeOutput;
+    codingTest.challenges[currentChallengeIndex].testResults = testResults;
+    codingTest.challenges[currentChallengeIndex].codeOutput = codeOutput;
   };
 
   // if qs already attempted, updates to previous save state
@@ -106,6 +106,10 @@ const Problem = () => {
             data: { codingTestId, participantId },
           }
         );
+        // set language for each test to inital default
+        res.data.data.challenges.map((item, i) => {
+          return (res.data.data.challenges[i].language = language);
+        });
         updateCodingTest(res.data.data);
       } catch (err) {
         console.error(err);

@@ -8,9 +8,8 @@ import {
   Typography,
 } from '@material-ui/core';
 import CodeIcon from '@material-ui/icons/Code';
-import { executeCode } from '../../endpoints';
 import { CodingTestContext } from './context/CodingTestState';
-import axios from 'axios';
+import { addSubmission } from '../../codeExecutionEndpoint';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -41,6 +40,11 @@ const CodeEditor = () => {
     codingTest.challenges[currentChallengeIndex].code = code;
   };
 
+  const saveResults = (codeOutput, testResults) => {
+    codingTest.challenges[currentChallengeIndex].codeOutput = codeOutput;
+    codingTest.challenges[currentChallengeIndex].testResults = testResults;
+  };
+
   const handleSubmitCode = async (e) => {
     e.preventDefault();
     saveCodeProgress();
@@ -51,12 +55,12 @@ const CodeEditor = () => {
     const base64Code = btoa(code);
     codingTest.challenges[currentChallengeIndex].testCases.map(
       async (test, i) => {
-        const base64Stdin = btoa(test.input);
-        const output = await axios.post(executeCode, {
+        const base64Input = btoa(test.input);
+        const output = await addSubmission({
           data: {
             language: language.toLowerCase(),
             code: base64Code,
-            stdin: base64Stdin,
+            input: base64Input,
           },
         });
 
@@ -75,6 +79,7 @@ const CodeEditor = () => {
     );
     updateCodeOutput(codeOutputList);
     updateTestResults(testResults);
+    saveResults(codeOutputList, testResults);
   };
 
   return (

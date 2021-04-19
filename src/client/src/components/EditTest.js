@@ -23,22 +23,25 @@ import { useHistory } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import Button from '@material-ui/core/Button';
+import Button from '@material-ui/core/Button'; 
 import axios from 'axios';
 
 const EditTest = () => {
   const history = useHistory();
   const { currentUser } = useAuth();
-  const TestName = history.location.state.TestName;
+  const testName = history.location.state.testName;
   const id = history.location.state._id;
+  const [questionsId, setQuestionsId] = useState('');
   const [tableData, setTableData] = useState([]);
   const [QuestionsTableData, setQuestionsTableData] = useState([]);
 
   useEffect(() => {
+    let mounted = true;
     const rows = async () => {
       var res = await axios.post(getChallenges, {
-        data: { googleId: currentUser.uid, testName: TestName },
+        data: { googleId: currentUser.uid, testName: testName },
       });
+      if(mounted){
       setTableData(
         res.data.data.map((item) => ({
           _id: item._id,
@@ -62,29 +65,31 @@ const EditTest = () => {
           testOutput5: item.testOutput5,
           createdAt: item.createdAt,
         }))
-      );
+      )};
     };
 
     rows();
-  }, [currentUser.uid, TestName]);
+    return () => { mounted = false;}
+  }, [currentUser.uid, testName]);
 
   useEffect(() => {
+    let mounted = true;
     const questionRows = async () => {
       var res = await axios.post(getQuestions, {
-        data: { googleId: currentUser.uid, testName: TestName },
+        data: { googleId: currentUser.uid, testName: testName },
       });
+      if(mounted && res.data.data[0] !== undefined){
+        setQuestionsId(res.data.data[0]._id);
       await setQuestionsTableData(
-        res.data.data.map((item) => ({
-          _id: item._id,
-          question1: item.question1,
-          question2: item.question2,
-          question3: item.question3,
+        res.data.data[0].questions.map((item) => ({
+          question: item,
         }))
-      );
+      )};
     };
 
     questionRows();
-  }, [currentUser.uid, TestName]);
+    return () => { mounted = false;}
+  }, [currentUser.uid, questionsId, testName]);
 
   const useStyles = makeStyles({
     table: {
@@ -107,7 +112,7 @@ const EditTest = () => {
   const handleOnClickAddParticipants = async (e) => {
     history.push({
       pathname: '/addparticipants',
-      state: { testName: TestName, _id: id },
+      state: { testName: testName, _id: id },
     });
   };
 
@@ -121,7 +126,7 @@ const EditTest = () => {
     history.push({
       pathname: '/editchallenge',
       state: {
-        testName: TestName,
+        testName: testName,
         title: e,
         challengeData: tableData,
         index: i,
@@ -131,7 +136,7 @@ const EditTest = () => {
   const handleOnClickEditQuestions = async (e) => {
     history.push({
       pathname: '/editquestions',
-      state: { testName: TestName, questionsData: QuestionsTableData },
+      state: { testName: testName, questionsData: QuestionsTableData, questionsId: questionsId },
     });
   };
 
@@ -141,7 +146,7 @@ const EditTest = () => {
       await axios.post(deleteChallenge, {
         data: {
           googleId: currentUser.uid,
-          testName: TestName,
+          testName: testName,
           title: title,
           _id: _id,
         },
@@ -157,7 +162,7 @@ const EditTest = () => {
       e.preventDefault();
       history.push({
         pathname: '/questions',
-        state: { newTestName: TestName },
+        state: { newTestName: testName },
       });
     } catch {
       console.log('error');
@@ -169,17 +174,17 @@ const EditTest = () => {
       e.preventDefault();
       history.push({
         pathname: '/newchallenge',
-        state: { newTestName: TestName },
+        state: { newTestName: testName },
       });
     } catch {
       console.log('error');
     }
   };
 
-  const handleOnClickDeleteQuestions = async (e) => {
+  const handleOnClickDeleteQuestions = async () => {
     try {
       await axios.post(deleteQuestions, {
-        data: { googleId: currentUser.uid, testName: TestName, _id: e },
+        data: { googleId: currentUser.uid, testName: testName, _id: questionsId },
       });
       return refreshPage();
     } catch {
@@ -207,15 +212,16 @@ const EditTest = () => {
   return (
     <Container>
       <NavBar />
-      <div id="results-container">
+      <div id="results-container" data-testid="editTest-container">
         <Grid container align="center" justify="center" direction="column">
           <Container component="main" maxWidth="md">
             <div>
               <Typography component="h1" variant="h5">
-                Coding Test: {TestName}
+                Coding Test: {testName}
               </Typography>
               <Button
                 id="addParticipants"
+                data-testid="addParticipants"
                 variant="contained"
                 color="secondary"
                 size="small"
@@ -238,6 +244,7 @@ const EditTest = () => {
                       <Button
                         id="addQs"
                         variant="contained"
+                        data-testid="addChallenge"
                         color="primary"
                         size="small"
                         onClick={(e) => handleOnClickAddChallenge(e)}
@@ -261,7 +268,7 @@ const EditTest = () => {
                         <IconButton
                           aria-label="edit"
                           className={classes.margin}
-                          id="edit"
+                          id="edit-challenge"
                           variant="contained"
                           color="primary"
                           size="small"
@@ -297,37 +304,16 @@ const EditTest = () => {
               <Table className={classes.table} aria-label="simple table">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Question 1</TableCell>
-                    <TableCell>Question 2</TableCell>
-                    <TableCell>Question 3</TableCell>
-                    {addButton}
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {QuestionsTableData.map((row) => (
-                    <TableRow key={row.question1}>
-                      <TableCell
-                        className={classes.cell_short}
-                        component="th"
-                        scope="row"
-                      >
-                        {row.question1}
-                      </TableCell>
-                      <TableCell className={classes.cell_short}>
-                        {row.question2}
-                      </TableCell>
-                      <TableCell className={classes.cell_short}>
-                        {row.question3}
-                      </TableCell>
-                      <TableCell>
+                    <TableCell>Question</TableCell>
+                     <TableCell>
                         <IconButton
                           aria-label="edit"
                           className={classes.margin}
-                          id="edit"
+                          id="edit-questions"
                           variant="contained"
                           color="primary"
                           size="small"
-                          onClick={(e) => handleOnClickEditQuestions(row.title)}
+                          onClick={(e) => handleOnClickEditQuestions()}
                         >
                           <EditIcon />
                         </IconButton>
@@ -340,10 +326,24 @@ const EditTest = () => {
                           variant="contained"
                           color="secondary"
                           size="small"
-                          onClick={(e) => handleOnClickDeleteQuestions(row._id)}
+                          onClick={(e) => handleOnClickDeleteQuestions()}
                         >
                           <DeleteIcon />
                         </IconButton>
+                      </TableCell>
+                 
+                    {addButton}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {QuestionsTableData.map((row) => (
+                    <TableRow key={row.question}>
+                      <TableCell
+                        className={classes.cell_short}
+                        component="th"
+                        scope="row"
+                      >
+                        {row.question}
                       </TableCell>
                     </TableRow>
                   ))}

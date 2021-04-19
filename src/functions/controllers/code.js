@@ -39,7 +39,7 @@ exports.executeCode = (req, res) => {
       languageId = 63;
       break;
     default:
-      console.log(`Language '${language}' is not supported`);
+      throw new Error(`Language '${language}' is not supported`);
   }
 
   submitCode(code, languageId, stdin)
@@ -51,7 +51,6 @@ exports.executeCode = (req, res) => {
       });
     })
     .catch((err) => {
-      console.error(err);
       return res.status(404).json({
         data: err,
       });

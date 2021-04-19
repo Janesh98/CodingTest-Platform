@@ -14,10 +14,12 @@ var transporter = nodemailer.createTransport({
 exports.sendEmail = (req, res) => {
     const email = req.body.data.email;
     const TestId = req.body.data._id;
+    const googleId = req.body.data.googleId
 
     const newParticipantsEntry = new ParticipantsDB({
       email,
       TestId,
+      googleId
     });
 
     newParticipantsEntry.save(function (err, room) {
@@ -37,11 +39,7 @@ exports.sendEmail = (req, res) => {
       };
       
       transporter.sendMail(mailOptions, function(error, info){
-        if (error) {
-          console.log(error);
-        } else {
-          console.log('Email sent: ' + info.response);
-        }
+        if (error) throw err;
       });
     });
 

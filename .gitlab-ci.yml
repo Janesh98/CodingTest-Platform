@@ -1,21 +1,38 @@
-image: node:12
+image: node:lts
 
 stages:
-  - test
   - build
+  - test
   - deploy
 
 cache:
   paths:
     - ./src/client/node_modules/
     - ./src/functions/node_modules/
+    - ./src/remoteCodeExecution/node_modules/
+
+build-frontend:
+  stage: build
+  script:
+    - cd src/client
+    - yarn
+    - yarn build
+  artifacts:
+    expire_in: 1 mos
+    paths:
+      - ./src/client/build/
+  only:
+    changes:
+      - src/client/**/*
 
 test-frontend:
   stage: test
   script:
     - cd src/client
-    - yarn install
+    - yarn
     - yarn test --watchAll=false
+  cache:
+    policy: pull
   only:
     changes:
       - src/client/**/*
@@ -24,28 +41,21 @@ test-backend:
   stage: test
   script:
     - cd src/functions
-    - npm ci
-    - npm run test
+    - npm i
+    - npm test
   only:
     changes:
       - src/functions/**/*
 
-build-frontend:
-  stage: build
+test-RCE:
+  stage: test
   script:
-    - cd src/client
-    - yarn
-    - yarn build
-  cache:
-    policy: pull
-  artifacts:
-    expire_in: 1 mos
-    paths:
-      - ./src/client/build/
-
+    - cd src/remoteCodeExecution
+    - npm i
+    - npm test
   only:
     changes:
-      - src/client/**/*
+      - src/remoteCodeExecution/**/*
 
 deploy-backend:
   stage: deploy

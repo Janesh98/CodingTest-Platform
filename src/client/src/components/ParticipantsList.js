@@ -27,11 +27,21 @@ const ParticipantsList = () => {
       var res = await axios.post(getParticipants, {
         data: { TestId: id },
       });
-      await setTableData(res.data.data.map((item) => ({ email: item.email })));
+      await setTableData(res.data.data.map((item) => ({ email: item.email, participantId: item._id })));
     };
 
     rows();
   }, [id]);
+
+  const handleOnClickView = async (participantId, email) => {
+    history.push({
+      pathname: '/IndividualResults',
+      state: {
+        id: participantId,
+        email: email
+      },
+    });
+  };
 
   const useStyles = makeStyles({
     table: {
@@ -71,6 +81,7 @@ const ParticipantsList = () => {
                           variant="contained"
                           color="secondary"
                           size="small"
+                          onClick={(e)=> handleOnClickView(row.participantId, row.email)}
                         >
                           View Results
                         </Button>

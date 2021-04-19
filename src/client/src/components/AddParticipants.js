@@ -11,6 +11,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import EmailIcon from '@material-ui/icons/Email';
 import { sendEmail } from '../endpoints';
 import axios from 'axios';
+import { useAuth } from '../contexts/AuthContext';
 
 const AddParticipants = () => {
   const [email, setEmail] = useState('');
@@ -19,6 +20,7 @@ const AddParticipants = () => {
   const history = useHistory();
   const TestName = history.location.state.testName;
   const id = history.location.state._id;
+  const { currentUser } = useAuth();
 
   function refreshPage() {
     window.location.reload(false);
@@ -45,7 +47,7 @@ const AddParticipants = () => {
       return setError('Please enter a valid email');
     } else {
       await axios.post(sendEmail, {
-        data: { email: email, _id: id },
+        data: { email: email, _id: id, googleId: currentUser.uid},
       });
       return refreshPage();
     }
@@ -55,7 +57,7 @@ const AddParticipants = () => {
     e.preventDefault();
     history.push({
       pathname: '/edittest',
-      state: { TestName: TestName, _id: id },
+      state: { testName: TestName, _id: id },
     });
   };
 
@@ -74,7 +76,8 @@ const AddParticipants = () => {
               required
               fullWidth
               id="email"
-              label="Email"
+              aria-label="Email"
+              inputProps={{ "data-testid": "Email" }}
               placeholder="Email"
               name="Email"
               autoFocus
@@ -84,6 +87,7 @@ const AddParticipants = () => {
             />
             <Button
               id="send-invitation"
+              data-testid="send"
               variant="contained"
               color="primary"
               size="large"
@@ -94,6 +98,7 @@ const AddParticipants = () => {
             </Button>
             <Button
               id="exit"
+              data-testid="exit"
               variant="contained"
               color="secondary"
               size="large"

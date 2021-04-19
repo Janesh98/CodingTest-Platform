@@ -38,6 +38,23 @@ exports.register = (req, res) => {
   });
 };
 
+exports.checkRegister = (req, res) => {
+  const newUser = {
+    email: req.body.data.email,
+  };
+  NewUserDB.find(
+    { email: newUser.email },
+    function (err, result) {
+      if (err) throw err;
+      // need to return data as key in response for firebase functions
+      return res.status(200).json({
+        status: 'success',
+        data: result,
+      });
+    }
+  );
+};
+
 exports.company = (req, res) => {
   NewUserDB.find(
     { company: { $ne: null } },
@@ -54,7 +71,6 @@ exports.company = (req, res) => {
 };
 
 exports.addCompany = (req, res) => {
-  console.log(req);
   const newCompany = {
     googleId: req.body.data.googleId,
     company: req.body.data.company,
@@ -232,23 +248,18 @@ exports.addQs = (req, res) => {
   const Qs = {
     googleId: req.body.data.googleId,
     testName: req.body.data.testName,
-    question1: req.body.data.question1,
-    question2: req.body.data.question2,
-    question3: req.body.data.question3,
+    questions: req.body.data.questions,
+ 
   };
 
   const googleId = Qs.googleId;
   const testName = Qs.testName;
-  const question1 = Qs.question1;
-  const question2 = Qs.question2;
-  const question3 = Qs.question3;
+  const questions = Qs.questions;
 
   const newQuestionsEntry = new QuestionsDB({
     googleId,
     testName,
-    question1,
-    question2,
-    question3,
+    questions
   });
 
   newQuestionsEntry.save(function (err, room) {
@@ -294,7 +305,6 @@ exports.getParticipants = (req, res) => {
     { __v: 0 },
     function (err, result) {
       if (err) throw err;
-      console.log(result);
       return res.status(200).json({
         data: result,
       });
@@ -302,6 +312,22 @@ exports.getParticipants = (req, res) => {
   );
 };
 
+exports.getParticipantResults = (req, res) => {
+  const participant = {
+    _id: req.body.data._id,
+  };
+
+  ParticipantDB.find(
+    { _id: participant._id },
+    { __v: 0 },
+    function (err, result) {
+      if (err) throw err;
+      return res.status(200).json({
+        data: result,
+      });
+    }
+  );
+};
 exports.deleteTest = (req, res) => {
   const test = {
     googleId: req.body.data.googleId,
@@ -315,17 +341,22 @@ exports.deleteTest = (req, res) => {
   };
   CodingTestDB.deleteOne(query, function (err, obj) {
     if (err) throw err;
-    console.log('1 document deleted');
   });
 
   CodingChallengeDB.deleteMany(query, function (err, obj) {
     if (err) throw err;
-    console.log('Many document(s) deleted');
   });
 
   QuestionsDB.deleteMany(query, function (err, obj) {
     if (err) throw err;
-    console.log('Many document(s) deleted');
+  });
+
+  var newQuery = {
+    googleId: test.googleId,
+  };
+
+  ParticipantDB.deleteMany(newQuery, function (err, obj) {
+    if (err) throw err;
   });
 
   NewUserDB.updateOne(
@@ -419,7 +450,6 @@ exports.getCodingTest = async (req, res) => {
 };
 
 exports.submitCodingTest = async (req, res) => {
-  console.log('code submission');
   try {
     const id = req.body.data.participantId;
     const codingTestResults = req.body.data.codingTestResults;
@@ -468,7 +498,6 @@ exports.deleteChallenge = (req, res) => {
   };
   CodingChallengeDB.deleteOne(query, function (err, obj) {
     if (err) throw err;
-    console.log('1 document deleted');
   });
   CodingTestDB.updateOne(
     { googleId: challenge.googleId, testName: challenge.testName },
@@ -491,12 +520,11 @@ exports.deleteQuestions = (req, res) => {
 
   var query = {
     googleId: questions.googleId,
-    testName: questions.testName,
+    testName: questions.testName, 
   };
 
   QuestionsDB.deleteOne(query, function (err, obj) {
     if (err) throw err;
-    console.log('1 document deleted');
   });
   CodingTestDB.updateOne(
     { googleId: questions.googleId, testName: questions.testName },
@@ -598,17 +626,13 @@ exports.updateChallenge = (req, res) => {
 exports.updateQuestions = (req, res) => {
   const Qs = {
     _id: req.body.data._id,
-    question1: req.body.data.question1,
-    question2: req.body.data.question2,
-    question3: req.body.data.question3,
+    questions: req.body.data.questions,
   };
 
   QuestionsDB.updateOne(
     { _id: Qs._id },
     {
-      question1: Qs.question1,
-      question2: Qs.question2,
-      question3: Qs.question3,
+      questions: Qs.questions,
     },
     function (err, res) {
       if (err) throw err;
@@ -616,6 +640,39 @@ exports.updateQuestions = (req, res) => {
   );
   return res.status(200).json({
     status: 'success',
+    data: null,
+  });
+};
+
+exports.deleteUserData = (req, res) => {
+  const user = {
+    googleId: req.body.data.googleId,
+  };
+
+  var query = {
+    googleId: user.googleId,
+  };
+
+  NewUserDB.deleteOne(query, function (err, obj) {
+    if (err) throw err;
+  });
+
+  CodingTestDB.deleteMany(query, function (err, obj) {
+    if (err) throw err;
+  });
+
+  CodingChallengeDB.deleteMany(query, function (err, obj) {
+    if (err) throw err;
+  });
+
+  QuestionsDB.deleteMany(query, function (err, obj) {
+    if (err) throw err;
+  });
+
+  ParticipantDB.deleteMany(query, function (err, obj) {
+    if (err) throw err;
+  });
+  return res.status(200).json({
     data: null,
   });
 };

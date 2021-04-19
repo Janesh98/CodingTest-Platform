@@ -20,10 +20,13 @@ const CompanyInput = () => {
   const { currentUser } = useAuth();
 
   useEffect(() => {
+    let mounted = true;
     const getCompanies = async () => {
       try {
         const res = await axios.post(callCompany, {});
+        if(mounted){
         setCompanies(res.data.data.map((item) => item.company.toLowerCase()));
+        }
       } catch {
         console.log(
           'error in CompanyInput.js getting list of companies from backend api'
@@ -32,6 +35,7 @@ const CompanyInput = () => {
     };
 
     getCompanies();
+    return () => { mounted = false;}
   }, []);
 
   const setCompanyAndRemoveErrors = (company) => {
@@ -60,7 +64,7 @@ const CompanyInput = () => {
       <div>
         <Grid container align="center" justify="center" direction="row">
           <Container component="main" maxWidth="xs">
-            <div>
+            <div data-testid = "company input div">
               <Typography component="h1" variant="h5">
                 Enter Company
               </Typography>
@@ -75,6 +79,7 @@ const CompanyInput = () => {
                   label="company"
                   type="company"
                   id="company"
+                  inputProps={{ "data-testid": "company" }}
                   error={isError}
                   helperText={error}
                   autoComplete="company"
@@ -84,6 +89,7 @@ const CompanyInput = () => {
                 />
                 <Button
                   id="submit-company"
+                  data-testid="submit"
                   type="submit"
                   fullWidth
                   variant="contained"

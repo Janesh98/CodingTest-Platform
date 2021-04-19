@@ -32,12 +32,30 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = () => {
   const classes = useStyles();
-  const { updateLanguage, codingTest } = useContext(CodingTestContext);
+  const {
+    updateLanguage,
+    codingTest,
+    currentChallengeIndex,
+    code,
+  } = useContext(CodingTestContext);
   const { codingTestId, participantId } = useParams();
   const history = useHistory();
 
+  // saves code to global memory
+  const saveCodeProgress = () => {
+    codingTest.challenges[currentChallengeIndex].code = code;
+  };
+
+  const convertCodeToBase64 = () => {
+    codingTest?.challenges.map((test, i) => {
+      return (codingTest.challenges[i].code = btoa(test.code));
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    saveCodeProgress();
+    convertCodeToBase64();
     try {
       await axios.post(submitCodingTest, {
         data: { participantId, codingTestResults: codingTest },
@@ -46,6 +64,11 @@ const Header = () => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const onLanguageChange = async (language) => {
+    updateLanguage(language);
+    codingTest.challenges[currentChallengeIndex].language = language;
   };
 
   return (
@@ -65,14 +88,13 @@ const Header = () => {
               label="Language"
               defaultValue={10}
               color="primary"
-              onChange={(e) => updateLanguage(languages[e.target.value])}
+              onChange={(e) => onLanguageChange(languages[e.target.value])}
               classes={{
                 root: classes.selector,
                 icon: classes.selector,
               }}
             >
               {Object.entries(languages).map(([key, value]) => {
-                // console.log(key, value);
                 return (
                   <MenuItem key={key} value={key}>
                     {value}

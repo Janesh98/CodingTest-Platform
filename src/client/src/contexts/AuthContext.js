@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { auth } from '../firebase';
 import firebase from 'firebase/app';
 
-const AuthContext = React.createContext();
+export const AuthContext = React.createContext();
 
 export const useAuth = () => {
   return useContext(AuthContext);
@@ -25,6 +25,10 @@ export const AuthProvider = ({ children }) => {
     return auth.signInWithPopup(provider);
   };
 
+  const deleteUser = () => {
+    return auth.currentUser.delete();
+  }
+
   const logout = () => {
     return auth.signOut();
   };
@@ -43,6 +47,7 @@ export const AuthProvider = ({ children }) => {
     login,
     signup,
     signInWithGoogle,
+    deleteUser,
     logout,
   };
   return (

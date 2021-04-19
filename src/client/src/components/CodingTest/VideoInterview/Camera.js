@@ -6,6 +6,7 @@ import Webcam from "react-webcam";
 import { storage } from "../../../firebase"
 import { useParams } from 'react-router-dom';
 import { CountdownCircleTimer } from 'react-countdown-circle-timer'
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,6 +17,10 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'auto',
     maxHeight: '87vh',
   },
+
+  spinner:{
+    justifyContent: "center"
+  }
 }));
 
 const Camera = () => {
@@ -29,6 +34,7 @@ const Camera = () => {
   const mediaRecorderRef = useRef(null);
   const [capturing, setCapturing] = useState(false);
   const [responded, setResponded] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [recordedChunks, setRecordedChunks] = useState([]);
   const [finished, setFinished] = useState(false);
   const { codingTestId, participantId } = useParams();
@@ -73,12 +79,14 @@ const Camera = () => {
     }
   }, [recordedChunks]);
 
-  const handleContinue = () => {
+  const handleContinue = async () => {
     const file = handleFile();
-    storage.ref().child(`${codingTestId}/${participantId}/${currentQuestionIndex}.mp4`).put(file);
+    setLoading(true);
+    await storage.ref().child(`${codingTestId}/${participantId}/${currentQuestionIndex}.mp4`).put(file);
+    setLoading(false);
 
     updateCurrentQuestionIndex(currentQuestionIndex + 1);
-    if(Object.keys(codingTest.questions[0]).length === currentQuestionIndex){
+    if(Object.keys(codingTest.questions[0].questions).length - 1 === currentQuestionIndex){
       setFinished(true);
     };
     setResponded(false);
@@ -90,15 +98,19 @@ const Camera = () => {
     facingMode: "user"
     };
 
+  
+
   return (
     <>
       <div className={classes.root}>
+        {loading ? <Typography>Please wait while your response is uploaded </Typography> : ''}
+        {loading ? <CircularProgress size={200} className={classes.spinner} />: ''}
         {!finished ? 
-        <Webcam  mirrored = "true" audio={true} height={338} width={600} ref={webcamRef} videoConstraints={videoConstraints}/> : ''}
+        <Webcam  mirrored = "true" audio={true} height={338} width={600} ref={webcamRef}  videoConstraints={videoConstraints}/> : ''}
                 {responded ? 
                 <div>
                   <Typography>Thank you! Your response has been recorded.</Typography>
-                  <Button color="secondary" variant="contained" onClick={handleContinue}>Continue</Button>
+                  <Button color="secondary" variant="contained" disabled={loading} onClick={handleContinue}>Continue</Button>
                   </div>
                  :(capturing ? (
                    <div>    

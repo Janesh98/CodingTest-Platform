@@ -13,7 +13,7 @@ import { useAuth } from '../contexts/AuthContext';
 import axios from 'axios';
 
 const Create = () => {
-  const [name, setName] = useState('');
+  const [created, setName] = useState('');
   const [error, setError] = useState('');
   const [isError, setISError] = useState(false);
   const { currentUser } = useAuth();
@@ -21,12 +21,15 @@ const Create = () => {
   const history = useHistory();
 
   useEffect(() => {
+    let mounted = true;
     const getUserTests = async () => {
       try {
         const res = await axios.post(getTests, {
           data: { googleId: currentUser.uid },
         });
+        if (mounted){
         setTests(res.data.data.map((item) => item.testName.toLowerCase()));
+        }
       } catch {
         console.log(
           'error in Create.js getting list of tests from backend api'
@@ -35,6 +38,7 @@ const Create = () => {
     };
 
     getUserTests();
+    return () => { mounted = false;}
   }, [currentUser.uid]);
 
   const setNameAndRemoveErrors = (name) => {
@@ -47,19 +51,19 @@ const Create = () => {
 
   const handleOnClick = async (e) => {
     e.preventDefault();
-    if (name.length === 0) {
+    if (created.length === 0) {
       setISError(true);
       return setError('Test name cannot be null');
-    } else if (tests.includes(name.toLowerCase())) {
+    } else if (tests.includes(created.toLowerCase())) {
       setISError(true);
       return setError('A test by this name already exists');
     } else {
       await axios.post(addTest, {
-        data: { googleId: currentUser.uid, testName: name },
+        data: { googleId: currentUser.uid, testName: created },
       });
       return history.push({
         pathname: '/setup',
-        state: { newTestName: name },
+        state: { newTestName: created },
       });
     }
   };
@@ -67,7 +71,7 @@ const Create = () => {
   return (
     <Container>
       <NavBar />
-      <div id="create-container">
+      <div id="create-container" data-testid="create-container">
         <Grid container align="center" justify="center" direction="column">
           <Container component="main" maxWidth="xs">
             <Typography component="h1" variant="h5">
@@ -79,6 +83,7 @@ const Create = () => {
               required
               fullWidth
               id="name"
+              inputProps={{ "data-testid": "name" }}
               label="Coding test name"
               placeholder="Coding test name'"
               name="name"
@@ -88,7 +93,9 @@ const Create = () => {
               onChange={(input) => setNameAndRemoveErrors(input.target.value)}
             />
             <Button
-              id="save-challenge"
+              id="continue"
+              aria-label="continue"
+              data-testid="continue"
               variant="contained"
               color="secondary"
               size="large"

@@ -24,10 +24,12 @@ const Results = () => {
   const history = useHistory();
 
   useEffect(() => {
+    let mounted = true;
     const rows = async () => {
       var res = await axios.post(getTests, {
         data: { googleId: currentUser.uid },
       });
+      if(mounted){
       await setTableData(
         res.data.data.map((item) => ({
           _id: item._id,
@@ -36,10 +38,11 @@ const Results = () => {
           participants: item.participants,
           challenges: item.challenges.length,
         }))
-      );
+      )};
     };
 
     rows();
+    return () => { mounted = false;}
   }, [currentUser.uid]);
 
   const useStyles = makeStyles({
@@ -62,7 +65,7 @@ const Results = () => {
   return (
     <Container>
       <NavBar />
-      <div id="results-container">
+      <div id="results-container" data-testid="results-container">
         <Grid container align="center" justify="center" direction="column">
           <Container component="main" maxWidth="md">
             <div>

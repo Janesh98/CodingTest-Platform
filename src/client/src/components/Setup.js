@@ -103,7 +103,7 @@ const Setup = () => {
   return (
     <Container>
       <NavBar />
-      <div id="setup-container" style={{ marginTop: 200 }}>
+      <div id="setup-container" data-testid="setup-container" style={{ marginTop: 200 }}>
         <Grid container align="center" justify="center" direction="column">
           <Container component="main" maxWidth="xs">
             <div>
@@ -129,7 +129,7 @@ const Setup = () => {
                 helperText={error}
                 onChange={(input) => setTitle(input.target.value)}
               />
-              <Typography component="h1">Problem Description</Typography>
+              <Typography component="h1" data-testid = "Problem Description typography">Problem Description</Typography>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -138,14 +138,15 @@ const Setup = () => {
                 multiline
                 rows={3}
                 id="problem description"
-                label="Problem Description"
+                inputProps={{ "data-testid": "Problem Description" }}
+                aria-label="Problem Description"
                 placeholder="Problem Description of Challenge"
                 name="problem description"
                 error={isError}
                 helperText={error}
                 onChange={(input) => setProbDesc(input.target.value)}
               />
-              <Typography component="h1">Input Format</Typography>
+              <Typography component="h1" data-testid = "Input Format typography">Input Format</Typography>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -153,7 +154,8 @@ const Setup = () => {
                 fullWidth
                 multiline
                 id="input format"
-                label="Input Format"
+                inputProps={{ "data-testid": "Input Format" }}
+                aria-label="Input Format"
                 placeholder="Input Format"
                 name="input format"
                 error={isError}
@@ -161,7 +163,7 @@ const Setup = () => {
                 onChange={(input) => setInFormat(input.target.value)}
               />
 
-              <Typography component="h1">Return Format</Typography>
+              <Typography component="h1" data-testid = "Return Format typography">Return Format</Typography>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -169,14 +171,15 @@ const Setup = () => {
                 fullWidth
                 multiline
                 id="return format"
-                label="Return Format"
+                inputProps={{ "data-testid": "Return Format" }}
+                aria-label="Return Format"
                 placeholder="Return Format"
                 name="return format"
                 error={isError}
                 helperText={error}
                 onChange={(input) => setReturnFormat(input.target.value)}
               />
-              <Typography component="h1">Constraints</Typography>
+              <Typography component="h1" data-testid = "Constraints typography">Constraints</Typography>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -185,14 +188,15 @@ const Setup = () => {
                 multiline
                 rows={2}
                 id="constraints"
-                label="Constraints"
+                inputProps={{ "data-testid": "Constraints" }}
+                aria-label="Constraints"
                 placeholder="Constraints"
                 name="constraints"
                 error={isError}
                 helperText={error}
                 onChange={(input) => setConstraints(input.target.value)}
               />
-              <Typography component="h1">Sample Input</Typography>
+              <Typography component="h1" data-testid = "Sample Input typography">Sample Input</Typography>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -200,14 +204,15 @@ const Setup = () => {
                 fullWidth
                 multiline
                 id="sample input"
-                label="Sample Input"
+                inputProps={{ "data-testid": "Sample Input" }}
+                aria-label="Sample Input"
                 placeholder="Sample Input"
                 name="sample input"
                 error={isError}
                 helperText={error}
                 onChange={(input) => setSampleIn(input.target.value)}
               />
-              <Typography component="h1">Sample Output</Typography>
+              <Typography component="h1" data-testid = "Sample Output typography">Sample Output</Typography>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -215,14 +220,15 @@ const Setup = () => {
                 fullWidth
                 multiline
                 id="sample output"
-                label="Sample Output"
+                inputProps={{ "data-testid": "Sample Output" }}
+                aria-label="Sample Output"
                 placeholder="Sample Output"
                 name="sample output"
                 error={isError}
                 helperText={error}
                 onChange={(input) => setSampleOut(input.target.value)}
               />
-              <Typography component="h1">Example with Explanation</Typography>
+              <Typography component="h1" data-testid = "Example with Explanation typography">Example with Explanation</Typography>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -231,7 +237,8 @@ const Setup = () => {
                 multiline
                 rows={2}
                 id="example with explanation"
-                label="Example with Explanation"
+                inputProps={{ "data-testid": "Example with Explanation" }}
+                aria-label="Example with Explanation"
                 placeholder="Example with Explanation"
                 name="example with explanation"
                 error={isError}
@@ -246,7 +253,8 @@ const Setup = () => {
                 margin="normal"
                 required
                 id="test input 1"
-                label="Input"
+                aria-label="Input"
+                inputProps={{ "data-testid": "test input 1" }}
                 placeholder="Input"
                 name="Input"
                 error={isError}
@@ -258,7 +266,8 @@ const Setup = () => {
                 margin="normal"
                 required
                 id="test output 1"
-                label="Expected Output"
+                inputProps={{ "data-testid": "test output 1" }}
+                aria-label="Expected Output"
                 placeholder="Expected Output"
                 name="Output"
                 error={isError}
@@ -269,6 +278,7 @@ const Setup = () => {
                 variant="outlined"
                 margin="normal"
                 id="test input 2"
+                inputProps={{ "data-testid": "test input 2" }}
                 label="Input"
                 placeholder="Input"
                 name="Input"
@@ -278,6 +288,7 @@ const Setup = () => {
                 variant="outlined"
                 margin="normal"
                 id="test output 2"
+                inputProps={{ "data-testid": "test output 2" }}
                 label="Expected Output"
                 placeholder=" Expected Output"
                 name="Output"
@@ -287,6 +298,7 @@ const Setup = () => {
                 variant="outlined"
                 margin="normal"
                 id="test input 3"
+                inputProps={{ "data-testid": "test input 3" }}
                 label="Input"
                 placeholder="Input"
                 name="Input"
@@ -296,6 +308,7 @@ const Setup = () => {
                 variant="outlined"
                 margin="normal"
                 id="test output 3"
+                inputProps={{ "data-testid": "test output 3" }}
                 label="Expected Output"
                 placeholder=" Expected Output"
                 name="Output"
@@ -305,6 +318,7 @@ const Setup = () => {
                 variant="outlined"
                 margin="normal"
                 id="test input 4"
+                inputProps={{ "data-testid": "test input 4" }}
                 label="Input"
                 placeholder="Input"
                 name="Input"
@@ -314,6 +328,7 @@ const Setup = () => {
                 variant="outlined"
                 margin="normal"
                 id="test output 4"
+                inputProps={{ "data-testid": "test output 4" }}
                 label="Expected Output"
                 placeholder=" Expected Output"
                 name="Output"
@@ -323,6 +338,7 @@ const Setup = () => {
                 variant="outlined"
                 margin="normal"
                 id="test input 5"
+                inputProps={{ "data-testid": "test input 5" }}
                 label="Input"
                 placeholder="Input"
                 name="Input"
@@ -332,6 +348,7 @@ const Setup = () => {
                 variant="outlined"
                 margin="normal"
                 id="test output 5"
+                inputProps={{ "data-testid": "test output 5" }}
                 label="Expected Output"
                 placeholder=" Expected Output"
                 name="Output"
@@ -339,6 +356,7 @@ const Setup = () => {
               />
               <Button
                 id="save-challenge"
+                data-testid="save"
                 variant="contained"
                 color="primary"
                 size="large"
@@ -349,6 +367,7 @@ const Setup = () => {
               </Button>
               <Button
                 id="continue"
+                data-testid="continue"
                 variant="contained"
                 color="secondary"
                 size="large"
@@ -359,6 +378,7 @@ const Setup = () => {
               </Button>
               <Button
                 id="exit"
+                data-testid="exit"
                 variant="contained"
                 color="primary"
                 size="large"

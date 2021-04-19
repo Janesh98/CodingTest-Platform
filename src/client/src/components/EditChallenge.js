@@ -82,7 +82,7 @@ const EditChallenge = () => {
       });
       history.push({
         pathname: '/edittest',
-        state: { TestName: TestName },
+        state: { testName: TestName },
       });
     }
   };
@@ -92,7 +92,7 @@ const EditChallenge = () => {
       e.preventDefault();
       history.push({
         pathname: '/edittest',
-        state: { TestName: TestName },
+        state: { testName: TestName },
       });
     } catch {
       console.log('error');
@@ -101,7 +101,7 @@ const EditChallenge = () => {
   return (
     <Container>
       <NavBar />
-      <div id="setup-container" style={{ marginTop: 200 }}>
+      <div id="setup-container" data-testid = "setup-container" style={{ marginTop: 200 }}>
         <Grid container align="center" justify="center" direction="column">
           <Container component="main" maxWidth="xs">
             <div>
@@ -127,7 +127,7 @@ const EditChallenge = () => {
                 helperText={error}
                 onChange={(input) => setTitle(input.target.value)}
               />
-              <Typography component="h1">Problem Description</Typography>
+              <Typography component="h1" data-testid = "Problem Description typography">Problem Description</Typography>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -136,15 +136,16 @@ const EditChallenge = () => {
                 multiline
                 rows={3}
                 id="problem description"
+                inputProps={{ "data-testid": "Problem Description" }}
                 defaultValue={challengeData[index].problemDescription}
-                label="Problem Description"
+                aria-label="Problem Description"
                 placeholder="Problem Description of Challenge"
                 name="problem description"
                 error={isError}
                 helperText={error}
                 onChange={(input) => setProbDesc(input.target.value)}
               />
-              <Typography component="h1">Input Format</Typography>
+              <Typography component="h1" data-testid = "Input Format typography">Input Format</Typography>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -152,8 +153,9 @@ const EditChallenge = () => {
                 fullWidth
                 multiline
                 id="input format"
+                inputProps={{ "data-testid": "Input Format" }}
                 defaultValue={challengeData[index].inputFormat}
-                label="Input Format"
+                aria-label="Input Format"
                 placeholder="Input Format"
                 name="input format"
                 error={isError}
@@ -161,7 +163,7 @@ const EditChallenge = () => {
                 onChange={(input) => setInFormat(input.target.value)}
               />
 
-              <Typography component="h1">Return Format</Typography>
+              <Typography component="h1" data-testid = "Return Format typography">Return Format</Typography>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -169,15 +171,16 @@ const EditChallenge = () => {
                 fullWidth
                 multiline
                 id="return format"
+                inputProps={{ "data-testid": "Return Format" }}
                 defaultValue={challengeData[index].returnFormat}
-                label="Return Format"
+                aria-label="Return Format"
                 placeholder="Return Format"
                 name="return format"
                 error={isError}
                 helperText={error}
                 onChange={(input) => setReturnFormat(input.target.value)}
               />
-              <Typography component="h1">Constraints</Typography>
+              <Typography component="h1" data-testid = "Constraints typography">Constraints</Typography>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -186,15 +189,16 @@ const EditChallenge = () => {
                 multiline
                 rows={2}
                 id="constraints"
+                inputProps={{ "data-testid": "Constraints" }}
                 defaultValue={challengeData[index].constraints}
-                label="Constraints"
+                aria-label="Constraints"
                 placeholder="Constraints"
                 name="constraints"
                 error={isError}
                 helperText={error}
                 onChange={(input) => setConstraints(input.target.value)}
               />
-              <Typography component="h1">Sample Input</Typography>
+              <Typography component="h1" data-testid = "Sample Input typography">Sample Input</Typography>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -202,15 +206,16 @@ const EditChallenge = () => {
                 fullWidth
                 multiline
                 id="sample input"
+                inputProps={{ "data-testid": "Sample Input" }}
                 defaultValue={challengeData[index].sampleInput}
-                label="Sample Input"
+                aria-label="Sample Input"
                 placeholder="Sample Input"
                 name="sample input"
                 error={isError}
                 helperText={error}
                 onChange={(input) => setSampleIn(input.target.value)}
               />
-              <Typography component="h1">Sample Output</Typography>
+              <Typography component="h1" data-testid = "Sample Output typography">Sample Output</Typography>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -218,15 +223,16 @@ const EditChallenge = () => {
                 fullWidth
                 multiline
                 id="sample output"
+                inputProps={{ "data-testid": "Sample Output" }}
                 defaultValue={challengeData[index].sampleOutput}
-                label="Sample Output"
+                aria-label="Sample Output"
                 placeholder="Sample Output"
                 name="sample output"
                 error={isError}
                 helperText={error}
                 onChange={(input) => setSampleOut(input.target.value)}
               />
-              <Typography component="h1">Example with Explanation</Typography>
+              <Typography component="h1" data-testid = "Example with Explanation typography">Example with Explanation</Typography>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -235,8 +241,9 @@ const EditChallenge = () => {
                 multiline
                 rows={2}
                 id="example with explanation"
+                inputProps={{ "data-testid": "Example with Explanation" }}
                 defaultValue={challengeData[index].exampleExplanation}
-                label="Example with Explanation"
+                aria-label="Example with Explanation"
                 placeholder="Example with Explanation"
                 name="example with explanation"
                 error={isError}
@@ -251,6 +258,7 @@ const EditChallenge = () => {
                 margin="normal"
                 required
                 id="test input 1"
+                inputProps={{ "data-testid": "test input 1" }}
                 defaultValue={challengeData[index].testInput1}
                 label="Input"
                 placeholder="Input"
@@ -264,6 +272,7 @@ const EditChallenge = () => {
                 margin="normal"
                 required
                 id="test output 1"
+                inputProps={{ "data-testid": "test output 1" }}
                 defaultValue={challengeData[index].testOutput1}
                 label="Expected Output"
                 placeholder="Expected Output"
@@ -276,6 +285,7 @@ const EditChallenge = () => {
                 variant="outlined"
                 margin="normal"
                 id="test input 2"
+                inputProps={{ "data-testid": "test input 2" }}
                 defaultValue={challengeData[index].testInput2}
                 label="Input"
                 placeholder="Input"
@@ -286,6 +296,7 @@ const EditChallenge = () => {
                 variant="outlined"
                 margin="normal"
                 id="test output 2"
+                inputProps={{ "data-testid": "test output 2" }}
                 defaultValue={challengeData[index].testOutput2}
                 label="Expected Output"
                 placeholder=" Expected Output"
@@ -296,6 +307,7 @@ const EditChallenge = () => {
                 variant="outlined"
                 margin="normal"
                 id="test input 3"
+                inputProps={{ "data-testid": "test input 3" }}
                 defaultValue={challengeData[index].testInput3}
                 label="Input"
                 placeholder="Input"
@@ -306,6 +318,7 @@ const EditChallenge = () => {
                 variant="outlined"
                 margin="normal"
                 id="test output 3"
+                inputProps={{ "data-testid": "test output 3" }}
                 defaultValue={challengeData[index].testOutput3}
                 label="Expected Output"
                 placeholder=" Expected Output"
@@ -316,6 +329,7 @@ const EditChallenge = () => {
                 variant="outlined"
                 margin="normal"
                 id="test input 4"
+                inputProps={{ "data-testid": "test input 4" }}
                 defaultValue={challengeData[index].testInput4}
                 label="Input"
                 placeholder="Input"
@@ -326,6 +340,7 @@ const EditChallenge = () => {
                 variant="outlined"
                 margin="normal"
                 id="test output 4"
+                inputProps={{ "data-testid": "test output 4" }}
                 defaultValue={challengeData[index].testOutput4}
                 label="Expected Output"
                 placeholder=" Expected Output"
@@ -336,6 +351,7 @@ const EditChallenge = () => {
                 variant="outlined"
                 margin="normal"
                 id="test input 5"
+                inputProps={{ "data-testid": "test input 5" }}
                 defaultValue={challengeData[index].testInput5}
                 label="Input"
                 placeholder="Input"
@@ -346,6 +362,7 @@ const EditChallenge = () => {
                 variant="outlined"
                 margin="normal"
                 id="test output 5"
+                inputProps={{ "data-testid": "test output 5" }}
                 defaultValue={challengeData[index].testOutput5}
                 label="Expected Output"
                 placeholder=" Expected Output"
@@ -354,6 +371,7 @@ const EditChallenge = () => {
               />
               <Button
                 id="save-challenge"
+                data-testid = "save"
                 variant="contained"
                 color="primary"
                 size="large"
@@ -364,6 +382,7 @@ const EditChallenge = () => {
               </Button>
               <Button
                 id="exit"
+                data-testid = "exit"
                 variant="contained"
                 color="secondary"
                 size="large"

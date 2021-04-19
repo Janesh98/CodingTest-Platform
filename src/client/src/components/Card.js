@@ -64,7 +64,7 @@ export default function Card(){
 
   return (
       <div>
-    <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+    <Button variant="outlined" data-testid="open" color="primary" onClick={handleClickOpen}>
     See Example Challenge
   </Button>
   <Dialog onClose={handleClose} aria-label="example problem" open={open}>
@@ -103,7 +103,7 @@ export default function Card(){
             </Typography> 
           </Box>
           <Typography component="h1">
-            Return Format
+            Return Format 
           </Typography> 
           <Box color="black" bgcolor="lightgray" p={1}>
             <Typography>
@@ -157,7 +157,7 @@ export default function Card(){
       </form>
     </DialogContent>
     <DialogActions>
-      <Button autoFocus onClick={handleClose} color="primary">
+      <Button autoFocus onClick={handleClose} color="primary" data-testid="close">
         Close
       </Button>
     </DialogActions>
