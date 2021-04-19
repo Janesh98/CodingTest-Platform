@@ -3,7 +3,7 @@ const baseUrl =
     ? 'http://localhost:5000/coding-test-platform/us-central1/api'
     : 'https://us-central1-coding-test-platform.cloudfunctions.net/api';
 
-const rceBaseUrl = 'http://localhost:8000';
+const rceBaseUrl = process.env.REACT_APP_RCE_API || 'http://localhost:8000';
 
 export const submission =
   process.env.REACT_APP_ALT_RCE_API === 'false'
