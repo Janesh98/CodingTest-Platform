@@ -17,10 +17,16 @@ export const addSubmission = async (data) => {
     return await axios.post(submission, data);
   }
   // uses our custom solution api
-  const job = await axios.post(submission, data);
+  // tell server to wait for code execution to finish and not queue
+  data.data.wait = true;
+  return await axios.post(submission, data);
+};
 
+// @deprecated in favour of long http posts instead of constant polling
+// to reduce server load.
+// eslint-disable-next-line no-unused-vars
+const poll = async (job) => {
   var output = await axios.get(`${submission}/${job.data.id}`);
-
   while (output?.data.state !== 'completed') {
     await new Promise((r) => setTimeout(r, 500));
     output = await axios.get(`${submission}/${job.data.id}`);
