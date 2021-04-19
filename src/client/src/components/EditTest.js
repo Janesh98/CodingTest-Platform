@@ -89,7 +89,7 @@ const EditTest = () => {
 
     questionRows();
     return () => { mounted = false;}
-  }, [currentUser.uid, testName]);
+  }, [currentUser.uid, questionsId, testName]);
 
   const useStyles = makeStyles({
     table: {
@@ -184,7 +184,7 @@ const EditTest = () => {
   const handleOnClickDeleteQuestions = async () => {
     try {
       await axios.post(deleteQuestions, {
-        data: { googleId: currentUser.uid, testName: testName },
+        data: { googleId: currentUser.uid, testName: testName, _id: questionsId },
       });
       return refreshPage();
     } catch {

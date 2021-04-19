@@ -520,7 +520,7 @@ exports.deleteQuestions = (req, res) => {
 
   var query = {
     googleId: questions.googleId,
-    testName: questions.testName,
+    testName: questions.testName, 
   };
 
   QuestionsDB.deleteOne(query, function (err, obj) {
