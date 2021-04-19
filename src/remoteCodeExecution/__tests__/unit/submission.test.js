@@ -1,24 +1,57 @@
 const submissionQueue = require('../../config/queueSetup');
+const ExecutorService = require('../../services/ExecutorService');
 const {
   addSubmission,
   getSubmission,
 } = require('../../controllers/submission');
+jest.mock('../../services/ExecutorService');
 
 describe('/submission', () => {
+  beforeEach(() => {
+    // Clear all instances and calls to constructor and all methods:
+    ExecutorService.mockClear();
+  });
   afterEach(() => {
     jest.restoreAllMocks();
   });
   it('GET /, Add Submission', async () => {
     let responseObject = {};
+    let status = null;
     const mockData = { id: 123 };
     jest.spyOn(submissionQueue, 'add').mockResolvedValueOnce(mockData);
     const req = { body: { data: {} } };
     const res = {
-      json: jest.fn().mockImplementation((result) => {
-        responseObject = result;
+      status: jest.fn().mockImplementation((result) => {
+        status = result;
+        return {
+          json: jest.fn().mockImplementation((result) => {
+            responseObject = result;
+          }),
+        };
       }),
     };
     await addSubmission(req, res);
+    expect(status).toBe(201);
+    expect(responseObject).toEqual(mockData);
+  });
+
+  it('GET /, Add Submission and wait for completion', async () => {
+    let responseObject = {};
+    let status = null;
+    const mockData = { data: undefined };
+    const req = { body: { data: { wait: true } } };
+    const res = {
+      status: jest.fn().mockImplementation((result) => {
+        status = result;
+        return {
+          json: jest.fn().mockImplementation((result) => {
+            responseObject = result;
+          }),
+        };
+      }),
+    };
+    await addSubmission(req, res);
+    expect(status).toBe(200);
     expect(responseObject).toEqual(mockData);
   });
 
