@@ -30,6 +30,7 @@ body {
 #dashboard-container {
   height: 100%;
   display: flex;
+  margin-top: 10px;
   justify-content: center;
   align-items: center;
 }

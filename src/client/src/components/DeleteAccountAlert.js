@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     '& > * + *': {
-      marginTop: theme.spacing(5),
+      marginTop: theme.spacing(2),
     },
     justifyContent: 'center'
   },
