@@ -42,6 +42,11 @@ beforeEach(() => {
         cy.get('[data-testid="Question 3"]').type('What time is it?');
         cy.get('[data-testid="save"]').click()
         cy.wait(5000);
+        cy.get('[data-testid="open-menu"]').click()
+        cy.get('[data-testid="edit-test-menu"]').click()
+        cy.wait(3000);
+        cy.get('[id="delete"]').first().click()
+        cy.wait(5000);
         cy.get('[data-testid="logout"]').click()
     })
 
@@ -78,6 +83,11 @@ beforeEach(() => {
         cy.wait(5000);
         cy.get('[id="continue"]').click()
         cy.get('[data-testid="exit"]').click()
+        cy.wait(5000);
+        cy.get('[data-testid="open-menu"]').click()
+        cy.get('[data-testid="edit-test-menu"]').click()
+        cy.wait(3000);
+        cy.get('[id="delete"]').first().click()
         cy.wait(5000);
         cy.get('[data-testid="logout"]').click()
     })
