@@ -26,14 +26,4 @@ describe('Create correct language context for Docker image and command', () => {
     };
     expect(result).toEqual(expected);
   });
-  //   it('Should throw Error as language does not exist', () => {
-  //     const code = Base64.encode('System.out.println("hello world")');
-  //     const input = Base64.encode('1 2 3');
-  //     const language = 'doesNotExist';
-  //     const result = new ExecutorService().createContext(code, input, language);
-  //     expected = {};
-  //     expect(
-  //       new ExecutorService().createContext(code, input, language)
-  //     ).toThrowError(new Error('"doesNotExist" is not a supported language.'));
-  //   });
 });
