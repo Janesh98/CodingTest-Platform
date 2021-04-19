@@ -10,6 +10,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
+import DeleteAccountAlert from './DeleteAccountAlert'
+
 
 export default function Dashboard() {
   const history = useHistory();
@@ -41,6 +43,8 @@ export default function Dashboard() {
       console.log('error');
     }
   };
+
+  
 
   return (
     <Container>
@@ -137,6 +141,7 @@ export default function Dashboard() {
               </form>
             </div>
           </Container>
+          <DeleteAccountAlert />
         </Grid>
       </div>
     </Container>

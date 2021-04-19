@@ -25,6 +25,10 @@ export const AuthProvider = ({ children }) => {
     return auth.signInWithPopup(provider);
   };
 
+  const deleteUser = () => {
+    return auth.currentUser.delete();
+  }
+
   const logout = () => {
     return auth.signOut();
   };
@@ -43,6 +47,7 @@ export const AuthProvider = ({ children }) => {
     login,
     signup,
     signInWithGoogle,
+    deleteUser,
     logout,
   };
   return (

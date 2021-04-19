@@ -635,3 +635,36 @@ exports.updateQuestions = (req, res) => {
     data: null,
   });
 };
+
+exports.deleteUserData = (req, res) => {
+  const user = {
+    googleId: req.body.data.googleId,
+  };
+
+  var query = {
+    googleId: user.googleId,
+  };
+
+  NewUserDB.deleteOne(query, function (err, obj) {
+    if (err) throw err;
+  });
+
+  CodingTestDB.deleteMany(query, function (err, obj) {
+    if (err) throw err;
+  });
+
+  CodingChallengeDB.deleteMany(query, function (err, obj) {
+    if (err) throw err;
+  });
+
+  QuestionsDB.deleteMany(query, function (err, obj) {
+    if (err) throw err;
+  });
+
+  ParticipantDB.deleteMany(query, function (err, obj) {
+    if (err) throw err;
+  });
+  return res.status(200).json({
+    data: null,
+  });
+};

@@ -29,6 +29,7 @@ const {
   updateChallenge,
   updateQuestions,
   submitCodingTest,
+  deleteUserData,
 } = require('./controllers/users');
 const { executeCode } = require('./controllers/code');
 const { sendEmail } = require('./controllers/email');
@@ -66,6 +67,7 @@ app.post('/deleteChallenge', deleteChallenge);
 app.post('/deleteQuestions', deleteQuestions);
 app.post('/updateChallenge', updateChallenge);
 app.post('/updateQuestions', updateQuestions);
+app.post('/deleteUserData', deleteUserData);
 app.post('/email', sendEmail);
 app.post('/testy', (req, res) => {
   res.send('Test Successful');

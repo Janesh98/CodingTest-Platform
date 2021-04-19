@@ -11,6 +11,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import EmailIcon from '@material-ui/icons/Email';
 import { sendEmail } from '../endpoints';
 import axios from 'axios';
+import { useAuth } from '../contexts/AuthContext';
 
 const AddParticipants = () => {
   const [email, setEmail] = useState('');
@@ -19,6 +20,7 @@ const AddParticipants = () => {
   const history = useHistory();
   const TestName = history.location.state.testName;
   const id = history.location.state._id;
+  const { currentUser } = useAuth();
 
   function refreshPage() {
     window.location.reload(false);
@@ -45,7 +47,7 @@ const AddParticipants = () => {
       return setError('Please enter a valid email');
     } else {
       await axios.post(sendEmail, {
-        data: { email: email, _id: id },
+        data: { email: email, _id: id, googleId: currentUser.uid},
       });
       return refreshPage();
     }
