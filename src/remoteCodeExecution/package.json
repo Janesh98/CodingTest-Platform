@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --coverage",
+    "test:watch": "jest --coverage --watchAll",
     "server": "node server",
     "worker": "node worker",
     "dev:server": "nodemon server",
