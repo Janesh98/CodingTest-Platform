@@ -1,5 +1,4 @@
-const Docker = require('dockerode');
-const docker = new Docker();
+const docker = require('../config/dockerSetup');
 const streams = require('memory-streams');
 const { Base64 } = require('js-base64');
 const { escapeQuotes } = require('../utils/escape');

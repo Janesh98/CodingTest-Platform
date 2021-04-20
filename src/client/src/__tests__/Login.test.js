@@ -65,24 +65,28 @@ it('Password TextField update', async ()=> {
 });
 
  it('Sign in Button click', async ()=> {
-    const mockHandleOnClick = jest.fn()
+    const promise = Promise.resolve()
+    const mockHandleOnClick = jest.fn(() => promise)
     const  wrapper  = render(<Login onClick={mockHandleOnClick()}/>);
-
     const button = wrapper.queryByTestId("sign-in");
     act(() => {
     fireEvent.click(button);
      });
      expect(mockHandleOnClick).toHaveBeenCalledTimes(1);
+     await act(() => promise)
  });
 
   it('Sign in with Google Button click', async ()=> {
-    const mockHandleOnClick = jest.fn()
+    const promise = Promise.resolve()
+    const mockHandleOnClick = jest.fn(() => promise)
     const  wrapper  = render(<Login onClick={mockHandleOnClick()}/>);
 
     const button = wrapper.queryByTestId("sign-in-google");
+  
     act(() => {
     fireEvent.click(button);
      });
      expect(mockHandleOnClick).toHaveBeenCalledTimes(1);
+     await act(() => promise)
  });
 });

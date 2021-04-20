@@ -1,5 +1,5 @@
 const ExecutorService = require('../../services/ExecutorService');
-const Docker = require('dockerode');
+const docker = require('../../config/dockerSetup');
 const { Base64 } = require('js-base64');
 
 describe('Create correct language context for Docker image and command', () => {
@@ -35,13 +35,30 @@ describe('Create correct language context for Docker image and command', () => {
       new ExecutorService().createContext(code, input, language);
     }).toThrow();
   });
-  // it('Should execute code and return output', async () => {
-  //   const mockData = [{}, {}, {}];
-  //   jest.spyOn(Docker, 'run').mockResolvedValueOnce(mockData);
-  //   const code = Base64.encode('System.out.println("hello world")');
-  //   const input = Base64.encode('1 2 3');
-  //   const language = 'java';
-  //   const result = await new ExecutorService().execute(code, input, language);
-  //   expect(result).toEqual({});
-  // });
+  it('Should execute code and return output', async () => {
+    mockFuncs = {
+      inspect: jest.fn(() => {
+        return {
+          State: {
+            StartedAt: null,
+            FinishedAt: null,
+          },
+        };
+      }),
+      remove: jest.fn(() => null),
+    };
+    const mockData = [{}, mockFuncs, {}];
+    jest.spyOn(docker, 'run').mockResolvedValueOnce(mockData);
+    const code = Base64.encode('System.out.println("hello world")');
+    const input = Base64.encode('1 2 3');
+    const language = 'java';
+    const result = await new ExecutorService().execute(code, input, language);
+    const expected = {
+      memory: '0',
+      stderr: '',
+      stdout: '',
+      time: 0,
+    };
+    expect(result).toEqual(expected);
+  });
 });

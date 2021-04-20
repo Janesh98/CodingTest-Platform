@@ -82,7 +82,8 @@ it('Confirm Password TextField update', async ()=> {
 });
 
  it('Sign up Button click', async ()=> {
-    const mockHandleOnClick = jest.fn()
+    const promise = Promise.resolve()
+    const mockHandleOnClick = jest.fn(() => promise)
     const  wrapper  = render(<Signup onClick={mockHandleOnClick()}/>);
 
     const button = wrapper.queryByTestId("sign-up");
@@ -90,10 +91,12 @@ it('Confirm Password TextField update', async ()=> {
     fireEvent.click(button);
      });
      expect(mockHandleOnClick).toHaveBeenCalledTimes(1);
+     await act(() => promise)
  });
 
   it('Sign up with Google Button click', async ()=> {
-    const handleSubmitGoogle = jest.fn()
+    const promise = Promise.resolve()
+    const handleSubmitGoogle = jest.fn(() => promise)
     const  wrapper  = render(<Signup onClick={handleSubmitGoogle()}/>);
 
     const button = wrapper.queryByTestId("sign-up-google");
@@ -101,6 +104,7 @@ it('Confirm Password TextField update', async ()=> {
      fireEvent.click(button);
      });
      expect(handleSubmitGoogle).toHaveBeenCalledTimes(1);
+     await act(() => promise)
  });
 
 });
