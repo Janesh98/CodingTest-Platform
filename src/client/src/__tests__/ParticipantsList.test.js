@@ -1,7 +1,7 @@
 import React from 'react';
 import ParticipantsList from '../components/ParticipantsList';
 import { createBrowserHistory } from "history";
-import { render, screen, fireEvent, act, cleanup,} from "../test-utils";
+import { render, screen } from "../test-utils";
 import '@testing-library/jest-dom'
 
 describe('rendering components', () => {

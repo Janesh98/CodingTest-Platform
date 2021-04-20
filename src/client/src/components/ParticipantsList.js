@@ -23,14 +23,18 @@ const ParticipantsList = () => {
   const id = history.location.state._id;
 
   useEffect(() => {
+    let mounted = true;
     const rows = async () => {
       var res = await axios.post(getParticipants, {
         data: { TestId: id },
       });
+      if(mounted){
       await setTableData(res.data.data.map((item) => ({ email: item.email, participantId: item._id })));
+      }
     };
 
     rows();
+    return () => { mounted = false;}
   }, [id]);
 
   const handleOnClickView = async (participantId, email) => {
@@ -50,7 +54,6 @@ const ParticipantsList = () => {
   });
 
   const classes = useStyles();
-
   return (
     <Container>
       <NavBar />
