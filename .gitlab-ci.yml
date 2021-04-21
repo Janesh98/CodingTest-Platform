@@ -52,7 +52,7 @@ test-RCE:
   script:
     - cd src/remoteCodeExecution
     - npm i
-    - npm test
+    - npm run test:unit
   only:
     changes:
       - src/remoteCodeExecution/**/*

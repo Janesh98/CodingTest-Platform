@@ -8,10 +8,7 @@ jest.mock('../../services/ExecutorService');
 
 describe('/submission', () => {
   beforeEach(() => {
-    // Clear all instances and calls to constructor and all methods:
-    ExecutorService.mockClear();
-  });
-  afterEach(() => {
+    jest.resetAllMocks();
     jest.restoreAllMocks();
   });
   it('GET /, Add Submission', async () => {
