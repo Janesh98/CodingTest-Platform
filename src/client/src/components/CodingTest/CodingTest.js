@@ -38,6 +38,7 @@ export default function CodingTest() {
         className={classes.root}
         style={{ backgroundColor: '#1d1d1d' }}
         spacing={0}
+        data-testid="coding-test-grid"
       >
         <Grid item xs={12} sm={12}>
           <Header />

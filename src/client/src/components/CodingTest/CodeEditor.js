@@ -84,7 +84,7 @@ const CodeEditor = () => {
 
   return (
     <>
-      <div>
+      <div data-testid="editor">
         <Editor
           height="61vh"
           // default language only checked once on intial load
@@ -106,6 +106,7 @@ const CodeEditor = () => {
             className={classes.button}
             startIcon={<CodeIcon />}
             onClick={(e) => handleSubmitCode(e)}
+            data-testid="submit"
           >
             <Typography variant="button">Run Code</Typography>
           </Button>
