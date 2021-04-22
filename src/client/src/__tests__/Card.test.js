@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import Card  from '../components/Card';
-import { render, screen, fireEvent, act, cleanup,} from "../test-utils";
+import { render, screen, fireEvent, act} from "../test-utils";
 import '@testing-library/jest-dom'
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
