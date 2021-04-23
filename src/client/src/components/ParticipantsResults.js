@@ -30,7 +30,6 @@ const ParticipantsResults = () => {
  
   const reducer = (accumulator, currentValue) => accumulator + currentValue;
 
-
   
   useEffect(() => {
     const rows = async () => {
@@ -40,7 +39,7 @@ const ParticipantsResults = () => {
      
       if(res.data.data[0].codingTestResults.length > 0){
       setTestId(res.data.data[0].TestId);
-      await setTableData(res.data.data[0].codingTestResults[0].challenges.map((item) => ({ title: item.title, testCases : item.testResults.reduce(reducer)/item.testResults.length, challengeData: item})));
+      await setTableData(res.data.data[0].codingTestResults[0].challenges.map((item) => ({ title: item.title, testCases : item.testResults, challengeData: item, code: item.code})));
 
       var index;
       var i = 1;
@@ -111,9 +110,10 @@ const ParticipantsResults = () => {
                         {row.title}
                       </TableCell>
                       <TableCell component="th" scope="row">
-                        {row.testCases * 100}%
+                        {row.testCases ? row.testCases.reduce(reducer)/row.testCases.length  * 100 : 0}%
                       </TableCell>
                       <TableCell>
+                        {row.code !== "" ?
                         <Button
                           id="addParticipants"
                           variant="contained"
@@ -122,7 +122,7 @@ const ParticipantsResults = () => {
                           onClick={(e)=> handleOnClickSeeMore(row.challengeData)}
                         >
                           See More
-                        </Button>
+                        </Button> : 'Code Not Submitted'}
                       </TableCell>
                     </TableRow>
                   ))}
