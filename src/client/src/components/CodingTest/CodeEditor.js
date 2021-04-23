@@ -97,19 +97,21 @@ const CodeEditor = () => {
       </div>
       <Paper square className={classes.run}>
         <Container align="right">
-          <Button
-            disableElevation={true}
-            variant="contained"
-            type="submit"
-            color="primary"
-            size="small"
-            className={classes.button}
-            startIcon={<CodeIcon />}
-            onClick={(e) => handleSubmitCode(e)}
-            data-testid="submit"
-          >
-            <Typography variant="button">Run Code</Typography>
-          </Button>
+          <div id="runcode">
+            <Button
+              disableElevation={true}
+              variant="contained"
+              type="submit"
+              color="primary"
+              size="small"
+              className={classes.button}
+              startIcon={<CodeIcon />}
+              onClick={(e) => handleSubmitCode(e)}
+              data-testid="submit"
+            >
+              <Typography variant="button">Run Code</Typography>
+            </Button>
+          </div>
         </Container>
       </Paper>
     </>
