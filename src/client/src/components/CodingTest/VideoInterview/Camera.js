@@ -110,7 +110,7 @@ const Camera = () => {
                 {responded ? 
                 <div>
                   <Typography>Thank you! Your response has been recorded.</Typography>
-                  <Button color="secondary" variant="contained" disabled={loading} onClick={handleContinue}>Continue</Button>
+                  <Button  color="secondary" variant="contained" disabled={loading} onClick={handleContinue}>Continue</Button>
                   </div>
                  :(capturing ? (
                    <div>    
@@ -129,7 +129,7 @@ const Camera = () => {
                     </CountdownCircleTimer>
                     </div>
                    ) : ( !finished ? 
-                   <Button   color="primary" variant="contained" onClick={handleStartCaptureClick}>Start Recording</Button> : ''
+                   <Button   data-testid="start" color="primary" variant="contained" onClick={handleStartCaptureClick}>Start Recording</Button> : ''
                  ))}
                  {finished ?
                  <div>
