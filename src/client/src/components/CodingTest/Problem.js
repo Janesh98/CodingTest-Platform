@@ -108,6 +108,11 @@ const Problem = () => {
         );
         // set language for each test to inital default
         res.data.data.challenges.map((item, i) => {
+          // TODO temporary line below, needs to be changed
+          const testCases = res.data.data.challenges[i].testCases.filter(
+            (test) => test.output !== ''
+          );
+          res.data.data.challenges[i].testCases = testCases;
           return (res.data.data.challenges[i].language = language);
         });
         updateCodingTest(res.data.data);

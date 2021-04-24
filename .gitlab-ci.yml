@@ -77,6 +77,25 @@ test-RCE:
       - runner_system_failure
       - stuck_or_timeout_failure
 
+test-e2e:
+  image: cypress/browsers:node14.16.0-chrome89-ff86
+  stage: test
+  script:
+    - cd src/e2e
+    - npx cypress run --headless --browser chrome
+  cache: {} # Disable globally defined cache
+  dependencies: [] # Don't download artifacts
+  only:
+    changes:
+      - src/remoteCodeExecution/**/*
+      - src/functions/**/*
+      - src/client/**/*
+  retry:
+    max: 2
+    when:
+      - runner_system_failure
+      - stuck_or_timeout_failure
+
 deploy-backend:
   stage: deploy
   before_script:
