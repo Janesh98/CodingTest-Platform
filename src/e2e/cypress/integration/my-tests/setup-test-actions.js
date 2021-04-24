@@ -5,7 +5,7 @@ beforeEach(() => {
 describe('setup tests', () => {
   it('login user create, setup test and logout', () => {
     cy.viewport('macbook-11');
-    cy.get('[data-testid="Email Address"]').type('test123@mail.com');
+    cy.get('[data-testid="Email Address"]').type('test1234@gmail.com');
     cy.get('[data-testid="Password"]').type('123456');
     cy.get('[data-testid="sign-in"]').click();
     cy.get('[data-testid="setup-test"]').click();
@@ -56,7 +56,7 @@ describe('setup tests', () => {
 
   it('login user create, setup test with out questions and logout', () => {
     cy.viewport('macbook-11');
-    cy.get('[data-testid="Email Address"]').type('test123@mail.com');
+    cy.get('[data-testid="Email Address"]').type('test12345@gmail.com');
     cy.get('[data-testid="Password"]').type('123456');
     cy.get('[data-testid="sign-in"]').click();
     cy.get('[data-testid="setup-test"]').click();
