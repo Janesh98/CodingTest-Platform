@@ -26,8 +26,8 @@ describe('rendering components', () => {
  });
 
  it('renders <Dashboard /> without crashing', () => { 
-   const wrapper = shallow(<Dashboard />);
-   expect(wrapper.find('#dashboard-container').length).toBe(1);
+   const wrapper = render(<Dashboard />);
+   expect(wrapper.queryByTestId('dashboard-grid')).not.toBeNull();
  });
 
 });

@@ -12,19 +12,17 @@ import EmailIcon from '@material-ui/icons/Email';
 import { sendEmail } from '../endpoints';
 import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
+import Alert from '@material-ui/lab/Alert';
 
 const AddParticipants = () => {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [isError, setISError] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
   const history = useHistory();
   const TestName = history.location.state.testName;
   const id = history.location.state._id;
   const { currentUser } = useAuth();
-
-  function refreshPage() {
-    window.location.reload(false);
-  }
 
   const isEmail = (email) => {
     const emailRegEx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -49,7 +47,8 @@ const AddParticipants = () => {
       await axios.post(sendEmail, {
         data: { email: email, _id: id, googleId: currentUser.uid},
       });
-      return refreshPage();
+      document.getElementById("email-form").reset();  
+      setEmailSent(true)
     }
   };
 
@@ -67,9 +66,11 @@ const AddParticipants = () => {
       <div id="add-container">
         <Grid container align="center" justify="center" direction="column">
           <Container component="main" maxWidth="xs">
+            {emailSent ? <Alert onClose={()=>{setEmailSent(false)}}>Email Invitation Sent!</Alert> : ''}
             <Typography component="h1" variant="h5">
               Send Participants Email Invitation
             </Typography>
+            <form id='email-form'>
             <TextField
               variant="outlined"
               margin="normal"
@@ -107,6 +108,7 @@ const AddParticipants = () => {
             >
               Exit
             </Button>
+            </form>
           </Container>
         </Grid>
       </div>

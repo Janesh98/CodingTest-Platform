@@ -61,7 +61,7 @@ const classes = useStyles();
   return (
     <Container>
       <NavBar />
-        <Grid container align="center" justify="center" direction="row" spacing={3} style={{marginTop: '75px'}}>
+        <Grid container align="center" justify="center" direction="row" spacing={3} style={{marginTop: '75px'}} data-testid="dashboard-grid">
           <Grid item xs={12}>
               <Typography component="h1" variant="h5" data-testid="Dashboard typography">
                 Dashboard
@@ -84,7 +84,8 @@ const classes = useStyles();
                         of adding video interview questions
                       </Typography>
                     </CardContent>
-                    <CardActions>
+                  </CardActionArea>
+                  <CardActions>
                     <Button
                       id="setup-test"
                       data-testid="setup-test"
@@ -98,7 +99,6 @@ const classes = useStyles();
                       Setup
                     </Button>
                   </CardActions>
-                  </CardActionArea>
                 </Card>
                 </Grid>
                 <Grid item xs={4}>
@@ -118,7 +118,8 @@ const classes = useStyles();
                         coding test and send email invites to participants
                       </Typography>
                     </CardContent>
-                    <CardActions>
+                  </CardActionArea>
+                  <CardActions>
                     <Button
                       id="edit-test"
                       data-testid="edit-test"
@@ -132,7 +133,6 @@ const classes = useStyles();
                       Edit
                     </Button>
                   </CardActions>
-                  </CardActionArea>
                 </Card>
                 </Grid>
                 <Grid item xs={4}>
@@ -152,7 +152,8 @@ const classes = useStyles();
                         including analytics
                       </Typography>
                     </CardContent>
-                    <CardActions>
+                  </CardActionArea>
+                  <CardActions>
                     <Button
                       id="history-results"
                       data-testid="history-results"
@@ -166,7 +167,6 @@ const classes = useStyles();
                       Results
                     </Button>
                   </CardActions>
-                  </CardActionArea>
                 </Card>
                 </Grid>
           <DeleteAccountAlert />
