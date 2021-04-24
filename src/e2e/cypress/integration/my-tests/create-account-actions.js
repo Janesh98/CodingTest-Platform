@@ -1,10 +1,10 @@
 beforeEach(() => {
+  cy.viewport(1920, 1080);
   cy.visit('/signup');
 });
 
 describe('signup', () => {
   it('create account login user and delete account', () => {
-    cy.viewport('macbook-11');
     cy.get('[data-testid="Email Address"]').type('deletetest@mail.com');
     cy.get('[data-testid="Password"]').type('123456');
     cy.get('[data-testid="Confirm Password"]').type('123456');

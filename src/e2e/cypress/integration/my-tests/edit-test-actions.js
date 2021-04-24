@@ -1,10 +1,10 @@
 beforeEach(() => {
+  cy.viewport(1920, 1080);
   cy.visit('/login');
 });
 
 describe('setup and edit tests', () => {
   it('login user create, setup test, edit test and logout', () => {
-    cy.viewport('macbook-11');
     cy.get('[data-testid="Email Address"]').type('test123@mail.com');
     cy.get('[data-testid="Password"]').type('123456');
     cy.get('[data-testid="sign-in"]').click();

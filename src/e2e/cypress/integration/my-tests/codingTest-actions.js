@@ -1,6 +1,7 @@
 beforeEach(() => {
+  cy.viewport(1920, 1080);
   cy.visit('/codingtest/603eb0c20b376e4320e3b3be/607c75fda139d62d1817d7bb');
-  cy.wait(4000);
+  cy.wait(8000);
 });
 
 describe('Coding Test', () => {
