@@ -24,6 +24,11 @@ build-frontend:
   only:
     changes:
       - src/client/**/*
+  retry:
+    max: 2
+    when:
+      - runner_system_failure
+      - stuck_or_timeout_failure
 
 test-frontend:
   stage: test
@@ -36,6 +41,11 @@ test-frontend:
   only:
     changes:
       - src/client/**/*
+  retry:
+    max: 2
+    when:
+      - runner_system_failure
+      - stuck_or_timeout_failure
 
 test-backend:
   stage: test
@@ -46,6 +56,11 @@ test-backend:
   only:
     changes:
       - src/functions/**/*
+  retry:
+    max: 2
+    when:
+      - runner_system_failure
+      - stuck_or_timeout_failure
 
 test-RCE:
   stage: test
@@ -56,6 +71,11 @@ test-RCE:
   only:
     changes:
       - src/remoteCodeExecution/**/*
+  retry:
+    max: 2
+    when:
+      - runner_system_failure
+      - stuck_or_timeout_failure
 
 deploy-backend:
   stage: deploy
@@ -72,6 +92,11 @@ deploy-backend:
       - master
     changes:
       - src/functions/**/*
+  retry:
+    max: 2
+    when:
+      - runner_system_failure
+      - stuck_or_timeout_failure
 
 deploy-frontend:
   stage: deploy
@@ -89,3 +114,8 @@ deploy-frontend:
       - master
     changes:
       - src/client/**/*
+  retry:
+    max: 2
+    when:
+      - runner_system_failure
+      - stuck_or_timeout_failure
