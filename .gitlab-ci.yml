@@ -78,7 +78,6 @@ test-RCE:
       - stuck_or_timeout_failure
 
 test-e2e:
-  image: cypress/browsers:node14.16.0-chrome89-ff86
   stage: test
   script:
     - cd src/e2e
