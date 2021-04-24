@@ -1,9 +1,5 @@
-/// <reference types="cypress"/>
-
 beforeEach(() => {
-  cy.visit(
-    'http://localhost:3000/codingtest/603eb0c20b376e4320e3b3be/607c75fda139d62d1817d7bb'
-  );
+  cy.visit('/codingtest/603eb0c20b376e4320e3b3be/607c75fda139d62d1817d7bb');
   cy.wait(4000);
 });
 
