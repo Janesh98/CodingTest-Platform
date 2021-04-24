@@ -35,13 +35,14 @@ const Camera = () => {
   const [capturing, setCapturing] = useState(false);
   const [responded, setResponded] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [noCamera, setNoCamera] = useState(false);
   const [recordedChunks, setRecordedChunks] = useState([]);
   const [finished, setFinished] = useState(false);
   const { codingTestId, participantId } = useParams();
 
   const handleStartCaptureClick = () => {
     setCapturing(true);
-  
+    try{
     mediaRecorderRef.current = new MediaRecorder(webcamRef.current.stream, {
       mimeType: "video/webm"
     });
@@ -50,6 +51,10 @@ const Camera = () => {
       handleDataAvailable
     );
     mediaRecorderRef.current.start();
+    }catch(err){
+      setCapturing(false);
+      setNoCamera(true);
+    }
   };
  
   const handleDataAvailable = useCallback(
@@ -105,6 +110,7 @@ const Camera = () => {
       <div className={classes.root}>
         {loading ? <Typography>Please wait while your response is uploaded </Typography> : ''}
         {loading ? <CircularProgress size={200} className={classes.spinner} />: ''}
+        {noCamera ? <Typography>No Webcam detected. Please connect a webcam and reload the page. </Typography> : ''}
         {!finished ? 
         <Webcam  mirrored = "true" audio={true} height={338} width={600} ref={webcamRef}  videoConstraints={videoConstraints}/> : ''}
                 {responded ? 
@@ -129,7 +135,7 @@ const Camera = () => {
                     </CountdownCircleTimer>
                     </div>
                    ) : ( !finished ? 
-                   <Button   data-testid="start" color="primary" variant="contained" onClick={handleStartCaptureClick}>Start Recording</Button> : ''
+                   <Button  color="primary" variant="contained" onClick={handleStartCaptureClick}>Start Recording</Button> : ''
                  ))}
                  {finished ?
                  <div>
