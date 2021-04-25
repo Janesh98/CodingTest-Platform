@@ -18,7 +18,7 @@ const challengeSchema = new Schema({
   sampleOutput: { type: String, required: true },
   exampleExplanation: { type: String, required: true },
   testInput1: { type: String, required: true },
-  testOutput1: { type: String, required: true },
+  testOutput1: { type: String, required: false },
   testInput2: { type: String, required: false },
   testOutput2: { type: String, required: false },
   testInput3: { type: String, required: false },
@@ -27,6 +27,16 @@ const challengeSchema = new Schema({
   testOutput4: { type: String, required: false },
   testInput5: { type: String, required: false },
   testOutput5: { type: String, required: false },
+  testInput6: { type: String, required: false },
+  testOutput6: { type: String, required: false },
+  testInput7: { type: String, required: false },
+  testOutput7: { type: String, required: false },
+  testInput8: { type: String, required: false },
+  testOutput8: { type: String, required: false },
+  testInput9: { type: String, required: false },
+  testOutput9: { type: String, required: false },
+  testInput10: { type: String, required: false },
+  testOutput10: { type: String, required: false },
   testCases: {type: Array, required: false}
 });
 

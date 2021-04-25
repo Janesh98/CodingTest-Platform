@@ -153,6 +153,16 @@ exports.newChallenge = (req, res) => {
     testOutput4: req.body.data.testOutput4,
     testInput5: req.body.data.testInput5,
     testOutput5: req.body.data.testOutput5,
+    testInput6: req.body.data.testInput6,
+    testOutput6: req.body.data.testOutput6,
+    testInput7: req.body.data.testInput7,
+    testOutput7: req.body.data.testOutput7,
+    testInput8: req.body.data.testInput8,
+    testOutput8: req.body.data.testOutput8,
+    testInput9: req.body.data.testInput9,
+    testOutput9: req.body.data.testOutput9,
+    testInput10: req.body.data.testInput10,
+    testOutput10: req.body.data.testOutput10,
   };
 
   const googleId = challenge.googleId;
@@ -175,6 +185,16 @@ exports.newChallenge = (req, res) => {
   const testOutput4 = challenge.testOutput4;
   const testInput5 = challenge.testInput5;
   const testOutput5 = challenge.testOutput5;
+  const testInput6 = challenge.testInput6;
+  const testOutput6 = challenge.testOutput6;
+  const testInput7 = challenge.testInput7;
+  const testOutput7 = challenge.testOutput7;
+  const testInput8 = challenge.testInput8;
+  const testOutput8 = challenge.testOutput8;
+  const testInput9 = challenge.testInput9;
+  const testOutput9 = challenge.testOutput9;
+  const testInput10 = challenge.testInput10;
+  const testOutput10 = challenge.testOutput10;
 
   const unfilteredTestCases = [
     {
@@ -197,13 +217,32 @@ exports.newChallenge = (req, res) => {
       input: testInput5,
       output: testOutput5,
     },
+    {
+      input: testInput6,
+      output: testOutput6,
+    },
+    {
+      input: testInput7,
+      output: testOutput7,
+    },
+    {
+      input: testInput8,
+      output: testOutput8,
+    },
+    {
+      input: testInput9,
+      output: testOutput9,
+    },
+    {
+      input: testInput10,
+      output: testOutput10,
+    },
   ];
 
   var testCases = unfilteredTestCases.filter(function (el) {
     return el.input != "";
   });
 
-  console.log(testCases);
   // Add CHallenge to MongoDB
   const newChallengeEntry = new CodingChallengeDB({
     googleId,
@@ -226,6 +265,16 @@ exports.newChallenge = (req, res) => {
     testOutput4,
     testInput5,
     testOutput5,
+    testInput6,
+    testOutput6,
+    testInput7,
+    testOutput7,
+    testInput8,
+    testOutput8,
+    testInput9,
+    testOutput9,
+    testInput10,
+    testOutput10,
     testCases,
   });
 

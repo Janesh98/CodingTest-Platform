@@ -19,11 +19,3 @@ body {
   height: 100%;
   display: flex;
 }
-
-#setup-container {
-  height: 100%;
-  display: flex;
-  margin-top: 500px;
-  justify-content: center;
-  align-items: center;
-}
