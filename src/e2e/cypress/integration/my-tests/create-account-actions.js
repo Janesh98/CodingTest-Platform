@@ -1,6 +1,7 @@
 beforeEach(() => {
   cy.viewport(1920, 1080);
   cy.visit('/signup');
+  cy.wait(2000);
 });
 
 describe('signup', () => {
@@ -9,7 +10,7 @@ describe('signup', () => {
     cy.get('[data-testid="Password"]').type('123456');
     cy.get('[data-testid="Confirm Password"]').type('123456');
     cy.get('[data-testid="sign-up"]').click();
-    cy.wait(3000);
+    cy.wait(5000);
     cy.get('[data-testid="company"]').type('delete this');
     cy.get('[data-testid="submit"]').click();
     cy.wait(3000);
