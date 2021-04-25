@@ -200,9 +200,10 @@ exports.newChallenge = (req, res) => {
   ];
 
   var testCases = unfilteredTestCases.filter(function (el) {
-    return el.input != null || el.output != null;
+    return el.input != "";
   });
 
+  console.log(testCases);
   // Add CHallenge to MongoDB
   const newChallengeEntry = new CodingChallengeDB({
     googleId,
