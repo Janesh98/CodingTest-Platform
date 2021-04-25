@@ -4,6 +4,7 @@ stages:
   - build
   - test
   - deploy
+  - e2e
 
 ## Set environment variables for folders in "cache" job settings for npm modules and Cypress binary
 variables:
@@ -84,25 +85,6 @@ test-RCE:
       - runner_system_failure
       - stuck_or_timeout_failure
 
-test-e2e:
-  image: cypress/browsers:node14.16.0-chrome89-ff86
-  stage: test
-  script:
-    - cd src/e2e
-    - npx cypress run --browser chrome
-  dependencies: [] # Don't download artifacts
-  only:
-    changes:
-      - src/remoteCodeExecution/**/*
-      - src/functions/**/*
-      - src/client/**/*
-      - src/e2e/**/*
-  retry:
-    max: 2
-    when:
-      - runner_system_failure
-      - stuck_or_timeout_failure
-
 deploy-backend:
   stage: deploy
   before_script:
@@ -140,6 +122,29 @@ deploy-frontend:
       - master
     changes:
       - src/client/**/*
+  retry:
+    max: 2
+    when:
+      - runner_system_failure
+      - stuck_or_timeout_failure
+
+prod-e2e:
+  image: cypress/browsers:node14.16.0-chrome89-ff86
+  stage: e2e
+  script:
+    - cd src/e2e
+    - npx cypress run --browser chrome
+  when: delayed
+  start_in: 10 minutes
+  dependencies: [] # Don't download artifacts
+  only:
+    refs:
+      - master
+    changes:
+      - src/remoteCodeExecution/**/*
+      - src/functions/**/*
+      - src/client/**/*
+      - src/e2e/**/*
   retry:
     max: 2
     when:
