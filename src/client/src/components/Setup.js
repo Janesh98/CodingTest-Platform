@@ -14,7 +14,7 @@ import { useHistory } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { addChallenge } from '../endpoints';
 import axios from 'axios';
-// import Alert from '@material-ui/lab/Alert';
+import Alert from '@material-ui/lab/Alert';
 
 const Setup = () => {
   const [title, setTitle] = useState('');
@@ -37,13 +37,10 @@ const Setup = () => {
   const [testOut5, setTestOut5] = useState('');
   const [error, setError] = useState('');
   const [isError, setISError] = useState(false);
+  const [challengeSaved, setChallengeSaved] = useState(false);
   const { currentUser } = useAuth();
   const history = useHistory();
   const testName = history.location.state.newTestName;
-
-  function refreshPage() {
-    window.location.reload(false);
-  }
 
   const handleOnClickSave = async (e) => {
     e.preventDefault();
@@ -75,7 +72,8 @@ const Setup = () => {
           testOutput5: testOut5,
         },
       });
-      return refreshPage();
+      document.getElementById("challenge-form").reset();  
+      setChallengeSaved(true);
     }
   };
 
@@ -103,7 +101,7 @@ const Setup = () => {
   return (
     <Container>
       <NavBar />
-      <div id="setup-container" data-testid="setup-container" style={{ marginTop: 200 }}>
+      <div id="setup-container" data-testid="setup-container">
         <Grid container align="center" justify="center" direction="column">
           <Container component="main" maxWidth="xs">
             <div>
@@ -112,7 +110,8 @@ const Setup = () => {
               </Typography>
             </div>
             <Card />
-            <form>
+            {challengeSaved ? <Alert onClose={()=>{setChallengeSaved(false)}}>Challenge Saved!</Alert> : ''}
+            <form id="challenge-form">
               <Typography component="h1">Challenge Title</Typography>
               <TextField
                 variant="outlined"
