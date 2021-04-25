@@ -63,6 +63,16 @@ const EditTest = () => {
           testOutput4: item.testOutput4,
           testInput5: item.testInput5,
           testOutput5: item.testOutput5,
+          testInput6: item.testInput6,
+          testOutput6: item.testOutput6,
+          testInput7: item.testInput7,
+          testOutput7: item.testOutput7,
+          testInput8: item.testInput8,
+          testOutput8: item.testOutput8,
+          testInput9: item.testInput9,
+          testOutput9: item.testOutput9,
+          testInput10: item.testInput10,
+          testOutput10: item.testOutput10,
           createdAt: item.createdAt,
         }))
       )};

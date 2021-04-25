@@ -611,6 +611,16 @@ exports.updateChallenge = (req, res) => {
     testOutput4: req.body.data.testOutput4,
     testInput5: req.body.data.testInput5,
     testOutput5: req.body.data.testOutput5,
+    testInput6: req.body.data.testInput6,
+    testOutput6: req.body.data.testOutput6,
+    testInput7: req.body.data.testInput7,
+    testOutput7: req.body.data.testOutput7,
+    testInput8: req.body.data.testInput8,
+    testOutput8: req.body.data.testOutput8,
+    testInput9: req.body.data.testInput9,
+    testOutput9: req.body.data.testOutput9,
+    testInput10: req.body.data.testInput10,
+    testOutput10: req.body.data.testOutput10,
   };
 
   const unfilteredTestCases = [
@@ -634,10 +644,30 @@ exports.updateChallenge = (req, res) => {
       input: challenge.testInput5,
       output: challenge.testOutput5,
     },
+    {
+      input: challenge.testInput6,
+      output: challenge.testOutput6,
+    },
+    {
+      input: challenge.testInput7,
+      output: challenge.testOutput7,
+    },
+    {
+      input: challenge.testInput8,
+      output: challenge.testOutput8,
+    },
+    {
+      input: challenge.testInput9,
+      output: challenge.testOutput9,
+    },
+    {
+      input: challenge.testInput10,
+      output: challenge.testOutput10,
+    },
   ];
 
   var testCases = unfilteredTestCases.filter(function (el) {
-    return el.input != null || el.output != null;
+    return el.input != '';
   });
 
   CodingChallengeDB.updateOne(
@@ -661,6 +691,16 @@ exports.updateChallenge = (req, res) => {
       testOutput4: challenge.testOutput4,
       testInput5: challenge.testInput5,
       testOutput5: challenge.testOutput5,
+      testInput6: challenge.testInput6,
+      testOutput6: challenge.testOutput6,
+      testInput7: challenge.testInput7,
+      testOutput7: challenge.testOutput7,
+      testInput8: challenge.testInput8,
+      testOutput8: challenge.testOutput8,
+      testInput9: challenge.testInput9,
+      testOutput9: challenge.testOutput9,
+      testInput10: challenge.testInput10,
+      testOutput10: challenge.testOutput10,
       testCases: testCases,
     },
     function (err, res) {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
@@ -13,6 +13,8 @@ import { useHistory } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { updateChallenge } from '../endpoints';
 import axios from 'axios';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 
 const EditChallenge = () => {
   const history = useHistory();
@@ -45,9 +47,43 @@ const EditChallenge = () => {
   const [testOut4, setTestOut4] = useState(challengeData[index].testOutput4);
   const [testIn5, setTestIn5] = useState(challengeData[index].testInput5);
   const [testOut5, setTestOut5] = useState(challengeData[index].testOutput5);
+  const [testIn6, setTestIn6] = useState(challengeData[index].testInput6);
+  const [testOut6, setTestOut6] = useState(challengeData[index].testOutput6);
+  const [testIn7, setTestIn7] = useState(challengeData[index].testInput7);
+  const [testOut7, setTestOut7] = useState(challengeData[index].testOutput7);
+  const [testIn8, setTestIn8] = useState(challengeData[index].testInput8);
+  const [testOut8, setTestOut8] = useState(challengeData[index].testOutput8);
+  const [testIn9, setTestIn9] = useState(challengeData[index].testInput9);
+  const [testOut9, setTestOut9] = useState(challengeData[index].testOutput9);
+  const [testIn10, setTestIn10] = useState(challengeData[index].testInput10);
+  const [testOut10, setTestOut10] = useState(challengeData[index].testOutput10);
+  const [testCase6, setTestCase6] = useState(false);
+  const [testCase7, setTestCase7] = useState(false);
+  const [testCase8, setTestCase8] = useState(false);
+  const [testCase9, setTestCase9] = useState(false);
+  const [testCase10, setTestCase10] = useState(false);
   const [error, setError] = useState('');
   const [isError, setISError] = useState(false);
   const { currentUser } = useAuth();
+
+  useEffect(() => {
+    if (challengeData[index].testInput6 !== ''){
+      setTestCase6(true);
+    }
+    if (challengeData[index].testInput7 !== ''){
+      setTestCase7(true);
+    }
+    if (challengeData[index].testInput8 !== ''){
+      setTestCase8(true);
+    }
+    if (challengeData[index].testInput9 !== ''){
+      setTestCase9(true);
+    }
+    if (challengeData[index].testInput10 !== ''){
+      setTestCase10(true);
+    }
+    
+  }, [challengeData, index]);
 
   const handleOnClickSave = async (e) => {
     e.preventDefault();
@@ -78,12 +114,44 @@ const EditChallenge = () => {
           testOutput4: testOut4,
           testInput5: testIn5,
           testOutput5: testOut5,
+          testInput6: testIn6,
+          testOutput6: testOut6,
+          testInput7: testIn7,
+          testOutput7: testOut7,
+          testInput8: testIn8,
+          testOutput8: testOut8,
+          testInput9: testIn9,
+          testOutput9: testOut9,
+          testInput10: testIn10,
+          testOutput10: testOut10,
         },
       });
       history.push({
         pathname: '/edittest',
         state: { testName: TestName },
       });
+    }
+  };
+
+  const handleOnClickFab = async (e) => {
+    try {
+      e.preventDefault();
+      setTestCase6(true);
+      if(testCase9){
+        setTestCase10(true);
+      }
+      if(testCase8){
+        setTestCase9(true);
+      }
+      if(testCase7){
+        setTestCase8(true);
+      }
+      if(testCase6){
+        setTestCase7(true);
+      }
+      
+    } catch {
+      console.log('error');
     }
   };
 
@@ -99,18 +167,17 @@ const EditChallenge = () => {
     }
   };
   return (
-    <Container>
+     <Container>
       <NavBar />
-      <div id="setup-container" data-testid = "setup-container" style={{ marginTop: 200 }}>
-        <Grid container align="center" justify="center" direction="column">
-          <Container component="main" maxWidth="xs">
-            <div>
+      <form id="challenge-form">
+        <Grid container align="center" justify="center" style={{marginTop: '75px'}} spacing={5} direction="row" data-testid="setup-grid"> 
+          <Grid item xs={12}>
               <Typography component="h3" variant="h5">
                 Setup A New Coding Test
               </Typography>
-            </div>
             <Card />
-            <form>
+          </Grid>
+              <Grid item xs={6}>
               <Typography component="h1">Challenge Title</Typography>
               <TextField
                 variant="outlined"
@@ -118,6 +185,7 @@ const EditChallenge = () => {
                 required
                 fullWidth
                 id="title"
+                refs="title"
                 label="Title E.g. 'FizzBuzz'"
                 placeholder="Title E.g. 'FizzBuzz'"
                 defaultValue={challengeData[index].title}
@@ -137,9 +205,9 @@ const EditChallenge = () => {
                 rows={3}
                 id="problem description"
                 inputProps={{ "data-testid": "Problem Description" }}
-                defaultValue={challengeData[index].problemDescription}
                 aria-label="Problem Description"
                 placeholder="Problem Description of Challenge"
+                defaultValue={challengeData[index].problemDescription}
                 name="problem description"
                 error={isError}
                 helperText={error}
@@ -207,8 +275,8 @@ const EditChallenge = () => {
                 multiline
                 id="sample input"
                 inputProps={{ "data-testid": "Sample Input" }}
-                defaultValue={challengeData[index].sampleInput}
                 aria-label="Sample Input"
+                defaultValue={challengeData[index].sampleInput}
                 placeholder="Sample Input"
                 name="sample input"
                 error={isError}
@@ -224,8 +292,8 @@ const EditChallenge = () => {
                 multiline
                 id="sample output"
                 inputProps={{ "data-testid": "Sample Output" }}
-                defaultValue={challengeData[index].sampleOutput}
                 aria-label="Sample Output"
+                defaultValue={challengeData[index].sampleOutput}
                 placeholder="Sample Output"
                 name="sample output"
                 error={isError}
@@ -250,17 +318,25 @@ const EditChallenge = () => {
                 helperText={error}
                 onChange={(input) => setExampleExplanation(input.target.value)}
               />
+             
+              </Grid>
+              <Grid item xs={6}>
+                <Grid container align="center" justify="center" style={{marginTop: '75px'}}  direction="column">
+                  <Grid item xs={12}>
               <Typography component="h1">
                 Test Cases (Please provide at least 1 test case)
               </Typography>
+              </Grid>
+              <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 margin="normal"
                 required
+                style={{marginRight: '20px'}}
                 id="test input 1"
+                aria-label="Input"
                 inputProps={{ "data-testid": "test input 1" }}
                 defaultValue={challengeData[index].testInput1}
-                label="Input"
                 placeholder="Input"
                 name="Input"
                 error={isError}
@@ -270,21 +346,23 @@ const EditChallenge = () => {
               <TextField
                 variant="outlined"
                 margin="normal"
-                required
                 id="test output 1"
                 inputProps={{ "data-testid": "test output 1" }}
                 defaultValue={challengeData[index].testOutput1}
-                label="Expected Output"
+                aria-label="Expected Output"
                 placeholder="Expected Output"
                 name="Output"
                 error={isError}
                 helperText={error}
                 onChange={(input) => setTestOut1(input.target.value)}
               />
+              </Grid>
+              <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 margin="normal"
                 id="test input 2"
+                style={{marginRight: '20px'}}
                 inputProps={{ "data-testid": "test input 2" }}
                 defaultValue={challengeData[index].testInput2}
                 label="Input"
@@ -303,10 +381,13 @@ const EditChallenge = () => {
                 name="Output"
                 onChange={(input) => setTestOut2(input.target.value)}
               />
+              </Grid>
+              <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 margin="normal"
                 id="test input 3"
+                style={{marginRight: '20px'}}
                 inputProps={{ "data-testid": "test input 3" }}
                 defaultValue={challengeData[index].testInput3}
                 label="Input"
@@ -325,10 +406,13 @@ const EditChallenge = () => {
                 name="Output"
                 onChange={(input) => setTestOut3(input.target.value)}
               />
+              </Grid>
+              <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 margin="normal"
                 id="test input 4"
+                style={{marginRight: '20px'}}
                 inputProps={{ "data-testid": "test input 4" }}
                 defaultValue={challengeData[index].testInput4}
                 label="Input"
@@ -347,10 +431,13 @@ const EditChallenge = () => {
                 name="Output"
                 onChange={(input) => setTestOut4(input.target.value)}
               />
+              </Grid>
+              <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 margin="normal"
                 id="test input 5"
+                style={{marginRight: '20px'}}
                 inputProps={{ "data-testid": "test input 5" }}
                 defaultValue={challengeData[index].testInput5}
                 label="Input"
@@ -369,12 +456,147 @@ const EditChallenge = () => {
                 name="Output"
                 onChange={(input) => setTestOut5(input.target.value)}
               />
+              </Grid>
+              {testCase6 ? <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                id="test input 6"
+                style={{marginRight: '20px'}}
+                inputProps={{ "data-testid": "test input 6" }}
+                defaultValue={challengeData[index].testInput6}
+                label="Input"
+                placeholder="Input"
+                name="Input"
+                onChange={(input) => setTestIn6(input.target.value)}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                id="test output 6"
+                inputProps={{ "data-testid": "test output 6" }}
+                defaultValue={challengeData[index].testOutput6}
+                label="Expected Output"
+                placeholder=" Expected Output"
+                name="Output"
+                onChange={(input) => setTestOut6(input.target.value)}
+              />
+              </Grid> : ''}
+              {testCase7 ? <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                id="test input 7"
+                style={{marginRight: '20px'}}
+                inputProps={{ "data-testid": "test input 7" }}
+                defaultValue={challengeData[index].testInput7}
+                label="Input"
+                placeholder="Input"
+                name="Input"
+                onChange={(input) => setTestIn7(input.target.value)}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                id="test output 7"
+                inputProps={{ "data-testid": "test output 7" }}
+                defaultValue={challengeData[index].testOutput7}
+                label="Expected Output"
+                placeholder=" Expected Output"
+                name="Output"
+                onChange={(input) => setTestOut7(input.target.value)}
+              />
+              </Grid> : ''}
+              {testCase8 ? <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                id="test input 8"
+                style={{marginRight: '20px'}}
+                inputProps={{ "data-testid": "test input 8" }}
+                defaultValue={challengeData[index].testInput8}
+                label="Input"
+                placeholder="Input"
+                name="Input"
+                onChange={(input) => setTestIn8(input.target.value)}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                id="test output 8"
+                inputProps={{ "data-testid": "test output 8" }}
+                defaultValue={challengeData[index].testOutput8}
+                label="Expected Output"
+                placeholder=" Expected Output"
+                name="Output"
+                onChange={(input) => setTestOut8(input.target.value)}
+              />
+              </Grid> : ''}
+              {testCase9 ? <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                id="test input 9"
+                style={{marginRight: '20px'}}
+                inputProps={{ "data-testid": "test input 9" }}
+                defaultValue={challengeData[index].testInput9}
+                label="Input"
+                placeholder="Input"
+                name="Input"
+                onChange={(input) => setTestIn9(input.target.value)}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                id="test output 9"
+                inputProps={{ "data-testid": "test output 9" }}
+                defaultValue={challengeData[index].testOutput9}
+                label="Expected Output"
+                placeholder=" Expected Output"
+                name="Output"
+                onChange={(input) => setTestOut9(input.target.value)}
+              />
+              </Grid> : ''}
+              {testCase10 ? <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                id="test input 10"
+                style={{marginRight: '20px'}}
+                inputProps={{ "data-testid": "test input 10" }}
+                defaultValue={challengeData[index].testInput10}
+                label="Input"
+                placeholder="Input"
+                name="Input"
+                onChange={(input) => setTestIn10(input.target.value)}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                id="test output 6"
+                inputProps={{ "data-testid": "test output 10" }}
+                defaultValue={challengeData[index].testOutput10}
+                label="Expected Output"
+                placeholder=" Expected Output"
+                name="Output"
+                onChange={(input) => setTestOut10(input.target.value)}
+              />
+              </Grid> : ''}
+              <Grid item xs={12}>
+              <Fab color="primary" aria-label="add" disabled={testCase10} onClick={(e) => handleOnClickFab(e)}>
+                  <AddIcon />
+              </Fab>
+              </Grid>
+              </Grid>
+              </Grid>
+              <Container maxWidth= 'xs'>
               <Button
                 id="save-challenge"
                 data-testid = "save"
                 variant="contained"
                 color="primary"
                 size="large"
+                style={{marginRight: '10px'}}
                 startIcon={<SaveIcon />}
                 onClick={(e) => handleOnClickSave(e)}
               >
@@ -391,10 +613,9 @@ const EditChallenge = () => {
               >
                 Cancel
               </Button>
-            </form>
           </Container>
         </Grid>
-      </div>
+      </form>
     </Container>
   );
 };

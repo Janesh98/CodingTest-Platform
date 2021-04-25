@@ -10,7 +10,7 @@ describe('rendering components', () => {
     history.push("/", state);
     it('renders <Setup /> without crashing', () => {
         render(<NewChallenge history={createBrowserHistory(history.push("/", state))}/>);
-        expect(screen.queryByTestId("setup-container")).not.toBeNull();
+        expect(screen.queryByTestId("setup-grid")).not.toBeNull();
  });
 
  it('renders setup test text', () => {
