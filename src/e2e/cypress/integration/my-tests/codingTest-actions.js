@@ -5,7 +5,7 @@ beforeEach(() => {
 });
 
 describe('Coding Test', () => {
-  it('Complete Coding Test in Python', () => {
+  it('Should Complete Coding Test in Python and Submit', () => {
     // Q1
     cy.get('[data-testid="editor"]')
       .get('textarea')

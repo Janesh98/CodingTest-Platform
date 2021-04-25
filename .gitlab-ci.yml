@@ -5,8 +5,15 @@ stages:
   - test
   - deploy
 
+## Set environment variables for folders in "cache" job settings for npm modules and Cypress binary
+variables:
+  npm_config_cache: '$CI_PROJECT_DIR/.npm'
+  CYPRESS_CACHE_FOLDER: '$CI_PROJECT_DIR/cache/Cypress'
+
 cache:
   paths:
+    - .cache/*
+    - cache/Cypress
     - ./src/client/node_modules/
     - ./src/functions/node_modules/
     - ./src/remoteCodeExecution/node_modules/
@@ -78,17 +85,18 @@ test-RCE:
       - stuck_or_timeout_failure
 
 test-e2e:
+  image: cypress/browsers:node14.16.0-chrome89-ff86
   stage: test
   script:
     - cd src/e2e
-    - npx cypress run --headless --browser chrome
-  cache: {} # Disable globally defined cache
+    - npx cypress run --browser chrome
   dependencies: [] # Don't download artifacts
   only:
     changes:
       - src/remoteCodeExecution/**/*
       - src/functions/**/*
       - src/client/**/*
+      - src/e2e/**/*
   retry:
     max: 2
     when:
