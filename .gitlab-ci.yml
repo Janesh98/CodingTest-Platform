@@ -72,7 +72,7 @@ test-backend:
   script:
     - cd src/functions
     - npm i
-    - npm test
+    - npm run test:unit
   only:
     changes:
       - src/functions/**/*
