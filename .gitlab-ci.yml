@@ -11,16 +11,21 @@ variables:
   npm_config_cache: '$CI_PROJECT_DIR/.npm'
   CYPRESS_CACHE_FOLDER: '$CI_PROJECT_DIR/cache/Cypress'
 
-cache:
-  paths:
-    - .cache/*
-    - cache/Cypress
-    - ./src/client/node_modules/
-    - ./src/functions/node_modules/
-    - ./src/remoteCodeExecution/node_modules/
+# cache:
+#   # Define a cache with the key: ${CI_COMMIT_REF_SLUG} so that jobs of each branch always use the same cache
+#   key: ${CI_COMMIT_REF_SLUG}
+#   paths:
+#     # - cache/Cypress
+#     - ./src/client/node_modules/
+#     - ./src/functions/node_modules/
+#     - ./src/remoteCodeExecution/node_modules/
 
 build-frontend:
   stage: build
+  cache:
+    key: frontend-cache
+    paths:
+      - ./src/client/node_modules/
   script:
     - cd src/client
     - yarn
@@ -40,12 +45,15 @@ build-frontend:
 
 test-frontend:
   stage: test
+  cache:
+    key: frontend-cache
+    paths:
+      - ./src/client/node_modules/
+    policy: pull
   script:
     - cd src/client
     - yarn
     - yarn test --watchAll=false
-  cache:
-    policy: pull
   only:
     changes:
       - src/client/**/*
@@ -57,6 +65,10 @@ test-frontend:
 
 test-backend:
   stage: test
+  cache:
+    key: backend-cache
+    paths:
+      - ./src/functions/node_modules/
   script:
     - cd src/functions
     - npm i
@@ -72,6 +84,10 @@ test-backend:
 
 test-RCE:
   stage: test
+  cache:
+    key: rce-cache
+    paths:
+      - ./src/remoteCodeExecution/node_modules/
   script:
     - cd src/remoteCodeExecution
     - npm i
@@ -136,6 +152,7 @@ prod-e2e:
     - npx cypress run --browser chrome
   when: delayed
   start_in: 10 minutes
+  cache: {} # Disable globally defined cache
   dependencies: [] # Don't download artifacts
   only:
     refs:
