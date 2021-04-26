@@ -1,12 +1,13 @@
-const FirebaseConfig = require('./config/config');
-FirebaseConfig.init();
-const functions = require('firebase-functions');
-const ConnectMongo = require('./config/ConnectMongo');
+// const FirebaseConfig = require('./config/config');
+// FirebaseConfig.init();
+// const functions = require('firebase-functions');
+// const ConnectMongo = require('./config/ConnectMongo');
 const express = require('express');
 const cors = require('cors');
 
 const app = express();
 
+app.use(express.json());
 app.use(cors());
 app.options('*', cors());
 
@@ -36,7 +37,7 @@ const { executeCode } = require('./controllers/code');
 const { sendEmail } = require('./controllers/email');
 
 // initiliaze MongoDB configuration
-ConnectMongo.init();
+// ConnectMongo.init();
 
 // all firebase functions must be a post request
 app.post('/register', register);
@@ -62,5 +63,4 @@ app.post('/updateQuestions', updateQuestions);
 app.post('/deleteUserData', deleteUserData);
 app.post('/email', sendEmail);
 
-// module.exports = { app, api: functions.https.onRequest(app) };
-exports.api = functions.https.onRequest(app);
+module.exports = app;

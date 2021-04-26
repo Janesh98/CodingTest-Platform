@@ -1,6 +1,6 @@
 const axios = require('axios');
 jest.mock('axios');
-const submitCode = require('../../services/CodeService');
+const CodeService = require('../../services/CodeService');
 
 describe('CodeService', () => {
   beforeEach(() => {
@@ -12,7 +12,7 @@ describe('CodeService', () => {
     const code = 'print("hello world")';
     const language = 'python';
     const stdin = '1 2 3 4 5';
-    const result = await submitCode(code, language, stdin);
+    const result = await CodeService.submitCode(code, language, stdin);
     expect(result).toEqual(mockData);
   });
   it('should execute code in Java and return output', async () => {
@@ -21,7 +21,7 @@ describe('CodeService', () => {
     const code = 'print("hello world")';
     const language = 'java';
     const stdin = '1 2 3 4 5';
-    const result = await submitCode(code, language, stdin);
+    const result = await CodeService.submitCode(code, language, stdin);
     expect(result).toEqual(mockData);
   });
   it('should execute code in JavaScript and return output', async () => {
@@ -30,7 +30,7 @@ describe('CodeService', () => {
     const code = 'print("hello world")';
     const language = 'javascript';
     const stdin = '1 2 3 4 5';
-    const result = await submitCode(code, language, stdin);
+    const result = await CodeService.submitCode(code, language, stdin);
     expect(result).toEqual(mockData);
   });
   it('should throw Error as language does not exist', async () => {
@@ -42,11 +42,10 @@ describe('CodeService', () => {
 
     let message = false;
     try {
-      await submitCode(code, language, stdin);
+      await CodeService.submitCode(code, language, stdin);
     } catch (e) {
       message = e.message;
     }
-    console.log(message);
     expect(message).toBe(`Language '${language}' is not supported`);
   });
 });

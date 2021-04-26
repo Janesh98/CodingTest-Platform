@@ -4,9 +4,6 @@ let CodingTestDB = require('../models/CodingTestModel');
 let CodingChallengeDB = require('../models/CodingChallengeModel');
 let QuestionsDB = require('../models/QuestionsModel');
 
-// const firebase = require('firebase');
-// firebase.initializeApp(config);
-
 const {
   validateRegistrationData,
   validateLoginData,
@@ -42,17 +39,14 @@ exports.checkRegister = (req, res) => {
   const newUser = {
     email: req.body.data.email,
   };
-  NewUserDB.find(
-    { email: newUser.email },
-    function (err, result) {
-      if (err) throw err;
-      // need to return data as key in response for firebase functions
-      return res.status(200).json({
-        status: 'success',
-        data: result,
-      });
-    }
-  );
+  NewUserDB.find({ email: newUser.email }, function (err, result) {
+    if (err) throw err;
+    // need to return data as key in response for firebase functions
+    return res.status(200).json({
+      status: 'success',
+      data: result,
+    });
+  });
 };
 
 exports.company = (req, res) => {
@@ -240,7 +234,7 @@ exports.newChallenge = (req, res) => {
   ];
 
   var testCases = unfilteredTestCases.filter(function (el) {
-    return el.input != "";
+    return el.input != '';
   });
 
   // Add CHallenge to MongoDB
@@ -299,7 +293,6 @@ exports.addQs = (req, res) => {
     googleId: req.body.data.googleId,
     testName: req.body.data.testName,
     questions: req.body.data.questions,
- 
   };
 
   const googleId = Qs.googleId;
@@ -309,7 +302,7 @@ exports.addQs = (req, res) => {
   const newQuestionsEntry = new QuestionsDB({
     googleId,
     testName,
-    questions
+    questions,
   });
 
   newQuestionsEntry.save(function (err, room) {
@@ -570,7 +563,7 @@ exports.deleteQuestions = (req, res) => {
 
   var query = {
     googleId: questions.googleId,
-    testName: questions.testName, 
+    testName: questions.testName,
   };
 
   QuestionsDB.deleteOne(query, function (err, obj) {

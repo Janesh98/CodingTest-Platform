@@ -11,7 +11,7 @@ describe('/submission', () => {
     jest.resetAllMocks();
     jest.restoreAllMocks();
   });
-  it('GET /, Add Submission', async () => {
+  it('POST /, Add Submission', async () => {
     let responseObject = {};
     let status = null;
     const mockData = { id: 123 };
@@ -32,7 +32,7 @@ describe('/submission', () => {
     expect(responseObject).toEqual(mockData);
   });
 
-  it('GET /, Add Submission and wait for completion', async () => {
+  it('POST /, Add Submission and wait for completion', async () => {
     let responseObject = {};
     let status = null;
     const mockData = { data: undefined };
