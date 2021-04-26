@@ -583,7 +583,7 @@ const EditChallenge = () => {
               />
               </Grid> : ''}
               <Grid item xs={12}>
-              <Fab color="primary" aria-label="add" disabled={testCase10} onClick={(e) => handleOnClickFab(e)}>
+              <Fab color="primary" aria-label="add" data-testid="add" disabled={testCase10} onClick={(e) => handleOnClickFab(e)}>
                   <AddIcon />
               </Fab>
               </Grid>

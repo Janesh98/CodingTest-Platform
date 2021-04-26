@@ -20,15 +20,12 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
+import { storage } from "../firebase"
 
 const Edit = () => {
   const { currentUser } = useAuth();
   const [tableData, setTableData] = useState([]);
   const history = useHistory();
-
-  function refreshPage() {
-    window.location.reload(false);
-  }
 
   useEffect(() => {
     let mounted = true;
@@ -65,13 +62,49 @@ const Edit = () => {
     });
   };
 
+  const deleteFolderContents = (path) => {
+        const ref = storage.ref(path);
+        ref.listAll()
+          .then(dir => {
+            dir.items.forEach(fileRef => {
+              deleteFile(ref.fullPath, fileRef.name);
+            });
+            dir.prefixes.forEach(folderRef => {
+              deleteFolderContents(folderRef.fullPath);
+            })
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }
+
+      const deleteFile = (pathToFile, fileName) => {
+        const ref = storage.ref(pathToFile);
+        const childRef = ref.child(fileName);
+        childRef.delete()
+      }
+
+      const updatedRows = async () => {
+      var res = await axios.post(getTests, {
+        data: { googleId: currentUser.uid },
+      });
+      setTableData(
+        res.data.data.map((item) => ({
+          _id: item._id,
+          testName: item.testName,
+          createdAt: item.createdAt,
+        }))
+      )};
+
   const handleOnClickDelete = async (e, _id) => {
     try {
       const testName = e;
+      deleteFolderContents(_id);
       await axios.post(deleteTest, {
         data: { googleId: currentUser.uid, testName: testName, _id: _id },
       });
-      return refreshPage();
+      updatedRows();
+      document.getElementById("tests-table").reset();
     } catch {
       console.log('error');
     }
@@ -96,7 +129,7 @@ const Edit = () => {
               </Typography>
             </div>
             <TableContainer component={Paper}>
-              <Table className={classes.table} aria-label="simple table">
+              <Table className={classes.table} aria-label="simple table" id='tests-table'>
                 <TableHead>
                   <TableRow>
                     <TableCell>Test Name</TableCell>
