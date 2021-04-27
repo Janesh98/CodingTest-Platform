@@ -23,16 +23,16 @@ const {
   getParticipantResults,
   deleteTest,
   getChallenges,
-  getCodingTest,
   getQuestions,
   deleteChallenge,
   deleteQuestions,
   updateChallenge,
   updateQuestions,
-  submitCodingTest,
   deleteUserData,
   resetTest
 } = require('./controllers/users');
+const { getCodingTest, submitCodingTest } = require('./controllers/codingTest');
+
 const { executeCode } = require('./controllers/code');
 const { sendEmail } = require('./controllers/email');
 
