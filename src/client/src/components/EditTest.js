@@ -115,9 +115,45 @@ const EditTest = () => {
 
   const classes = useStyles();
 
-  function refreshPage() {
-    window.location.reload(false);
-  }
+  const updatedRows = async () => {
+      var res = await axios.post(getChallenges, {
+        data: { googleId: currentUser.uid, testName: testName },
+      });
+      setTableData(
+        res.data.data.map((item) => ({
+          _id: item._id,
+          title: item.title,
+          problemDescription: item.problemDescription,
+          inputFormat: item.inputFormat,
+          returnFormat: item.returnFormat,
+          constraints: item.constraints,
+          sampleInput: item.sampleInput,
+          sampleOutput: item.sampleOutput,
+          exampleExplanation: item.exampleExplanation,
+          testInput1: item.testInput1,
+          testOutput1: item.testOutput1,
+          testInput2: item.testInput2,
+          testOutput2: item.testOutput2,
+          testInput3: item.testInput3,
+          testOutput3: item.testOutput3,
+          testInput4: item.testInput4,
+          testOutput4: item.testOutput4,
+          testInput5: item.testInput5,
+          testOutput5: item.testOutput5,
+          testInput6: item.testInput6,
+          testOutput6: item.testOutput6,
+          testInput7: item.testInput7,
+          testOutput7: item.testOutput7,
+          testInput8: item.testInput8,
+          testOutput8: item.testOutput8,
+          testInput9: item.testInput9,
+          testOutput9: item.testOutput9,
+          testInput10: item.testInput10,
+          testOutput10: item.testOutput10,
+          createdAt: item.createdAt,
+        }))
+      )};
+
 
   const handleOnClickAddParticipants = async (e) => {
     history.push({
@@ -161,7 +197,7 @@ const EditTest = () => {
           _id: _id,
         },
       });
-      return refreshPage();
+      await updatedRows();
     } catch {
       console.log('error');
     }
@@ -196,7 +232,7 @@ const EditTest = () => {
       await axios.post(deleteQuestions, {
         data: { googleId: currentUser.uid, testName: testName, _id: questionsId },
       });
-      return refreshPage();
+      setQuestionsTableData([])
     } catch {
       console.log('error');
     }
@@ -244,7 +280,7 @@ const EditTest = () => {
               Coding Challenges for this test
             </Typography>
             <TableContainer component={Paper}>
-              <Table className={classes.table} aria-label="simple table">
+              <Table className={classes.table} aria-label="simple table" id="challenges-table">
                 <TableHead>
                   <TableRow>
                     <TableCell>Title</TableCell>
@@ -311,7 +347,7 @@ const EditTest = () => {
               Video Interview Questions for this test
             </Typography>
             <TableContainer component={Paper}>
-              <Table className={classes.table} aria-label="simple table">
+              <Table className={classes.table} aria-label="simple table" id="questions-table">
                 <TableHead>
                   <TableRow>
                     <TableCell>Question</TableCell>
