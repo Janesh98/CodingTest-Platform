@@ -15,6 +15,7 @@ import { updateChallenge } from '../endpoints';
 import axios from 'axios';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
 
 const EditChallenge = () => {
   const history = useHistory();
@@ -57,6 +58,10 @@ const EditChallenge = () => {
   const [testOut9, setTestOut9] = useState(challengeData[index].testOutput9);
   const [testIn10, setTestIn10] = useState(challengeData[index].testInput10);
   const [testOut10, setTestOut10] = useState(challengeData[index].testOutput10);
+  const [testCase2, setTestCase2] = useState(false);
+  const [testCase3, setTestCase3] = useState(false);
+  const [testCase4, setTestCase4] = useState(false);
+  const [testCase5, setTestCase5] = useState(false);
   const [testCase6, setTestCase6] = useState(false);
   const [testCase7, setTestCase7] = useState(false);
   const [testCase8, setTestCase8] = useState(false);
@@ -67,6 +72,18 @@ const EditChallenge = () => {
   const { currentUser } = useAuth();
 
   useEffect(() => {
+    if (challengeData[index].testInput2 !== ''){
+      setTestCase2(true);
+    }
+    if (challengeData[index].testInput3 !== ''){
+      setTestCase3(true);
+    }
+    if (challengeData[index].testInput4 !== ''){
+      setTestCase4(true);
+    }
+    if (challengeData[index].testInput5 !== ''){
+      setTestCase5(true);
+    }
     if (challengeData[index].testInput6 !== ''){
       setTestCase6(true);
     }
@@ -136,7 +153,7 @@ const EditChallenge = () => {
   const handleOnClickFab = async (e) => {
     try {
       e.preventDefault();
-      setTestCase6(true);
+      setTestCase2(true);
       if(testCase9){
         setTestCase10(true);
       }
@@ -149,7 +166,64 @@ const EditChallenge = () => {
       if(testCase6){
         setTestCase7(true);
       }
+      if(testCase5){
+        setTestCase6(true);
+      }
+      if(testCase4){
+        setTestCase5(true);
+      }
+      if(testCase3){
+        setTestCase4(true);
+      }
+      if(testCase2){
+        setTestCase3(true);
+      }
       
+    } catch {
+      console.log('error');
+    }
+  };
+
+  const handleOnClickFabRemove = async (e) => {
+    try {
+      e.preventDefault();
+      if(testCase10){
+        setTestCase10(false);
+        setTestIn10("");
+        setTestOut10("");
+      }else if(testCase9){
+        setTestCase9(false);
+        setTestIn9("");
+        setTestOut9("");
+      }else if(testCase8){
+        setTestCase8(false);
+        setTestIn8("");
+        setTestOut8("");
+      }else if(testCase7){
+        setTestCase7(false);
+        setTestIn7("");
+        setTestOut7("");
+      }else if(testCase6){
+        setTestCase6(false);
+        setTestIn6("");
+        setTestOut6("");
+      }else if(testCase5){
+        setTestCase5(false);
+        setTestIn5("");
+        setTestOut5("");
+      }else if(testCase4){
+        setTestCase4(false);
+        setTestIn4("");
+        setTestOut4("");
+      }else if(testCase3){
+        setTestCase3(false);
+        setTestIn3("");
+        setTestOut3("");
+      }else if(testCase2){
+        setTestCase2(false);
+        setTestIn2("");
+        setTestOut2("");
+      }
     } catch {
       console.log('error');
     }
@@ -357,7 +431,7 @@ const EditChallenge = () => {
                 onChange={(input) => setTestOut1(input.target.value)}
               />
               </Grid>
-              <Grid item xs={12}>
+              {testCase2 ? <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -381,8 +455,8 @@ const EditChallenge = () => {
                 name="Output"
                 onChange={(input) => setTestOut2(input.target.value)}
               />
-              </Grid>
-              <Grid item xs={12}>
+              </Grid> : '' }
+              {testCase3 ? <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -406,8 +480,8 @@ const EditChallenge = () => {
                 name="Output"
                 onChange={(input) => setTestOut3(input.target.value)}
               />
-              </Grid>
-              <Grid item xs={12}>
+              </Grid> : '' }
+              {testCase4 ? <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -431,8 +505,8 @@ const EditChallenge = () => {
                 name="Output"
                 onChange={(input) => setTestOut4(input.target.value)}
               />
-              </Grid>
-              <Grid item xs={12}>
+              </Grid> : ''}
+              {testCase5 ? <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -456,7 +530,7 @@ const EditChallenge = () => {
                 name="Output"
                 onChange={(input) => setTestOut5(input.target.value)}
               />
-              </Grid>
+              </Grid> : '' }
               {testCase6 ? <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -585,6 +659,9 @@ const EditChallenge = () => {
               <Grid item xs={12}>
               <Fab color="primary" aria-label="add" data-testid="add" disabled={testCase10} onClick={(e) => handleOnClickFab(e)}>
                   <AddIcon />
+              </Fab>
+              <Fab color="secondary" aria-label="remove" data-testid="remove" disabled={!testCase2} onClick={(e) => handleOnClickFabRemove(e)}>
+                  <RemoveIcon />
               </Fab>
               </Grid>
               </Grid>
