@@ -4,7 +4,7 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import { Grid } from '@material-ui/core';
 import './css/Edit.css';
-import { getTests, deleteTest } from '../endpoints';
+import { getTests, deleteTest, resetTest } from '../endpoints';
 import { useAuth } from '../contexts/AuthContext';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -21,10 +21,13 @@ import EditIcon from '@material-ui/icons/Edit';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import { storage } from "../firebase"
+import Alert from '@material-ui/lab/Alert';
 
 const Edit = () => {
   const { currentUser } = useAuth();
   const [tableData, setTableData] = useState([]);
+  const [resetTestSuccessful, setResetTest] = useState(false);
+  const [testReset, setTestReset] = useState('');
   const history = useHistory();
 
   useEffect(() => {
@@ -110,6 +113,15 @@ const Edit = () => {
     }
   };
 
+  const handleResetTest = async (testName, _id) => {
+    setTestReset("");
+    await axios.post(resetTest, {
+        data: { _id: _id },
+      });
+      setTestReset(testName);
+      setResetTest(true);
+  }
+
   const handleOnClickEdit = async (e, _id) => {
     history.push({
       pathname: '/edittest',
@@ -128,6 +140,7 @@ const Edit = () => {
                 Edit Existing Coding Test
               </Typography>
             </div>
+            {resetTestSuccessful ? <Alert onClose={()=>{setResetTest(false)}}>{testReset} reset! All current results and invitations have been removed.</Alert> : ''}
             <TableContainer component={Paper}>
               <Table className={classes.table} aria-label="simple table" id='tests-table'>
                 <TableHead>
@@ -154,6 +167,19 @@ const Edit = () => {
                           }
                         >
                           Add Participants
+                        </Button>
+                      </TableCell>
+                      <TableCell>
+                        <Button
+                          id="addParticipants"
+                          variant="contained"
+                          color="primary"
+                          size="small"
+                          onClick={(e) =>
+                            handleResetTest(row.testName, row._id)
+                          }
+                        >
+                          Reset Test
                         </Button>
                       </TableCell>
                       <TableCell>

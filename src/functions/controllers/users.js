@@ -759,3 +759,29 @@ exports.deleteUserData = (req, res) => {
     data: null,
   });
 };
+
+exports.resetTest = (req, res) => {
+  const test = {
+    TestId: req.body.data._id,
+  };
+
+  var query = {
+    TestId: test.TestId,
+  };
+
+  ParticipantDB.deleteMany(query, function (err, obj) {
+    if (err) throw err;
+  });
+  CodingTestDB.updateOne(
+    { _id: test.TestId },
+    {
+      participants: []
+    },
+    function (err, res) {
+      if (err) throw err;
+    }
+  )
+  return res.status(200).json({
+    data: null,
+  });
+};
