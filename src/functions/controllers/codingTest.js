@@ -73,7 +73,9 @@ exports.submitCodingTest = async (req, res) => {
     return res.status(200).json({
       data: null,
     });
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    return await res.status(400).json({
+      data: err.message,
+    });
   }
 };
