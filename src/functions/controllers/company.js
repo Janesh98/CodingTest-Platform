@@ -36,9 +36,7 @@ exports.addCompany = async (req, res) => {
     });
   } else {
     var companyToBeAdded = { $set: { company: newCompany.company } };
-    await NewUserDB.updateOne(query, companyToBeAdded, function (err, res) {
-      if (err) throw err;
-    });
+    await NewUserDB.updateOne(query, companyToBeAdded);
     return res.status(200).json({
       status: 'success',
       data: null,

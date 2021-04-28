@@ -11,8 +11,6 @@ app.use(cors());
 app.options('*', cors());
 
 const {
-  register,
-  checkRegister,
   newTest,
   newChallenge,
   addQs,
@@ -25,6 +23,7 @@ const {
   updateQuestions,
 } = require('./controllers/users');
 const { getCodingTest, submitCodingTest } = require('./controllers/codingTest');
+const { register, checkRegister } = require('./controllers/register');
 const { company, addCompany } = require('./controllers/company');
 const { executeCode } = require('./controllers/code');
 const { sendEmail } = require('./controllers/email');

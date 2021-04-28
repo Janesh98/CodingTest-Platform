@@ -3,47 +3,7 @@ let CodingTestDB = require('../models/CodingTestModel');
 let CodingChallengeDB = require('../models/CodingChallengeModel');
 let QuestionsDB = require('../models/QuestionsModel');
 
-const { validateRegistrationData } = require('../utilities/validation');
 const ParticipantDB = require('../models/ParticipantsModel');
-
-exports.register = (req, res) => {
-  const newUser = {
-    email: req.body.data.email,
-    googleId: req.body.data.googleId,
-  };
-
-  const { valid, errors } = validateRegistrationData(newUser);
-
-  if (!valid) return res.status(400).json(errors);
-
-  // Register user
-  const googleId = newUser.googleId;
-  const email = newUser.email;
-  // Add user to MongoDB
-  const newUserEntry = new NewUserDB({
-    email,
-    googleId,
-  });
-  newUserEntry.save();
-  return res.status(201).json({
-    googleId,
-    data: null,
-  });
-};
-
-exports.checkRegister = (req, res) => {
-  const newUser = {
-    email: req.body.data.email,
-  };
-  NewUserDB.find({ email: newUser.email }, function (err, result) {
-    if (err) throw err;
-    // need to return data as key in response for firebase functions
-    return res.status(200).json({
-      status: 'success',
-      data: result,
-    });
-  });
-};
 
 exports.newTest = (req, res) => {
   const test = {
