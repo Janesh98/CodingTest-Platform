@@ -3,8 +3,6 @@ let CodingTestDB = require('../models/CodingTestModel');
 let CodingChallengeDB = require('../models/CodingChallengeModel');
 let QuestionsDB = require('../models/QuestionsModel');
 
-const ParticipantDB = require('../models/ParticipantsModel');
-
 exports.newTest = (req, res) => {
   const test = {
     googleId: req.body.data.googleId,
@@ -239,40 +237,6 @@ exports.getTests = (req, res) => {
   CodingTestDB.find(
     { googleId: user.googleId },
     { __v: 0, googleId: 0, questions: 0 },
-    function (err, result) {
-      if (err) throw err;
-      return res.status(200).json({
-        data: result,
-      });
-    }
-  );
-};
-
-exports.getParticipants = (req, res) => {
-  const test = {
-    TestId: req.body.data.TestId,
-  };
-
-  ParticipantDB.find(
-    { TestId: test.TestId },
-    { __v: 0 },
-    function (err, result) {
-      if (err) throw err;
-      return res.status(200).json({
-        data: result,
-      });
-    }
-  );
-};
-
-exports.getParticipantResults = (req, res) => {
-  const participant = {
-    _id: req.body.data._id,
-  };
-
-  ParticipantDB.find(
-    { _id: participant._id },
-    { __v: 0 },
     function (err, result) {
       if (err) throw err;
       return res.status(200).json({

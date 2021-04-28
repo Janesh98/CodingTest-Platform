@@ -17,8 +17,6 @@ const {
   newChallenge,
   addQs,
   getTests,
-  getParticipants,
-  getParticipantResults,
   getChallenges,
   getQuestions,
   updateChallenge,
@@ -26,10 +24,20 @@ const {
 } = require('./controllers/users');
 const { register, checkRegister } = require('./controllers/register');
 const { getCodingTest, submitCodingTest } = require('./controllers/codingTest');
+const {
+  getParticipants,
+  getParticipantResults,
+} = require('./controllers/participant');
 const { company, addCompany } = require('./controllers/company');
 const { executeCode } = require('./controllers/code');
 const { sendEmail } = require('./controllers/email');
-const { deleteTest, deleteChallenge, deleteQuestions, deleteUserData, resetTest,} = require('./controllers/delete');
+const {
+  deleteTest,
+  deleteChallenge,
+  deleteQuestions,
+  deleteUserData,
+  resetTest,
+} = require('./controllers/delete');
 
 // initialize MongoDB configuration
 // ConnectMongo.init();
