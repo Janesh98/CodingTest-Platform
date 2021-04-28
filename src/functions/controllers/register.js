@@ -1,5 +1,5 @@
 const { validateRegistrationData } = require('../utilities/validation');
-let NewUserDB = require('../models/UserModel');
+const NewUserDB = require('../models/UserModel');
 
 exports.register = async (req, res) => {
   const newUser = {
