@@ -20,6 +20,10 @@ describe('/newChallenge', () => {
     await jest
       .spyOn(CodingChallengeDB.prototype, 'save')
       .mockReturnValue(Promise.resolve(mockData));
+    await jest
+      .spyOn(CodingTestDB, 'updateOne')
+      .mockReturnValue(Promise.resolve({ testName: "hello" },
+    { $push: { challenges: "123" } }));
     const req = {
       body: {
         data: {
