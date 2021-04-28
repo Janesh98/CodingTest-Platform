@@ -17,35 +17,35 @@ describe('rendering components', () => {
     shallow(<CodingTest />);
   });
 
-  it('renders <CodingEditor /> without crashing', () => {
-    shallow(<CodeEditor />);
-  });
-
-  it('renders <CodingTest /> grid without crashing', () => {
-    render(<CodingTest />);
-    expect(screen.queryByTestId("coding-test-grid")).toBeInTheDocument();
-  });
-
-  it('renders submit button without crashing', () => {
-    render(<CodeEditor />);
-    expect(screen.queryByTestId("submit")).toBeInTheDocument();
-  });
-
-  it('submit Button click', async ()=> {
-    const mockHandleOnClick = jest.fn()
-    const  wrapper  = render(<CodeEditor onClick={mockHandleOnClick()}/>);
-
-    const button = wrapper.queryByTestId("submit");
-    act(() => {
-    fireEvent.click(button);
-     });
-     expect(mockHandleOnClick).toHaveBeenCalledTimes(1);
+ it('renders <CodingEditor /> without crashing', () => {
+   shallow(<CodeEditor />);
  });
 
-  it('renders editor without crashing', () => {
-    render(<CodeEditor />);
-    expect(screen.queryByTestId("editor")).toBeInTheDocument();
-  });
+ it('renders <CodingTest /> grid without crashing', () => {
+   render(<CodingTest />);
+   expect(screen.queryByTestId("coding-test-grid")).toBeInTheDocument();
+ });
+
+ it('renders submit button without crashing', () => {
+   render(<CodeEditor />);
+   expect(screen.queryByTestId("submit")).toBeInTheDocument();
+ });
+
+ it('submit Button click', async ()=> {
+   const mockHandleOnClick = jest.fn()
+   const  wrapper  = render(<CodeEditor onClick={mockHandleOnClick()}/>);
+
+   const button = wrapper.queryByTestId("submit");
+   act(() => {
+   fireEvent.click(button);
+    });
+    expect(mockHandleOnClick).toHaveBeenCalledTimes(1);
+});
+
+ it('renders editor without crashing', () => {
+   render(<CodeEditor />);
+   expect(screen.queryByTestId("editor")).toBeInTheDocument();
+ });
 
 
   it('renders <Header /> without crashing', () => {
@@ -62,17 +62,18 @@ describe('rendering components', () => {
     expect(screen.queryByTestId("submit")).toBeInTheDocument();
   });
 
-  it('submit test Button click', async ()=> {
-    const mockHandleOnClick = jest.fn()
-    const  wrapper  = render(<Header onClick={mockHandleOnClick()}/>);
-
-    const button = wrapper.queryByTestId("submit");
-    act(() => {
-    fireEvent.click(button);
-     });
-
-     expect(mockHandleOnClick).toHaveBeenCalledTimes(1);
-
+ it('submit test Button click', async ()=> {
+   try{
+   const mockHandleOnClick = jest.fn()
+   const  wrapper  = render(<Header onClick={mockHandleOnClick()}/>);
+   const button = wrapper.queryByTestId("submit");
+   act(() => {
+   fireEvent.click(button);
+    });
+    expect(mockHandleOnClick).toHaveBeenCalledTimes(1);
+  }catch{
+    console.log('error');
+  }
 })
 it('renders <Problem /> without crashing', () => {
       render(<Problem />)

@@ -3,6 +3,7 @@ import EditChallenge  from '../components/EditChallenge';
 import { render, screen, fireEvent, act, cleanup,} from "../test-utils";
 import '@testing-library/jest-dom'
 import { createBrowserHistory } from "history";
+import { Edit } from '@material-ui/icons';
 
 describe('rendering components', () => {
 
@@ -28,6 +29,16 @@ describe('rendering components', () => {
           testOutput4: 4,
           testInput5: 5,
           testOutput5: 5,
+          testInput6: 6,
+          testOutput6: 6,
+          testInput7: 7,
+          testOutput7: 7,
+          testInput8: 8,
+          testOutput8: 8,
+          testInput9: 9,
+          testOutput9: 9,
+          testInput10: 10,
+          testOutput10: 10,
           createdAt: "1/2/3",
         } ]}
     history.push("/", state);
@@ -123,6 +134,162 @@ describe('rendering components', () => {
         expect(screen.getByLabelText("Example with Explanation")).toBeInTheDocument();
  });
 
+  it('Test input 1 check', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const in1 = wrapper.queryByTestId("test input 1");
+    expect(in1).toBeInTheDocument();
+    cleanup();
+});
+
+ it('Test input 2 check', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const in2 = wrapper.queryByTestId("test input 2");
+    expect(in2).toBeInTheDocument();
+    cleanup();
+});
+
+it('Test input 3 check', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const in3 = wrapper.queryByTestId("test input 3");
+    expect(in3).toBeInTheDocument();
+    cleanup();
+});
+
+it('Test input 4 check', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const in4 = wrapper.queryByTestId("test input 4");
+    expect(in4).toBeInTheDocument();
+    cleanup();
+});
+
+it('Test input 5 check', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const in5 = wrapper.queryByTestId("test input 5");
+    expect(in5).toBeInTheDocument();
+    cleanup();
+});
+
+it('Test input 6 check', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const in6 = wrapper.queryByTestId("test input 6");
+    expect(in6).toBeInTheDocument();
+    cleanup();
+});
+
+it('Test input 7 check', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const in7 = wrapper.queryByTestId("test input 7");
+    expect(in7).toBeInTheDocument();
+    cleanup();
+});
+
+it('Test input 8 check', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const in8 = wrapper.queryByTestId("test input 8");
+    expect(in8).toBeInTheDocument();
+    cleanup();
+});
+
+it('Test input 9 check', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const in9 = wrapper.queryByTestId("test input 9");
+    expect(in9).toBeInTheDocument();
+    cleanup();
+});
+
+it('Test input 10 check', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const in10 = wrapper.queryByTestId("test input 10");
+    expect(in10).toBeInTheDocument();
+    cleanup();
+});
+
+it('test output 1 check', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const out1 = wrapper.queryByTestId("test output 1");
+    expect(out1).toBeInTheDocument();
+    cleanup();
+});
+
+it('test output 2 check', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const out2 = wrapper.queryByTestId("test output 2");
+    expect(out2).toBeInTheDocument();
+    cleanup();
+});
+
+it('test output 3 check', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const out3 = wrapper.queryByTestId("test output 3");
+    expect(out3).toBeInTheDocument();
+    cleanup();
+});
+
+it('test output 4 check', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const out4 = wrapper.queryByTestId("test output 4");
+    expect(out4).toBeInTheDocument();
+    cleanup();
+});
+
+it('test output 5 check', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const out5 = wrapper.queryByTestId("test output 5");
+    expect(out5).toBeInTheDocument();
+    cleanup();
+});
+
+it('test output 6 check', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const out6 = wrapper.queryByTestId("test output 6");
+    expect(out6).toBeInTheDocument();
+    cleanup();
+});
+
+it('test output 7 check', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const out7 = wrapper.queryByTestId("test output 7");
+    expect(out7).toBeInTheDocument();
+    cleanup();
+});
+
+it('test output 8 check', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const out8 = wrapper.queryByTestId("test output 8");
+    expect(out8).toBeInTheDocument();
+    cleanup();
+});
+
+it('test output 9 check', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const out9 = wrapper.queryByTestId("test output 9");
+    expect(out9).toBeInTheDocument();
+    cleanup();
+});
+
+it('test output 10 check', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const out5 = wrapper.queryByTestId("test output 10");
+    expect(out5).toBeInTheDocument();
+    cleanup();
+});
+
+  it('renders add button without crashing', async () => {
+    
+    render(<EditChallenge history={createBrowserHistory(history.push("/", state))} />);
+ 
+    expect(screen.queryByTestId("add")).toBeInTheDocument();
+
+    });
+
+    it('renders remove button without crashing', async () => {
+    
+    render(<EditChallenge history={createBrowserHistory(history.push("/", state))} />);
+
+    expect(screen.queryByTestId("remove")).toBeInTheDocument();
+
+    });
+
  it('Problem TextField have correct value', async ()=> {
     const wrapper = render(<EditChallenge />);
     const problem = wrapper.queryByTestId("Problem Description");
@@ -209,6 +376,41 @@ it('test case in 5 TextField have correct value', async ()=> {
     cleanup();
 });
 
+it('test case in 6 TextField have correct value', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const in6 = wrapper.queryByTestId("test input 6");
+   expect(in6.value).toBe('6');
+    cleanup();
+});
+
+it('test case in 7 TextField have correct value', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const in7 = wrapper.queryByTestId("test input 7");
+   expect(in7.value).toBe('7');
+    cleanup();
+});
+
+it('test case in 8 TextField have correct value', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const in8 = wrapper.queryByTestId("test input 8");
+   expect(in8.value).toBe('8');
+    cleanup();
+});
+
+it('test case in 9 TextField have correct value', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const in9 = wrapper.queryByTestId("test input 9");
+   expect(in9.value).toBe('9');
+    cleanup();
+});
+
+it('test case in 10 TextField have correct value', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const in10 = wrapper.queryByTestId("test input 10");
+   expect(in10.value).toBe('10');
+    cleanup();
+});
+
 it('test case out 1 TextField have correct value', async ()=> {
     const wrapper = render(<EditChallenge />);
     const out1 = wrapper.queryByTestId("test output 1");
@@ -242,6 +444,36 @@ it('test case out 5 TextField have correct value', async ()=> {
     const wrapper = render(<EditChallenge />);
     const out5 = wrapper.queryByTestId("test input 5");
    expect(out5.value).toBe('5');
+    cleanup();
+});
+it('test case out 6 TextField have correct value', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const out6 = wrapper.queryByTestId("test input 6");
+   expect(out6.value).toBe('6');
+    cleanup();
+});
+it('test case out 7 TextField have correct value', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const out7 = wrapper.queryByTestId("test input 7");
+   expect(out7.value).toBe('7');
+    cleanup();
+});
+it('test case out 8 TextField have correct value', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const out8 = wrapper.queryByTestId("test input 8");
+   expect(out8.value).toBe('8');
+    cleanup();
+});
+it('test case out 9 TextField have correct value', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const out9 = wrapper.queryByTestId("test input 9");
+   expect(out9.value).toBe('9');
+    cleanup();
+});
+it('test case out 10 TextField have correct value', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const out10 = wrapper.queryByTestId("test input 10");
+   expect(out10.value).toBe('10');
     cleanup();
 });
 
@@ -395,6 +627,66 @@ it('Test input 5 update', async ()=> {
     cleanup();
 });
 
+it('Test input 6 update', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const in6 = wrapper.queryByTestId("test input 6");
+
+    act(() => {
+        fireEvent.change(in6, { target: { value: '1' } })
+    });
+
+    expect(in6.value).toBe('1');
+    cleanup();
+});
+
+it('Test input 7 update', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const in7 = wrapper.queryByTestId("test input 7");
+
+    act(() => {
+        fireEvent.change(in7, { target: { value: '1' } })
+    });
+
+    expect(in7.value).toBe('1');
+    cleanup();
+});
+
+it('Test input 8 update', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const in8 = wrapper.queryByTestId("test input 8");
+
+    act(() => {
+        fireEvent.change(in8, { target: { value: '1' } })
+    });
+
+    expect(in8.value).toBe('1');
+    cleanup();
+});
+
+it('Test input 9 update', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const in9 = wrapper.queryByTestId("test input 9");
+
+    act(() => {
+        fireEvent.change(in9, { target: { value: '1' } })
+    });
+
+    expect(in9.value).toBe('1');
+    cleanup();
+});
+
+it('Test input 10 update', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const in10 = wrapper.queryByTestId("test input 10");
+
+    act(() => {
+        fireEvent.change(in10, { target: { value: '1' } })
+    });
+
+    expect(in10.value).toBe('1');
+    cleanup();
+});
+
 it('test output 1 update', async ()=> {
     const wrapper = render(<EditChallenge />);
     const out1 = wrapper.queryByTestId("test output 1");
@@ -452,6 +744,77 @@ it('test output 5 update', async ()=> {
 
     cleanup();
 });
+
+it('test output 6 update', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const out6 = wrapper.queryByTestId("test output 6");
+
+    act(() => {
+        fireEvent.change(out6, { target: { value: '1' } })
+    });
+    expect(out6.value).toBe('1');
+
+    cleanup();
+});
+
+it('test output 7 update', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const out7 = wrapper.queryByTestId("test output 7");
+
+    act(() => {
+        fireEvent.change(out7, { target: { value: '1' } })
+    });
+    expect(out7.value).toBe('1');
+
+    cleanup();
+});
+
+it('test output 8 update', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const out8 = wrapper.queryByTestId("test output 8");
+
+    act(() => {
+        fireEvent.change(out8, { target: { value: '1' } })
+    });
+    expect(out8.value).toBe('1');
+
+    cleanup();
+});
+
+it('test output 9 update', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const out9 = wrapper.queryByTestId("test output 9");
+
+    act(() => {
+        fireEvent.change(out9, { target: { value: '1' } })
+    });
+    expect(out9.value).toBe('1');
+
+    cleanup();
+});
+
+it('test output 10 update', async ()=> {
+    const wrapper = render(<EditChallenge />);
+    const out10 = wrapper.queryByTestId("test output 10");
+
+    act(() => {
+        fireEvent.change(out10, { target: { value: '1' } })
+    });
+    expect(out10.value).toBe('1');
+
+    cleanup();
+});
+
+it('remove Button click', async ()=> {
+    const mockHandleOnClick = jest.fn()
+    const  wrapper  = render(<EditChallenge onClick={mockHandleOnClick()}/>);
+
+    const button = wrapper.queryByTestId("remove");
+    act(() => {
+    fireEvent.click(button);
+     });
+     expect(mockHandleOnClick).toHaveBeenCalledTimes(1);
+ });
 
 it('Save Button click', async ()=> {
     const mockHandleOnClick = jest.fn()
