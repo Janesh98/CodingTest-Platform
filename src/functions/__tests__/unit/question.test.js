@@ -1,22 +1,20 @@
-const {
-  getParticipants,
-  getParticipantResults,
-} = require('../../controllers/participant');
+const { getQuestions, updateQuestions } = require('../../controllers/question');
 
-jest.mock('../../models/ParticipantsModel');
+jest.mock('../../models/QuestionsModel');
 
-describe('/getParticipants', () => {
+describe('/getQuestions', () => {
   afterEach(() => {
     jest.clearAllMocks();
     jest.restoreAllMocks();
   });
-  it('POST /, should return all participants', async () => {
+  it('POST /, should return questions for particular coding challenge', async () => {
     let responseObject = {};
     let status = null;
     const req = {
       body: {
         data: {
-          TestId: '123',
+          googleId: '123',
+          testName: '123',
         },
       },
     };
@@ -35,25 +33,24 @@ describe('/getParticipants', () => {
       data: undefined,
     };
 
-    await getParticipants(req, res);
+    await getQuestions(req, res);
     expect(status).toBe(200);
     expect(responseObject).toEqual(expected);
   });
 });
-
-describe('/getParticipantResults', () => {
+describe('/getQuestions', () => {
   afterEach(() => {
     jest.clearAllMocks();
     jest.restoreAllMocks();
   });
-  it('POST /, should return participant results', async () => {
+  it('POST /, should return questions for particular coding challenge', async () => {
     let responseObject = {};
     let status = null;
-    const mockData = { valid: true, errors: false };
     const req = {
       body: {
         data: {
-          _id: '123',
+          googleId: '123',
+          testName: '123',
         },
       },
     };
@@ -69,10 +66,11 @@ describe('/getParticipantResults', () => {
     };
 
     const expected = {
-      data: undefined,
+      data: null,
+      status: 'success',
     };
 
-    await getParticipantResults(req, res);
+    await updateQuestions(req, res);
     expect(status).toBe(200);
     expect(responseObject).toEqual(expected);
   });

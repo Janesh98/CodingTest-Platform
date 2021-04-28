@@ -18,11 +18,10 @@ const {
   addQs,
   getTests,
   getChallenges,
-  getQuestions,
   updateChallenge,
-  updateQuestions,
 } = require('./controllers/users');
 const { register, checkRegister } = require('./controllers/register');
+const { getQuestions, updateQuestions } = require('./controllers/question');
 const { getCodingTest, submitCodingTest } = require('./controllers/codingTest');
 const {
   getParticipants,
