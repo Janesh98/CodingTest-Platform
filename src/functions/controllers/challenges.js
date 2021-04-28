@@ -150,7 +150,7 @@ exports.newChallenge = async (req, res) => {
 
   const result = await newChallengeEntry.save();
   const challengeId = result._id;
-  CodingTestDB.updateOne(
+  await CodingTestDB.updateOne(
     { testName: challenge.testName },
     { $push: { challenges: challengeId } }
   );
