@@ -12,11 +12,12 @@ app.options('*', cors());
 
 const {
   newTest,
-  newChallenge,
   addQs,
   getTests,
-  getChallenges,
-  updateChallenge,
+  getParticipants,
+  getParticipantResults,
+  getQuestions,
+  updateQuestions,
 } = require('./controllers/users');
 const { getCodingTest, submitCodingTest } = require('./controllers/codingTest');
 const { register, checkRegister } = require('./controllers/register');
@@ -28,13 +29,8 @@ const {
 const { company, addCompany } = require('./controllers/company');
 const { executeCode } = require('./controllers/code');
 const { sendEmail } = require('./controllers/email');
-const {
-  deleteTest,
-  deleteChallenge,
-  deleteQuestions,
-  deleteUserData,
-  resetTest,
-} = require('./controllers/delete');
+const { newChallenge, updateChallenge, getChallenges, } = require('./controllers/challenges');
+const { deleteTest, deleteChallenge, deleteQuestions, deleteUserData, resetTest,} = require('./controllers/delete');
 
 // initiliaze MongoDB configuration
 ConnectMongo.init();
