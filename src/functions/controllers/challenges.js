@@ -1,10 +1,7 @@
-const NewUserDB = require('../models/UserModel');
 const CodingTestDB = require('../models/CodingTestModel');
 const CodingChallengeDB = require('../models/CodingChallengeModel');
-const QuestionsDB = require('../models/QuestionsModel');
-const ParticipantDB = require('../models/ParticipantsModel');
 
-exports.newChallenge = (req, res) => {
+exports.newChallenge = async (req, res) => {
   const challenge = {
     googleId: req.body.data.googleId,
     testName: req.body.data.testName,
@@ -151,15 +148,15 @@ exports.newChallenge = (req, res) => {
     testCases,
   });
 
-  newChallengeEntry.save(function (err, room) {
-    const challengeId = room.id;
-    CodingTestDB.updateOne(
-      { testName: challenge.testName },
-      { $push: { challenges: challengeId } });
-  });
+  const result = await newChallengeEntry.save();
+  const challengeId = result._id;
+  CodingTestDB.updateOne(
+    { testName: challenge.testName },
+    { $push: { challenges: challengeId } }
+  );
   return res.status(200).json({
-      data: null,
-    });
+    data: null,
+  });
 };
 
 exports.updateChallenge = (req, res) => {
@@ -276,7 +273,8 @@ exports.updateChallenge = (req, res) => {
       testInput10: challenge.testInput10,
       testOutput10: challenge.testOutput10,
       testCases: testCases,
-    });
+    }
+  );
   return res.status(200).json({
     data: null,
   });
@@ -298,4 +296,3 @@ exports.getChallenges = (req, res) => {
     }
   );
 };
-

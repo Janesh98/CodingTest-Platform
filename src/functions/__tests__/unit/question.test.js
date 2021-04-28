@@ -1,5 +1,4 @@
 const { getQuestions, updateQuestions } = require('../../controllers/question');
-
 jest.mock('../../models/QuestionsModel');
 
 describe('/getQuestions', () => {

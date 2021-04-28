@@ -1,22 +1,24 @@
-const {
-  getParticipants,
-  getParticipantResults,
-} = require('../../controllers/participant');
+const { newTest, getTests } = require('../../controllers/Test');
+const CodingTestDB = require('../../models/CodingTestModel');
+jest.mock('../../models/UserModel');
 
-jest.mock('../../models/ParticipantsModel');
-
-describe('/getParticipants', () => {
+describe('/test', () => {
   afterEach(() => {
     jest.clearAllMocks();
     jest.restoreAllMocks();
   });
-  it('POST /, should return all participants', async () => {
+  it('POST /, should add test to coding challenge', async () => {
     let responseObject = {};
     let status = null;
+    const mockData = { _id: '123' };
+    await jest
+      .spyOn(CodingTestDB.prototype, 'save')
+      .mockReturnValue(Promise.resolve(mockData));
     const req = {
       body: {
         data: {
-          TestId: '123',
+          googleId: '123',
+          testName: 'test123',
         },
       },
     };
@@ -32,27 +34,31 @@ describe('/getParticipants', () => {
     };
 
     const expected = {
-      data: undefined,
+      data: null,
+      status: 'success',
     };
 
-    await getParticipants(req, res);
+    await newTest(req, res);
     expect(status).toBe(200);
     expect(responseObject).toEqual(expected);
   });
 });
-
-describe('/getParticipantResults', () => {
+describe('/tests', () => {
   afterEach(() => {
     jest.clearAllMocks();
     jest.restoreAllMocks();
   });
-  it('POST /, should return participant results', async () => {
+  it('POST /, should return coding challenge tests', async () => {
     let responseObject = {};
     let status = null;
+    const mockData = { tests: [{}, {}, {}] };
+    await jest
+      .spyOn(CodingTestDB, 'find')
+      .mockReturnValue(Promise.resolve(mockData));
     const req = {
       body: {
         data: {
-          _id: '123',
+          googleId: '123',
         },
       },
     };
@@ -68,10 +74,12 @@ describe('/getParticipantResults', () => {
     };
 
     const expected = {
-      data: undefined,
+      data: {
+        tests: mockData.tests,
+      },
     };
 
-    await getParticipantResults(req, res);
+    await getTests(req, res);
     expect(status).toBe(200);
     expect(responseObject).toEqual(expected);
   });

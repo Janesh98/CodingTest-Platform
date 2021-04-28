@@ -10,14 +10,14 @@ const app = express();
 app.use(cors());
 app.options('*', cors());
 
-const {
-  newTest,
-  addQs,
-  getTests,
-} = require('./controllers/users');
+const { newTest, getTests } = require('./controllers/Test');
 const { getCodingTest, submitCodingTest } = require('./controllers/codingTest');
 const { register, checkRegister } = require('./controllers/register');
-const { getQuestions, updateQuestions } = require('./controllers/question');
+const {
+  getQuestions,
+  updateQuestions,
+  addQs,
+} = require('./controllers/question');
 const {
   getParticipants,
   getParticipantResults,
@@ -25,8 +25,18 @@ const {
 const { company, addCompany } = require('./controllers/company');
 const { executeCode } = require('./controllers/code');
 const { sendEmail } = require('./controllers/email');
-const { newChallenge, updateChallenge, getChallenges, } = require('./controllers/challenges');
-const { deleteTest, deleteChallenge, deleteQuestions, deleteUserData, resetTest,} = require('./controllers/delete');
+const {
+  newChallenge,
+  updateChallenge,
+  getChallenges,
+} = require('./controllers/challenges');
+const {
+  deleteTest,
+  deleteChallenge,
+  deleteQuestions,
+  deleteUserData,
+  resetTest,
+} = require('./controllers/delete');
 
 // initiliaze MongoDB configuration
 ConnectMongo.init();
