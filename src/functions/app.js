@@ -1,8 +1,3 @@
-// const FirebaseConfig = require('./config/config');
-// FirebaseConfig.init();
-// const functions = require('firebase-functions');
-// const ConnectMongo = require('./config/ConnectMongo');
-const mongoose = require('mongoose');
 const express = require('express');
 const cors = require('cors');
 
@@ -39,19 +34,6 @@ const {
   deleteUserData,
   resetTest,
 } = require('./controllers/delete');
-
-// initialize MongoDB configuration
-// ConnectMongo.init();
-const uri = 'mongodb://localhost:27017/myapp';
-mongoose.connect(uri, {
-  useNewUrlParser: true,
-  useCreateIndex: true,
-  useUnifiedTopology: true,
-});
-const connection = mongoose.connection;
-connection.once('open', () => {
-  console.log('MongoDB connection established');
-});
 
 // all firebase functions must be a post request
 app.post('/register', register);
