@@ -16,10 +16,6 @@ const {
   newTest,
   addQs,
   getTests,
-  getParticipants,
-  getParticipantResults,
-  getQuestions,
-  updateQuestions,
 } = require('./controllers/users');
 const { register, checkRegister } = require('./controllers/register');
 const { getQuestions, updateQuestions } = require('./controllers/question');

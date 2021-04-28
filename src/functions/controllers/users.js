@@ -33,7 +33,6 @@ exports.newTest = (req, res) => {
   });
 };
 
-
 exports.addQs = (req, res) => {
   const Qs = {
     googleId: req.body.data.googleId,
@@ -84,76 +83,5 @@ exports.getTests = (req, res) => {
   );
 };
 
-exports.getParticipants = (req, res) => {
-  const test = {
-    TestId: req.body.data.TestId,
-  };
-
-  ParticipantDB.find(
-    { TestId: test.TestId },
-    { __v: 0 },
-    function (err, result) {
-      if (err) throw err;
-      return res.status(200).json({
-        data: result,
-      });
-    }
-  );
-};
-
-exports.getParticipantResults = (req, res) => {
-  const participant = {
-    _id: req.body.data._id,
-  };
-
-  ParticipantDB.find(
-    { _id: participant._id },
-    { __v: 0 },
-    function (err, result) {
-      if (err) throw err;
-      return res.status(200).json({
-        data: result,
-      });
-    }
-  );
-};
 
 
-exports.getQuestions = (req, res) => {
-  const user = {
-    googleId: req.body.data.googleId,
-    testName: req.body.data.testName,
-  };
-
-  QuestionsDB.find(
-    { googleId: user.googleId, testName: user.testName },
-    { __v: 0, googleId: 0, testName: 0 },
-    function (err, result) {
-      if (err) throw err;
-      return res.status(200).json({
-        data: result,
-      });
-    }
-  );
-};
-
-exports.updateQuestions = (req, res) => {
-  const Qs = {
-    _id: req.body.data._id,
-    questions: req.body.data.questions,
-  };
-
-  QuestionsDB.updateOne(
-    { _id: Qs._id },
-    {
-      questions: Qs.questions,
-    },
-    function (err, res) {
-      if (err) throw err;
-    }
-  );
-  return res.status(200).json({
-    status: 'success',
-    data: null,
-  });
-};
