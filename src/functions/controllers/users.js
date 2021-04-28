@@ -358,61 +358,6 @@ exports.getQuestions = (req, res) => {
   );
 };
 
-exports.deleteChallenge = (req, res) => {
-  const challenge = {
-    googleId: req.body.data.googleId,
-    testName: req.body.data.testName,
-    title: req.body.data.title,
-    _id: req.body.data._id,
-  };
-
-  var query = {
-    googleId: challenge.googleId,
-    testName: challenge.testName,
-    title: challenge.title,
-  };
-  CodingChallengeDB.deleteOne(query, function (err, obj) {
-    if (err) throw err;
-  });
-  CodingTestDB.updateOne(
-    { googleId: challenge.googleId, testName: challenge.testName },
-    { $pull: { challenges: challenge._id } },
-    function (err, res) {
-      if (err) throw err;
-    }
-  );
-  return res.status(200).json({
-    data: null,
-  });
-};
-
-exports.deleteQuestions = (req, res) => {
-  const questions = {
-    googleId: req.body.data.googleId,
-    testName: req.body.data.testName,
-    _id: req.body.data._id,
-  };
-
-  var query = {
-    googleId: questions.googleId,
-    testName: questions.testName,
-  };
-
-  QuestionsDB.deleteOne(query, function (err, obj) {
-    if (err) throw err;
-  });
-  CodingTestDB.updateOne(
-    { googleId: questions.googleId, testName: questions.testName },
-    { $pull: { questions: questions._id } },
-    function (err, res) {
-      if (err) throw err;
-    }
-  );
-  return res.status(200).json({
-    data: null,
-  });
-};
-
 exports.updateChallenge = (req, res) => {
   const challenge = {
     _id: req.body.data._id,
@@ -555,65 +500,6 @@ exports.updateQuestions = (req, res) => {
   );
   return res.status(200).json({
     status: 'success',
-    data: null,
-  });
-};
-
-exports.deleteUserData = (req, res) => {
-  const user = {
-    googleId: req.body.data.googleId,
-  };
-
-  var query = {
-    googleId: user.googleId,
-  };
-
-  NewUserDB.deleteOne(query, function (err, obj) {
-    if (err) throw err;
-  });
-
-  CodingTestDB.deleteMany(query, function (err, obj) {
-    if (err) throw err;
-  });
-
-  CodingChallengeDB.deleteMany(query, function (err, obj) {
-    if (err) throw err;
-  });
-
-  QuestionsDB.deleteMany(query, function (err, obj) {
-    if (err) throw err;
-  });
-
-  ParticipantDB.deleteMany(query, function (err, obj) {
-    if (err) throw err;
-  });
-  return res.status(200).json({
-    data: null,
-  });
-};
-
-exports.resetTest = (req, res) => {
-  const test = {
-    TestId: req.body.data._id,
-  };
-
-  var query = {
-    TestId: test.TestId,
-  };
-
-  ParticipantDB.deleteMany(query, function (err, obj) {
-    if (err) throw err;
-  });
-  CodingTestDB.updateOne(
-    { _id: test.TestId },
-    {
-      participants: [],
-    },
-    function (err, res) {
-      if (err) throw err;
-    }
-  );
-  return res.status(200).json({
     data: null,
   });
 };

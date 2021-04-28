@@ -23,20 +23,16 @@ const {
   getParticipantResults,
   getChallenges,
   getQuestions,
-  deleteChallenge,
-  deleteQuestions,
   updateChallenge,
   updateQuestions,
-  deleteUserData,
-  resetTest,
 } = require('./controllers/users');
 const { getCodingTest, submitCodingTest } = require('./controllers/codingTest');
 const { company, addCompany } = require('./controllers/company');
 const { executeCode } = require('./controllers/code');
 const { sendEmail } = require('./controllers/email');
-const { deleteTest } = require('./controllers/delete');
+const { deleteTest, deleteChallenge, deleteQuestions, deleteUserData, resetTest,} = require('./controllers/delete');
 
-// initiliaze MongoDB configuration
+// initialize MongoDB configuration
 // ConnectMongo.init();
 const uri = 'mongodb://localhost:27017/myapp';
 mongoose.connect(uri, {
