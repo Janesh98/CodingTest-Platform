@@ -100,94 +100,94 @@ describe('/codingTest', () => {
     expect(status).toBe(200);
     expect(responseObject).toEqual(expected);
   });
-});
-it('POST /:codingTestId/:participantId, should catch Error and return 400', async () => {
-  let responseObject = {};
-  let status = null;
-  const err = new Error('Error');
-  await jest
-    .spyOn(ParticipantDB, 'exists')
-    .mockReturnValue(Promise.reject(err));
-  const req = {
-    params: {
-      codingTestId: id,
-      participantId: id,
-    },
-  };
-  const res = {
-    status: jest.fn().mockImplementation((result) => {
-      status = result;
-      return {
-        json: jest.fn().mockImplementation((result) => {
-          responseObject = result;
-        }),
-      };
-    }),
-  };
-
-  const expected = {
-    data: err.message,
-  };
-
-  await getCodingTest(req, res);
-  expect(status).toBe(400);
-  expect(responseObject).toEqual(expected);
-});
-it('POST /codingtest/submit, should submit coding test', async () => {
-  let responseObject = {};
-  let status = null;
-  await jest
-    .spyOn(ParticipantDB, 'findOneAndUpdate')
-    .mockReturnValue(Promise.resolve({}));
-  const req = {
-    body: {
-      data: {
-        participantId: id,
-        codingTestResults: [],
-      },
-    },
-  };
-  const res = {
-    status: jest.fn().mockImplementation((result) => {
-      status = result;
-      return {
-        json: jest.fn().mockImplementation((result) => {
-          responseObject = result;
-        }),
-      };
-    }),
-  };
-
-  await submitCodingTest(req, res);
-  expect(status).toBe(200);
-  expect(responseObject.data).toBeNull();
-});
-it('POST /codingtest/submit, should return 404 Error', async () => {
-  let responseObject = {};
-  let status = null;
-  const err = new Error('failure');
-  await jest
-    .spyOn(ParticipantDB, 'findOneAndUpdate')
-    .mockReturnValue(Promise.reject(err));
-  const req = {
-    body: {
-      data: {
+  it('POST /:codingTestId/:participantId, should catch Error and return 400', async () => {
+    let responseObject = {};
+    let status = null;
+    const err = new Error('Error');
+    await jest
+      .spyOn(ParticipantDB, 'exists')
+      .mockReturnValue(Promise.reject(err));
+    const req = {
+      params: {
+        codingTestId: id,
         participantId: id,
       },
-    },
-  };
-  const res = {
-    status: jest.fn().mockImplementation((result) => {
-      status = result;
-      return {
-        json: jest.fn().mockImplementation((result) => {
-          responseObject = result;
-        }),
-      };
-    }),
-  };
+    };
+    const res = {
+      status: jest.fn().mockImplementation((result) => {
+        status = result;
+        return {
+          json: jest.fn().mockImplementation((result) => {
+            responseObject = result;
+          }),
+        };
+      }),
+    };
 
-  await submitCodingTest(req, res);
-  expect(status).toBe(400);
-  expect(responseObject.data).toBe(err.message);
+    const expected = {
+      data: err.message,
+    };
+
+    await getCodingTest(req, res);
+    expect(status).toBe(400);
+    expect(responseObject).toEqual(expected);
+  });
+  it('POST /codingtest/submit, should submit coding test', async () => {
+    let responseObject = {};
+    let status = null;
+    await jest
+      .spyOn(ParticipantDB, 'findOneAndUpdate')
+      .mockReturnValue(Promise.resolve({}));
+    const req = {
+      body: {
+        data: {
+          participantId: id,
+          codingTestResults: [],
+        },
+      },
+    };
+    const res = {
+      status: jest.fn().mockImplementation((result) => {
+        status = result;
+        return {
+          json: jest.fn().mockImplementation((result) => {
+            responseObject = result;
+          }),
+        };
+      }),
+    };
+
+    await submitCodingTest(req, res);
+    expect(status).toBe(200);
+    expect(responseObject.data).toBeNull();
+  });
+  it('POST /codingtest/submit, should return 404 Error', async () => {
+    let responseObject = {};
+    let status = null;
+    const err = new Error('failure');
+    await jest
+      .spyOn(ParticipantDB, 'findOneAndUpdate')
+      .mockReturnValue(Promise.reject(err));
+    const req = {
+      body: {
+        data: {
+          participantId: id,
+        },
+      },
+    };
+    const res = {
+      status: jest.fn().mockImplementation((result) => {
+        status = result;
+        return {
+          json: jest.fn().mockImplementation((result) => {
+            responseObject = result;
+          }),
+        };
+      }),
+    };
+
+    await submitCodingTest(req, res);
+    expect(status).toBe(400);
+    expect(responseObject.data).toBe(err.message);
+  });
 });

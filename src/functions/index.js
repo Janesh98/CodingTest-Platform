@@ -13,8 +13,6 @@ app.options('*', cors());
 const {
   register,
   checkRegister,
-  company,
-  addCompany,
   newTest,
   newChallenge,
   addQs,
@@ -29,10 +27,10 @@ const {
   updateChallenge,
   updateQuestions,
   deleteUserData,
-  resetTest
+  resetTest,
 } = require('./controllers/users');
 const { getCodingTest, submitCodingTest } = require('./controllers/codingTest');
-
+const { company, addCompany } = require('./controllers/company');
 const { executeCode } = require('./controllers/code');
 const { sendEmail } = require('./controllers/email');
 
