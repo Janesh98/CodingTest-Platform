@@ -82,6 +82,27 @@ test-backend:
       - runner_system_failure
       - stuck_or_timeout_failure
 
+test-backend-integration:
+  stage: test
+  services:
+    - mongo
+  cache:
+    key: backend-cache
+    paths:
+      - ./src/functions/node_modules/
+  script:
+    - cd src/functions
+    - npm i
+    - npm run test:integration
+  only:
+    changes:
+      - src/functions/**/*
+  retry:
+    max: 2
+    when:
+      - runner_system_failure
+      - stuck_or_timeout_failure
+
 test-RCE:
   stage: test
   cache:
