@@ -21,7 +21,6 @@ const {
   getTests,
   getParticipants,
   getParticipantResults,
-  deleteTest,
   getChallenges,
   getQuestions,
   deleteChallenge,
@@ -29,11 +28,13 @@ const {
   updateChallenge,
   updateQuestions,
   deleteUserData,
+  resetTest,
 } = require('./controllers/users');
 const { getCodingTest, submitCodingTest } = require('./controllers/codingTest');
 const { company, addCompany } = require('./controllers/company');
 const { executeCode } = require('./controllers/code');
 const { sendEmail } = require('./controllers/email');
+const { deleteTest } = require('./controllers/delete');
 
 // initiliaze MongoDB configuration
 // ConnectMongo.init();
@@ -58,6 +59,7 @@ app.post('/test', newTest);
 app.post('/challenge', newChallenge);
 app.post('/questions', addQs);
 app.post('/tests', getTests);
+app.post('/resetTest', resetTest);
 app.post('/getParticipants', getParticipants);
 app.post('/getParticipantResults', getParticipantResults);
 app.post('/delete', deleteTest);
