@@ -3,6 +3,11 @@ const docker = require('../../config/dockerSetup');
 const { Base64 } = require('js-base64');
 
 describe('Create correct language context for Docker image and command', () => {
+  beforeEach(() => {
+    // Clear all instances and calls to constructor and all methods:
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+  });
   it('Should create python context', () => {
     const code = Base64.encode('print("hello world")');
     const input = Base64.encode('1 2 3');

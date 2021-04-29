@@ -1,28 +1,21 @@
 #save-challenge {
-    margin-bottom: 10px;
-  }
+  margin-bottom: 10px;
+}
 #continue {
-    margin-bottom: 10px;
-  }
+  margin-bottom: 10px;
+}
 
 #exit {
-    margin-bottom: 10px;
-  }
-  html,
-  body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-  }
-  
-  #root {
-    height: 100%;
-    display: flex;
-  }
-  
-  #setup-container {
-    height: 175%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+  margin-bottom: 10px;
+}
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  height: 100%;
+  display: flex;
+}

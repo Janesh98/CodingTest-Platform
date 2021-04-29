@@ -131,7 +131,7 @@ export default function NavBar() {
   };
 
   return (
-    <div>
+    <div data-testid="Navbar-div">
       <AppBar>
         <Toolbar>
           <IconButton
@@ -172,11 +172,11 @@ export default function NavBar() {
         </div>
         <Divider />
         <List>
-          <ListItem button color="primary" onClick={(e) => handleSubmitDash(e)}>
+          <ListItem button color="primary" data-testid="dashboard-button" onClick={(e) => handleSubmitDash(e)}>
             Dashboard
           </ListItem>
           <Divider />
-          <ListItem button color="primary" onClick={(e) => handleSubmitNew(e)}>
+          <ListItem button color="primary" data-testid="setup-test-menu" onClick={(e) => handleSubmitNew(e)}>
             Setup New Coding Test
           </ListItem>
           <Divider />
@@ -187,6 +187,7 @@ export default function NavBar() {
           <ListItem
             button
             color="primary"
+            data-testid="results-test-menu"
             onClick={(e) => handleSubmitResults(e)}
           >
             View previous Test Results

@@ -1,20 +1,3 @@
-#edit-test {
-  margin-bottom: 10px;
-}
-
-#edit-test-card {
-  margin-bottom: 15px;
-}
-
-#setup-test {
-  margin-bottom: 10px;
-}
-
-#setup-test-card {
-  margin-top: 20px;
-  margin-bottom: 15px;
-}
-
 html,
 body {
   height: 100%;
@@ -30,7 +13,7 @@ body {
 #dashboard-container {
   height: 100%;
   display: flex;
-  margin-top: 10px;
+  margin-top: 0px;
   justify-content: center;
   align-items: center;
 }

@@ -109,6 +109,7 @@ const Header = () => {
               variant="contained"
               className={classes.submit}
               onClick={(e) => handleSubmit(e)}
+              data-testid='submit'
             >
               <Typography variant="button">Submit Test</Typography>
             </Button>

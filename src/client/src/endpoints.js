@@ -20,6 +20,7 @@ export const getTests = `${baseUrl}/tests`;
 export const getParticipants = `${baseUrl}/getParticipants`;
 export const getParticipantResults = `${baseUrl}/getParticipantResults`;
 export const deleteTest = `${baseUrl}/delete`;
+export const resetTest = `${baseUrl}/resetTest`;
 export const deleteUserData = `${baseUrl}/deleteUserData`;
 export const updateChallenge = `${baseUrl}/updateChallenge`;
 export const updateQuestions = `${baseUrl}/updateQuestions`;

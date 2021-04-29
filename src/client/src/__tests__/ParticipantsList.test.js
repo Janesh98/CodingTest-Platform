@@ -9,7 +9,7 @@ describe('rendering components', () => {
     const history = createBrowserHistory();
     const state = { id: 1 }
     history.push("/", state);
-  it('renders <AddParticipants /> without crashing', () => {
+  it('renders <ParticipantsList /> without crashing', () => {
     render(<ParticipantsList history={createBrowserHistory(history.push("/", state))}/>);
   });
 

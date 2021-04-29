@@ -10,7 +10,7 @@ describe('rendering components', () => {
     history.push("/", state);
     it('renders <Setup /> without crashing', () => {
         render(<Setup history={createBrowserHistory(history.push("/", state))}/>);
-        expect(screen.queryByTestId("setup-container")).not.toBeNull();
+        expect(screen.queryByTestId("setup-grid")).not.toBeNull();
  });
 
  it('renders setup test text', () => {
@@ -114,6 +114,22 @@ describe('rendering components', () => {
 
     });
 
+    it('renders add button without crashing', async () => {
+    
+    render(<Setup history={createBrowserHistory(history.push("/", state))} />);
+ 
+    expect(screen.queryByTestId("add")).toBeInTheDocument();
+
+    });
+
+    it('renders remove button without crashing', async () => {
+    
+    render(<Setup history={createBrowserHistory(history.push("/", state))} />);
+ 
+    expect(screen.queryByTestId("remove")).toBeInTheDocument();
+
+    });
+
 it('Problem TextField update', async ()=> {
     const wrapper = render(<Setup />);
     const problem = wrapper.queryByTestId("Problem Description");
@@ -205,7 +221,7 @@ it('Example update', async ()=> {
 
 
 it('Test input 1 update', async ()=> {
-    const wrapper = render(<Setup />);
+    const wrapper = render(<Setup/>);
     const in1 = wrapper.queryByTestId("test input 1");
 
     act(() => {
@@ -216,51 +232,66 @@ it('Test input 1 update', async ()=> {
     cleanup();
 });
 
-it('Test input 2 update', async ()=> {
+it('Test input 2 check', async ()=> {
     const wrapper = render(<Setup />);
     const in2 = wrapper.queryByTestId("test input 2");
-
-    act(() => {
-        fireEvent.change(in2, { target: { value: '2' } })
-    });
-
-    expect(in2.value).toBe('2');
+    expect(in2).toBeNull();
     cleanup();
 });
 
-it('Test input 3 update', async ()=> {
+it('Test input 3 check', async ()=> {
     const wrapper = render(<Setup />);
     const in3 = wrapper.queryByTestId("test input 3");
-
-    act(() => {
-        fireEvent.change(in3, { target: { value: '3' } })
-    });
-
-    expect(in3.value).toBe('3');
+    expect(in3).toBeNull();
     cleanup();
 });
 
-it('Test input 4 update', async ()=> {
+it('Test input 4 check', async ()=> {
     const wrapper = render(<Setup />);
     const in4 = wrapper.queryByTestId("test input 4");
-
-    act(() => {
-        fireEvent.change(in4, { target: { value: '4' } })
-    });
-
-    expect(in4.value).toBe('4');
+    expect(in4).toBeNull();
     cleanup();
 });
 
-it('Test input 5 update', async ()=> {
+it('Test input 5 check', async ()=> {
     const wrapper = render(<Setup />);
     const in5 = wrapper.queryByTestId("test input 5");
+    expect(in5).toBeNull();
+    cleanup();
+});
 
-    act(() => {
-        fireEvent.change(in5, { target: { value: '5' } })
-    });
+it('Test input 6 check', async ()=> {
+    const wrapper = render(<Setup />);
+    const in6 = wrapper.queryByTestId("test input 6");
+    expect(in6).toBeNull();
+    cleanup();
+});
 
-    expect(in5.value).toBe('5');
+it('Test input 7 check', async ()=> {
+    const wrapper = render(<Setup />);
+    const in7 = wrapper.queryByTestId("test input 7");
+    expect(in7).toBeNull();
+    cleanup();
+});
+
+it('Test input 8 check', async ()=> {
+    const wrapper = render(<Setup />);
+    const in8 = wrapper.queryByTestId("test input 8");
+    expect(in8).toBeNull();
+    cleanup();
+});
+
+it('Test input 9 check', async ()=> {
+    const wrapper = render(<Setup />);
+    const in9 = wrapper.queryByTestId("test input 9");
+    expect(in9).toBeNull();
+    cleanup();
+});
+
+it('Test input 10 check', async ()=> {
+    const wrapper = render(<Setup />);
+    const in10 = wrapper.queryByTestId("test input 10");
+    expect(in10).toBeNull();
     cleanup();
 });
 
@@ -276,51 +307,79 @@ it('test output 1 update', async ()=> {
     cleanup();
 });
 
-it('test output 2 update', async ()=> {
+it('test output 2 check', async ()=> {
     const wrapper = render(<Setup />);
     const out2 = wrapper.queryByTestId("test output 2");
-    act(() => {
-        fireEvent.change(out2, { target: { value: '2' } })
-    });
-
-    expect(out2.value).toBe('2');
+    expect(out2).toBeNull();
     cleanup();
 });
 
-it('test output 3 update', async ()=> {
+it('test output 3 check', async ()=> {
     const wrapper = render(<Setup />);
     const out3 = wrapper.queryByTestId("test output 3");
-
-    act(() => {
-        fireEvent.change(out3, { target: { value: '3' } })
-    });
-    expect(out3.value).toBe('3');
+    expect(out3).toBeNull();
     cleanup();
 });
 
-it('test output 4 update', async ()=> {
+it('test output 4 check', async ()=> {
     const wrapper = render(<Setup />);
     const out4 = wrapper.queryByTestId("test output 4");
-
-    act(() => {
-        fireEvent.change(out4, { target: { value: '4' } })
-    });
-    expect(out4.value).toBe('4');
-
+    expect(out4).toBeNull();
     cleanup();
 });
 
-it('test output 5 update', async ()=> {
+it('test output 5 check', async ()=> {
     const wrapper = render(<Setup />);
     const out5 = wrapper.queryByTestId("test output 5");
-
-    act(() => {
-        fireEvent.change(out5, { target: { value: '5' } })
-    });
-    expect(out5.value).toBe('5');
-
+    expect(out5).toBeNull();
     cleanup();
 });
+
+it('test output 6 check', async ()=> {
+    const wrapper = render(<Setup />);
+    const out6 = wrapper.queryByTestId("test output 6");
+    expect(out6).toBeNull();
+    cleanup();
+});
+
+it('test output 7 check', async ()=> {
+    const wrapper = render(<Setup />);
+    const out7 = wrapper.queryByTestId("test output 7");
+    expect(out7).toBeNull();
+    cleanup();
+});
+
+it('test output 8 check', async ()=> {
+    const wrapper = render(<Setup />);
+    const out8 = wrapper.queryByTestId("test output 8");
+    expect(out8).toBeNull();
+    cleanup();
+});
+
+it('test output 9 check', async ()=> {
+    const wrapper = render(<Setup />);
+    const out9 = wrapper.queryByTestId("test output 9");
+    expect(out9).toBeNull();
+    cleanup();
+});
+
+it('test output 10 check', async ()=> {
+    const wrapper = render(<Setup />);
+    const out5 = wrapper.queryByTestId("test output 10");
+    expect(out5).toBeNull();
+    cleanup();
+});
+
+it('add Button click', async ()=> {
+    const mockHandleOnClick = jest.fn()
+    const  wrapper  = render(<Setup onClick={mockHandleOnClick()}/>);
+
+    const button = wrapper.queryByTestId("add");
+    act(() => {
+    fireEvent.click(button);
+     });
+     expect(mockHandleOnClick).toHaveBeenCalledTimes(1);
+ });
 
  it('Continue Button click', async ()=> {
     const mockHandleOnClick = jest.fn()

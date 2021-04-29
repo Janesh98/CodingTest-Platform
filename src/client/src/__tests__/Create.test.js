@@ -3,19 +3,6 @@ import Create  from '../components/Create';
 import { render, screen, fireEvent, act, cleanup } from "../test-utils";
 import '@testing-library/jest-dom'
 
-//const mockHistoryPush = jest.fn();
-//
-//jest.mock('react-router-dom', () => ({
-//  ...jest.requireActual('react-router-dom'),
-//  useHistory: () => ({
-//    push: mockHistoryPush,
-//  }),
-//}));
-//
-//const successResult = "Some data";
-//const getSuccess = jest.fn(() => Promise.resolve(successResult));
-//const getFail = jest.fn(() => Promise.reject(new Error()));
-
 describe('rendering components', () => {
 
     it('renders <Create /> without crashing', async () => {

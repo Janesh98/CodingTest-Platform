@@ -13,7 +13,9 @@ import { useHistory } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { addChallenge } from '../endpoints';
 import axios from 'axios';
-// import Alert from '@material-ui/lab/Alert';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
 
 const NewChallenge = () => {
   const [title, setTitle] = useState('');
@@ -34,6 +36,25 @@ const NewChallenge = () => {
   const [testOut4, setTestOut4] = useState('');
   const [testIn5, setTestIn5] = useState('');
   const [testOut5, setTestOut5] = useState('');
+  const [testIn6, setTestIn6] = useState('');
+  const [testOut6, setTestOut6] = useState('');
+  const [testIn7, setTestIn7] = useState('');
+  const [testOut7, setTestOut7] = useState('');
+  const [testIn8, setTestIn8] = useState('');
+  const [testOut8, setTestOut8] = useState('');
+  const [testIn9, setTestIn9] = useState('');
+  const [testOut9, setTestOut9] = useState('');
+  const [testIn10, setTestIn10] = useState('');
+  const [testOut10, setTestOut10] = useState('');
+  const [testCase2, setTestCase2] = useState(false);
+  const [testCase3, setTestCase3] = useState(false);
+  const [testCase4, setTestCase4] = useState(false);
+  const [testCase5, setTestCase5] = useState(false);
+  const [testCase6, setTestCase6] = useState(false);
+  const [testCase7, setTestCase7] = useState(false);
+  const [testCase8, setTestCase8] = useState(false);
+  const [testCase9, setTestCase9] = useState(false);
+  const [testCase10, setTestCase10] = useState(false);
   const [error, setError] = useState('');
   const [isError, setISError] = useState(false);
   const { currentUser } = useAuth();
@@ -68,12 +89,101 @@ const NewChallenge = () => {
           testOutput4: testOut4,
           testInput5: testIn5,
           testOutput5: testOut5,
+          testInput6: testIn6,
+          testOutput6: testOut6,
+          testInput7: testIn7,
+          testOutput7: testOut7,
+          testInput8: testIn8,
+          testOutput8: testOut8,
+          testInput9: testIn9,
+          testOutput9: testOut9,
+          testInput10: testIn10,
+          testOutput10: testOut10,
         },
       });
       history.push({
         pathname: '/edittest',
         state: { testName: testName },
       });
+    }
+  };
+
+  const handleOnClickFab = async (e) => {
+    try {
+      e.preventDefault();
+      setTestCase2(true);
+      if(testCase9){
+        setTestCase10(true);
+      }
+      if(testCase8){
+        setTestCase9(true);
+      }
+      if(testCase7){
+        setTestCase8(true);
+      }
+      if(testCase6){
+        setTestCase7(true);
+      }
+      if(testCase5){
+        setTestCase6(true);
+      }
+      if(testCase4){
+        setTestCase5(true);
+      }
+      if(testCase3){
+        setTestCase4(true);
+      }
+      if(testCase2){
+        setTestCase3(true);
+      }
+      
+    } catch {
+      console.log('error');
+    }
+  };
+
+  const handleOnClickFabRemove = async (e) => {
+    try {
+      e.preventDefault();
+      if(testCase10){
+        setTestCase10(false);
+        setTestIn10("");
+        setTestOut10("");
+      }else if(testCase9){
+        setTestCase9(false);
+        setTestIn9("");
+        setTestOut9("");
+      }else if(testCase8){
+        setTestCase8(false);
+        setTestIn8("");
+        setTestOut8("");
+      }else if(testCase7){
+        setTestCase7(false);
+        setTestIn7("");
+        setTestOut7("");
+      }else if(testCase6){
+        setTestCase6(false);
+        setTestIn6("");
+        setTestOut6("");
+      }else if(testCase5){
+        setTestCase5(false);
+        setTestIn5("");
+        setTestOut5("");
+      }else if(testCase4){
+        setTestCase4(false);
+        setTestIn4("");
+        setTestOut4("");
+      }else if(testCase3){
+        setTestCase3(false);
+        setTestIn3("");
+        setTestOut3("");
+      }else if(testCase2){
+        setTestCase2(false);
+        setTestIn2("");
+        setTestOut2("");
+      }
+    } catch {
+      console.log('error');
     }
   };
 
@@ -92,16 +202,15 @@ const NewChallenge = () => {
   return (
     <Container>
       <NavBar />
-      <div id="setup-container" data-testid="setup-container" style={{ marginTop: 200 }}>
-        <Grid container align="center" justify="center" direction="column">
-          <Container component="main" maxWidth="xs">
-            <div>
+      <form id="challenge-form">
+        <Grid container align="center" justify="center" style={{marginTop: '75px'}} spacing={5} direction="row" data-testid="setup-grid"> 
+          <Grid item xs={12}>
               <Typography component="h3" variant="h5">
                 Setup A New Coding Test
               </Typography>
-            </div>
             <Card />
-            <form>
+          </Grid>
+              <Grid item xs={6}>
               <Typography component="h1">Challenge Title</Typography>
               <TextField
                 variant="outlined"
@@ -118,7 +227,7 @@ const NewChallenge = () => {
                 helperText={error}
                 onChange={(input) => setTitle(input.target.value)}
               />
-              <Typography component="h1" data-testid = "Problem Description typography">Problem Description </Typography>
+              <Typography component="h1" data-testid = "Problem Description typography">Problem Description</Typography>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -234,13 +343,21 @@ const NewChallenge = () => {
                 helperText={error}
                 onChange={(input) => setExampleExplanation(input.target.value)}
               />
+             
+              </Grid>
+              <Grid item xs={6}>
+                <Grid container align="center" justify="center" style={{marginTop: '75px'}}  direction="column">
+                  <Grid item xs={12}>
               <Typography component="h1">
                 Test Cases (Please provide at least 1 test case)
               </Typography>
+              </Grid>
+              <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 margin="normal"
                 required
+                style={{marginRight: '20px'}}
                 id="test input 1"
                 aria-label="Input"
                 inputProps={{ "data-testid": "test input 1" }}
@@ -253,7 +370,6 @@ const NewChallenge = () => {
               <TextField
                 variant="outlined"
                 margin="normal"
-                required
                 id="test output 1"
                 inputProps={{ "data-testid": "test output 1" }}
                 aria-label="Expected Output"
@@ -263,10 +379,13 @@ const NewChallenge = () => {
                 helperText={error}
                 onChange={(input) => setTestOut1(input.target.value)}
               />
+              </Grid>
+              {testCase2 ? <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 margin="normal"
                 id="test input 2"
+                style={{marginRight: '20px'}}
                 inputProps={{ "data-testid": "test input 2" }}
                 label="Input"
                 placeholder="Input"
@@ -283,10 +402,13 @@ const NewChallenge = () => {
                 name="Output"
                 onChange={(input) => setTestOut2(input.target.value)}
               />
+              </Grid> : ''}
+              {testCase3 ? <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 margin="normal"
                 id="test input 3"
+                style={{marginRight: '20px'}}
                 inputProps={{ "data-testid": "test input 3" }}
                 label="Input"
                 placeholder="Input"
@@ -303,10 +425,13 @@ const NewChallenge = () => {
                 name="Output"
                 onChange={(input) => setTestOut3(input.target.value)}
               />
+              </Grid> : '' }
+              {testCase4 ? <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 margin="normal"
                 id="test input 4"
+                style={{marginRight: '20px'}}
                 inputProps={{ "data-testid": "test input 4" }}
                 label="Input"
                 placeholder="Input"
@@ -322,11 +447,14 @@ const NewChallenge = () => {
                 placeholder=" Expected Output"
                 name="Output"
                 onChange={(input) => setTestOut4(input.target.value)}
-              />
+              /> 
+              </Grid> : '' }
+              {testCase5 ? <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 margin="normal"
                 id="test input 5"
+                style={{marginRight: '20px'}}
                 inputProps={{ "data-testid": "test input 5" }}
                 label="Input"
                 placeholder="Input"
@@ -343,12 +471,140 @@ const NewChallenge = () => {
                 name="Output"
                 onChange={(input) => setTestOut5(input.target.value)}
               />
+              </Grid> : ''}
+              {testCase6 ? <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                id="test input 6"
+                style={{marginRight: '20px'}}
+                inputProps={{ "data-testid": "test input 6" }}
+                label="Input"
+                placeholder="Input"
+                name="Input"
+                onChange={(input) => setTestIn6(input.target.value)}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                id="test output 6"
+                inputProps={{ "data-testid": "test output 6" }}
+                label="Expected Output"
+                placeholder=" Expected Output"
+                name="Output"
+                onChange={(input) => setTestOut6(input.target.value)}
+              />
+              </Grid> : ''}
+              {testCase7 ? <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                id="test input 7"
+                style={{marginRight: '20px'}}
+                inputProps={{ "data-testid": "test input 7" }}
+                label="Input"
+                placeholder="Input"
+                name="Input"
+                onChange={(input) => setTestIn7(input.target.value)}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                id="test output 7"
+                inputProps={{ "data-testid": "test output 7" }}
+                label="Expected Output"
+                placeholder=" Expected Output"
+                name="Output"
+                onChange={(input) => setTestOut7(input.target.value)}
+              />
+              </Grid> : ''}
+              {testCase8 ? <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                id="test input 8"
+                style={{marginRight: '20px'}}
+                inputProps={{ "data-testid": "test input 8" }}
+                label="Input"
+                placeholder="Input"
+                name="Input"
+                onChange={(input) => setTestIn8(input.target.value)}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                id="test output 8"
+                inputProps={{ "data-testid": "test output 8" }}
+                label="Expected Output"
+                placeholder=" Expected Output"
+                name="Output"
+                onChange={(input) => setTestOut8(input.target.value)}
+              />
+              </Grid> : ''}
+              {testCase9 ? <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                id="test input 9"
+                style={{marginRight: '20px'}}
+                inputProps={{ "data-testid": "test input 9" }}
+                label="Input"
+                placeholder="Input"
+                name="Input"
+                onChange={(input) => setTestIn9(input.target.value)}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                id="test output 9"
+                inputProps={{ "data-testid": "test output 9" }}
+                label="Expected Output"
+                placeholder=" Expected Output"
+                name="Output"
+                onChange={(input) => setTestOut9(input.target.value)}
+              />
+              </Grid> : ''}
+              {testCase10 ? <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                id="test input 10"
+                style={{marginRight: '20px'}}
+                inputProps={{ "data-testid": "test input 10" }}
+                label="Input"
+                placeholder="Input"
+                name="Input"
+                onChange={(input) => setTestIn10(input.target.value)}
+              />
+              <TextField
+                variant="outlined"
+                margin="normal"
+                id="test output 6"
+                inputProps={{ "data-testid": "test output 10" }}
+                label="Expected Output"
+                placeholder=" Expected Output"
+                name="Output"
+                onChange={(input) => setTestOut10(input.target.value)}
+              />
+              </Grid> : ''}
+              <Grid item xs={12}>
+              <Fab color="primary" aria-label="add" data-testid="add" disabled={testCase10} onClick={(e) => handleOnClickFab(e)}>
+                  <AddIcon />
+              </Fab>
+              <Fab color="secondary" aria-label="remove" data-testid="remove" disabled={!testCase2} onClick={(e) => handleOnClickFabRemove(e)}>
+                  <RemoveIcon />
+              </Fab>
+              </Grid>
+              </Grid>
+              </Grid>
+              <Container maxWidth= 'xs'>
               <Button
                 id="save-challenge"
                 data-testid="save"
                 variant="contained"
                 color="primary"
                 size="large"
+                style={{marginRight: '10px'}}
                 startIcon={<SaveIcon />}
                 onClick={(e) => handleOnClickSave(e)}
               >
@@ -365,10 +621,9 @@ const NewChallenge = () => {
               >
                 Cancel
               </Button>
-            </form>
           </Container>
         </Grid>
-      </div>
+        </form>
     </Container>
   );
 };

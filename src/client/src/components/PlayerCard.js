@@ -71,18 +71,18 @@ export default function PlayerCard(video){
 
   return (
       <div>
-    <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+    <Button data-testid="open" variant="outlined" color="primary" onClick={handleClickOpen}>
     See Response
   </Button>
-  <Dialog onClose={handleClose} aria-label="example problem" open={open} maxWidth='md'>
+  <Dialog data-testid="dialog" onClose={handleClose} aria-label="example problem" open={open} maxWidth='md'>
     <DialogTitle id="example problem" onClose={handleClose}>
       Question: {video.question}
     </DialogTitle>
     <DialogContent dividers>
-    <ReactVideo src={String(videoUrl)} poster="https://ichef.bbci.co.uk/news/976/cpsprodpb/13F8F/production/_115970818_hi064603139.jpg" />
+    <ReactVideo data-testid="player" src={String(videoUrl)} poster="https://ichef.bbci.co.uk/news/976/cpsprodpb/13F8F/production/_115970818_hi064603139.jpg" />
     </DialogContent>
     <DialogActions>
-      <Button autoFocus onClick={handleClose} color="primary">
+      <Button autoFocus data-testid="close" onClick={handleClose} color="primary">
         Close
       </Button>
     </DialogActions>

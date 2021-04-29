@@ -4,7 +4,7 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import { Grid } from '@material-ui/core';
 import './css/Edit.css';
-import { getTests, deleteTest } from '../endpoints';
+import { getTests, deleteTest, resetTest } from '../endpoints';
 import { useAuth } from '../contexts/AuthContext';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -20,15 +20,15 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
+import { storage } from "../firebase"
+import Alert from '@material-ui/lab/Alert';
 
 const Edit = () => {
   const { currentUser } = useAuth();
   const [tableData, setTableData] = useState([]);
+  const [resetTestSuccessful, setResetTest] = useState(false);
+  const [testReset, setTestReset] = useState('');
   const history = useHistory();
-
-  function refreshPage() {
-    window.location.reload(false);
-  }
 
   useEffect(() => {
     let mounted = true;
@@ -65,17 +65,62 @@ const Edit = () => {
     });
   };
 
+  const deleteFolderContents = (path) => {
+        const ref = storage.ref(path);
+        ref.listAll()
+          .then(dir => {
+            dir.items.forEach(fileRef => {
+              deleteFile(ref.fullPath, fileRef.name);
+            });
+            dir.prefixes.forEach(folderRef => {
+              deleteFolderContents(folderRef.fullPath);
+            })
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }
+
+      const deleteFile = (pathToFile, fileName) => {
+        const ref = storage.ref(pathToFile);
+        const childRef = ref.child(fileName);
+        childRef.delete()
+      }
+
+      const updatedRows = async () => {
+      var res = await axios.post(getTests, {
+        data: { googleId: currentUser.uid },
+      });
+      setTableData(
+        res.data.data.map((item) => ({
+          _id: item._id,
+          testName: item.testName,
+          createdAt: item.createdAt,
+        }))
+      )};
+
   const handleOnClickDelete = async (e, _id) => {
     try {
       const testName = e;
+      deleteFolderContents(_id);
       await axios.post(deleteTest, {
         data: { googleId: currentUser.uid, testName: testName, _id: _id },
       });
-      return refreshPage();
+      updatedRows();
+      document.getElementById("tests-table").reset();
     } catch {
       console.log('error');
     }
   };
+
+  const handleResetTest = async (testName, _id) => {
+    setTestReset("");
+    await axios.post(resetTest, {
+        data: { _id: _id },
+      });
+      setTestReset(testName);
+      setResetTest(true);
+  }
 
   const handleOnClickEdit = async (e, _id) => {
     history.push({
@@ -95,8 +140,9 @@ const Edit = () => {
                 Edit Existing Coding Test
               </Typography>
             </div>
+            {resetTestSuccessful ? <Alert onClose={()=>{setResetTest(false)}}>{testReset} reset! All current results and invitations have been removed.</Alert> : ''}
             <TableContainer component={Paper}>
-              <Table className={classes.table} aria-label="simple table">
+              <Table className={classes.table} aria-label="simple table" id='tests-table'>
                 <TableHead>
                   <TableRow>
                     <TableCell>Test Name</TableCell>
@@ -121,6 +167,19 @@ const Edit = () => {
                           }
                         >
                           Add Participants
+                        </Button>
+                      </TableCell>
+                      <TableCell>
+                        <Button
+                          id="addParticipants"
+                          variant="contained"
+                          color="primary"
+                          size="small"
+                          onClick={(e) =>
+                            handleResetTest(row.testName, row._id)
+                          }
+                        >
+                          Reset Test
                         </Button>
                       </TableCell>
                       <TableCell>
