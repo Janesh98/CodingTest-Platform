@@ -1,6 +1,6 @@
 beforeEach(() => {
   cy.viewport(1920, 1080);
-  cy.visit('/codingtest/6082bed8047d59e806271639/60841db403eaf51b98058e27');
+  cy.visit('/codingtest/608b37629d11ba327cc0a513/608b38d940b3bf208e21e382');
   cy.wait(8000);
 });
 
@@ -10,7 +10,7 @@ describe('Coding Test', () => {
     cy.get('[data-testid="editor"]')
       .get('textarea')
       .type('print("hello world")');
-    cy.get('#runcode').get('button').contains('Run Code').click().wait(10000);
+    cy.get('#runcode').get('button').contains('Run Code').click().wait(15000);
     cy.get('#vertical-tab-0').click();
     cy.get('#vertical-tab-0').get('.MuiTab-wrapper').get('svg').should('exist');
     // Q2
@@ -18,7 +18,7 @@ describe('Coding Test', () => {
     cy.get('[data-testid="editor"]')
       .get('textarea')
       .type('print("hello world")');
-    cy.get('#runcode').get('button').contains('Run Code').click().wait(10000);
+    cy.get('#runcode').get('button').contains('Run Code').click().wait(15000);
     cy.get('#vertical-tab-0').click();
     cy.get('#vertical-tab-0').get('.MuiTab-wrapper').get('svg').should('exist');
     // Submit Test
