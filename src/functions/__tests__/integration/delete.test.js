@@ -10,8 +10,9 @@ const ParticipantDB = require('../../models/ParticipantsModel');
 
 describe('/deleteTest', () => {
   beforeEach((done) => {
+    const uri = process.env.MONGO_URI || 'mongodb://localhost:27017/JestDB';
     mongoose.connect(
-      'mongodb://localhost:27017/JestDB',
+      uri,
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -30,8 +31,8 @@ describe('/deleteTest', () => {
     const mockData = {
       data: {
         googleId: '123',
-        testName: "6969",
-        _id: '12345'
+        testName: '6969',
+        _id: '12345',
       },
     };
     const res = await request.post('/delete').send({
@@ -46,13 +47,13 @@ describe('/deleteTest', () => {
     expect(res.statusCode).toBe(200);
     expect(res.body).toEqual(expected.data);
   });
-  
 });
 
 describe('/deleteChallenge', () => {
   beforeEach((done) => {
+    const uri = process.env.MONGO_URI || 'mongodb://localhost:27017/JestDB';
     mongoose.connect(
-      'mongodb://localhost:27017/JestDB',
+      uri,
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -71,9 +72,9 @@ describe('/deleteChallenge', () => {
     const mockData = {
       data: {
         googleId: '123',
-        testName: "6969",
-        title: "hello world!",
-        _id: '12345'
+        testName: '6969',
+        title: 'hello world!',
+        _id: '12345',
       },
     };
     const res = await request.post('/deleteChallenge').send({
@@ -88,13 +89,13 @@ describe('/deleteChallenge', () => {
     expect(res.statusCode).toBe(200);
     expect(res.body).toEqual(expected.data);
   });
-  
 });
 
 describe('/deleteQuestions', () => {
   beforeEach((done) => {
+    const uri = process.env.MONGO_URI || 'mongodb://localhost:27017/JestDB';
     mongoose.connect(
-      'mongodb://localhost:27017/JestDB',
+      uri,
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -113,8 +114,8 @@ describe('/deleteQuestions', () => {
     const mockData = {
       data: {
         googleId: '123',
-        testName: "6969",
-        _id: '12345'
+        testName: '6969',
+        _id: '12345',
       },
     };
     const res = await request.post('/deleteQuestions').send({
@@ -129,13 +130,13 @@ describe('/deleteQuestions', () => {
     expect(res.statusCode).toBe(200);
     expect(res.body).toEqual(expected.data);
   });
-  
 });
 
 describe('/deleteUserData', () => {
   beforeEach((done) => {
+    const uri = process.env.MONGO_URI || 'mongodb://localhost:27017/JestDB';
     mongoose.connect(
-      'mongodb://localhost:27017/JestDB',
+      uri,
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -168,13 +169,13 @@ describe('/deleteUserData', () => {
     expect(res.statusCode).toBe(200);
     expect(res.body).toEqual(expected.data);
   });
-  
 });
 
 describe('/resetTest', () => {
   beforeEach((done) => {
+    const uri = process.env.MONGO_URI || 'mongodb://localhost:27017/JestDB';
     mongoose.connect(
-      'mongodb://localhost:27017/JestDB',
+      uri,
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -192,7 +193,7 @@ describe('/resetTest', () => {
   it('POST /, should reset test', async () => {
     const mockData = {
       data: {
-        TestId: "6969",
+        TestId: '6969',
       },
     };
     const res = await request.post('/resetTest').send({
@@ -207,5 +208,4 @@ describe('/resetTest', () => {
     expect(res.statusCode).toBe(200);
     expect(res.body).toEqual(expected.data);
   });
-  
 });

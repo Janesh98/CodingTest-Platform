@@ -6,8 +6,9 @@ const request = supertest(app);
 
 describe('/register', () => {
   beforeEach((done) => {
+    const uri = process.env.MONGO_URI || 'mongodb://localhost:27017/JestDB';
     mongoose.connect(
-      'mongodb://localhost:27017/JestDB',
+      uri,
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -65,8 +66,9 @@ describe('/register', () => {
 
 describe('/checkRegister', () => {
   beforeEach((done) => {
+    const uri = process.env.MONGO_URI || 'mongodb://localhost:27017/JestDB';
     mongoose.connect(
-      'mongodb://localhost:27017/JestDB',
+      uri,
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
