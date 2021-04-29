@@ -37,12 +37,12 @@ describe('/getQuestions', () => {
     expect(responseObject).toEqual(expected);
   });
 });
-describe('/getQuestions', () => {
+describe('/updateQuestions', () => {
   afterEach(() => {
     jest.clearAllMocks();
     jest.restoreAllMocks();
   });
-  it('POST /, should return questions for particular coding challenge', async () => {
+  it('POST /, should update questions for particular coding challenge', async () => {
     let responseObject = {};
     let status = null;
     const req = {

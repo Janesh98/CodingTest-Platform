@@ -1,12 +1,7 @@
 const app = require('../../app');
 const mongoose = require('mongoose');
-const NewUserDB = require('../../models/UserModel');
 const supertest = require('supertest');
 const request = supertest(app);
-const CodingTestDB = require('../../models/CodingTestModel');
-const CodingChallengeDB = require('../../models/CodingChallengeModel');
-const QuestionsDB = require('../../models/QuestionsModel');
-const ParticipantDB = require('../../models/ParticipantsModel');
 
 describe('/deleteTest', () => {
   beforeEach((done) => {
