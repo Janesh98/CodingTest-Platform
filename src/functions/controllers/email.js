@@ -6,11 +6,13 @@ exports.sendEmail = async (req, res) => {
   const email = req.body.data.email;
   const TestId = req.body.data._id;
   const googleId = req.body.data.googleId;
+  const attemptedTest = req.body.data.attemptedTest;
 
   const newParticipantsEntry = new ParticipantsDB({
     email,
     TestId,
     googleId,
+    attemptedTest,
   });
 
   const result = await newParticipantsEntry.save();

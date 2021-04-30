@@ -37,6 +37,7 @@ describe('/sendEmail', () => {
         email: 'email@mail.com',
         _id: id,
         googleId: '123',
+        attemptedTest: false,
       },
     };
 

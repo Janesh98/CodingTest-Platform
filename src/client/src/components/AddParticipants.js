@@ -45,7 +45,7 @@ const AddParticipants = () => {
       return setError('Please enter a valid email');
     } else {
       await axios.post(sendEmail, {
-        data: { email: email, _id: id, googleId: currentUser.uid},
+        data: { email: email, _id: id, googleId: currentUser.uid, attemptedTest: false},
       });
       document.getElementById("email-form").reset();  
       setEmailSent(true)
