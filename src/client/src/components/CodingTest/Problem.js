@@ -67,12 +67,14 @@ const Problem = () => {
     codeOutput,
     updateCode,
     language,
+    code,
   } = useContext(CodingTestContext);
   const classes = useStyles();
 
   const saveProgress = () => {
     codingTest.challenges[currentChallengeIndex].testResults = testResults;
     codingTest.challenges[currentChallengeIndex].codeOutput = codeOutput;
+    codingTest.challenges[currentChallengeIndex].code = code;
   };
 
   // if qs already attempted, updates to previous save state
