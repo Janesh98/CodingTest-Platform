@@ -8,8 +8,14 @@ exports.addSubmission = async (req, res) => {
     const code = data.code;
     const input = data.input;
     const language = data.language;
+    const maxTimeLimit = data.timeout;
 
-    const output = await new ExecutorService().execute(code, input, language);
+    const output = await new ExecutorService().execute(
+      code,
+      input,
+      language,
+      maxTimeLimit
+    );
     res.status(200).json({ data: output });
   } else {
     const job = await submissionQueue.add(data);

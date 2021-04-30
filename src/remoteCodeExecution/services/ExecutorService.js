@@ -7,11 +7,11 @@ const { extractMemory } = require('../utils/extractMemory');
 
 // executes code submitted in docker container, deleting container afterwards.
 class ExecutorService {
-  async execute(code, input, language) {
+  async execute(code, input, language, maxTimeLimit) {
     var stdout = new streams.WritableStream();
     var stderr = new streams.WritableStream();
 
-    const context = this.createContext(code, input, language);
+    const context = this.createContext(code, input, language, maxTimeLimit);
 
     const data = await docker.run(
       context.image,
@@ -41,12 +41,17 @@ class ExecutorService {
   }
 
   // returns correct docker image name and command to execute
-  createContext(code, input, language) {
+  createContext(code, input, language, maxTimeLimit) {
     code = Base64.decode(code);
     input = Base64.decode(input);
     code = escapeQuotes(code);
     const getMem = "time -f 'MEM: %M'";
-    const maxTimeLimit = 15;
+    if (!maxTimeLimit) {
+      maxTimeLimit = 15;
+    } else {
+      maxTimeLimit = parseInt(maxTimeLimit);
+      maxTimeLimit < 15 ? 15 : maxTimeLimit;
+    }
     const timeout = `timeout ${maxTimeLimit}`;
 
     var context = {};

@@ -66,6 +66,70 @@ describe('Create correct language context for Docker image and command', () => {
     };
     expect(result).toEqual(expected);
   });
+  it('Should change timeout limit to minimum allowed value if too low', async () => {
+    mockFuncs = {
+      inspect: jest.fn(() => {
+        return {
+          State: {
+            StartedAt: null,
+            FinishedAt: null,
+          },
+        };
+      }),
+      remove: jest.fn(() => null),
+    };
+    const mockData = [{}, mockFuncs, {}];
+    jest.spyOn(docker, 'run').mockResolvedValueOnce(mockData);
+    const code = Base64.encode('System.out.println("hello world")');
+    const input = Base64.encode('1 2 3');
+    const language = 'java';
+    const maxTimeLimit = 2;
+    const result = await new ExecutorService().execute(
+      code,
+      input,
+      language,
+      maxTimeLimit
+    );
+    const expected = {
+      memory: '0',
+      stderr: '',
+      stdout: '',
+      time: 0,
+    };
+    expect(result).toEqual(expected);
+  });
+  it('Should not change timeout limit as it is above the allowed minimum', async () => {
+    mockFuncs = {
+      inspect: jest.fn(() => {
+        return {
+          State: {
+            StartedAt: null,
+            FinishedAt: null,
+          },
+        };
+      }),
+      remove: jest.fn(() => null),
+    };
+    const mockData = [{}, mockFuncs, {}];
+    jest.spyOn(docker, 'run').mockResolvedValueOnce(mockData);
+    const code = Base64.encode('System.out.println("hello world")');
+    const input = Base64.encode('1 2 3');
+    const language = 'java';
+    const maxTimeLimit = 22;
+    const result = await new ExecutorService().execute(
+      code,
+      input,
+      language,
+      maxTimeLimit
+    );
+    const expected = {
+      memory: '0',
+      stderr: '',
+      stdout: '',
+      time: 0,
+    };
+    expect(result).toEqual(expected);
+  });
   it('Should return True as stderr contains timeout error', () => {
     const stderr = 'hello world Command terminated by signal 15';
     const result = new ExecutorService().isTimeoutError(stderr);
