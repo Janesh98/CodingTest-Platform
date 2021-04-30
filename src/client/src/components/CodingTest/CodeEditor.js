@@ -75,6 +75,7 @@ const CodeEditor = () => {
         }
 
         testResults[i] = testResult;
+        updateCode(code);
       }
     );
     updateCodeOutput(codeOutputList);
