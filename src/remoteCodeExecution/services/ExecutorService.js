@@ -17,7 +17,7 @@ class ExecutorService {
       context.image,
       ['/bin/sh', '-c', context.cmd],
       [stdout, stderr],
-      { Tty: false }
+      { Tty: false, memory: '200m' }
     );
     const container = data[1];
 
@@ -27,6 +27,11 @@ class ExecutorService {
     stdout = stdout.toString().trim();
     stderr = stderr.toString().trim();
     const output = extractMemory(stderr);
+
+    if (this.isTimeoutError(stderr)) {
+      output.stderr = 'Timeout Error: Maximum time limit exceeded.';
+    }
+
     return {
       time: runTime,
       memory: output.memory,
@@ -41,22 +46,28 @@ class ExecutorService {
     input = Base64.decode(input);
     code = escapeQuotes(code);
     const getMem = "time -f 'MEM: %M'";
+    const maxTimeLimit = 15;
+    const timeout = `timeout ${maxTimeLimit}`;
 
     var context = {};
     language = language.toLowerCase();
     switch (language) {
       case 'python':
         context.image = 'python:3-alpine';
-        context.cmd = `echo "${code}" > test.py && ${getMem} python3 test.py ${input}`;
+        context.cmd = `echo "${code}" > test.py && ${getMem} ${timeout} python3 test.py ${input}`;
         break;
       case 'java':
         context.image = 'openjdk:8-alpine';
-        context.cmd = `echo "${code}" > Main.java && javac Main.java && ${getMem} java Main ${input}`;
+        context.cmd = `echo "${code}" > Main.java && javac Main.java && ${getMem} ${timeout} java Main ${input}`;
         break;
       default:
         throw new Error(`'${language}' is not a supported language.`);
     }
     return context;
+  }
+
+  isTimeoutError(stderr) {
+    return stderr.includes('Command terminated by signal 15');
   }
 }
 

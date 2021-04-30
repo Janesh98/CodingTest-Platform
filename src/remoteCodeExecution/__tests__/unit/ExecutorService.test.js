@@ -4,7 +4,7 @@ const { Base64 } = require('js-base64');
 
 describe('Create correct language context for Docker image and command', () => {
   beforeEach(() => {
-    // Clear all instances and calls to constructor and all methods:
+    // Clear all instances and calls to constructor and all methods
     jest.clearAllMocks();
     jest.restoreAllMocks();
   });
@@ -16,7 +16,7 @@ describe('Create correct language context for Docker image and command', () => {
     expected = {
       image: 'python:3-alpine',
       cmd:
-        'echo "print(\\"hello world\\")" > test.py && time -f \'MEM: %M\' python3 test.py 1 2 3',
+        'echo "print(\\"hello world\\")" > test.py && time -f \'MEM: %M\' timeout 15 python3 test.py 1 2 3',
     };
     expect(result).toEqual(expected);
   });
@@ -28,7 +28,7 @@ describe('Create correct language context for Docker image and command', () => {
     expected = {
       image: 'openjdk:8-alpine',
       cmd:
-        'echo "System.out.println(\\"hello world\\")" > Main.java && javac Main.java && time -f \'MEM: %M\' java Main 1 2 3',
+        'echo "System.out.println(\\"hello world\\")" > Main.java && javac Main.java && time -f \'MEM: %M\' timeout 15 java Main 1 2 3',
     };
     expect(result).toEqual(expected);
   });
@@ -65,5 +65,15 @@ describe('Create correct language context for Docker image and command', () => {
       time: 0,
     };
     expect(result).toEqual(expected);
+  });
+  it('Should return True as stderr contains timeout error', () => {
+    const stderr = 'hello world Command terminated by signal 15';
+    const result = new ExecutorService().isTimeoutError(stderr);
+    expect(result).toBeTruthy();
+  });
+  it('Should return False as stderr does not contain timeout error', () => {
+    const stderr = 'hello world';
+    const result = new ExecutorService().isTimeoutError(stderr);
+    expect(result).toBeFalsy();
   });
 });
