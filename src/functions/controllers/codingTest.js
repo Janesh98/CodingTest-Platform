@@ -66,9 +66,10 @@ exports.submitCodingTest = async (req, res) => {
   try {
     const id = req.body.data.participantId;
     const codingTestResults = req.body.data.codingTestResults;
+    const attemptedTest = true;
 
     const filter = { _id: id };
-    const update = { codingTestResults };
+    const update = { codingTestResults, attemptedTest };
     await ParticipantDB.findOneAndUpdate(filter, update);
     return res.status(200).json({
       data: null,
