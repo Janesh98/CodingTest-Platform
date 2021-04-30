@@ -20,6 +20,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
 import CodingTest from './components/CodingTest/CodingTest';
+import testComplete from './components/CodingTest/testComplete';
 import VideoRecord from './components/CodingTest/VideoInterview/VideoRecord';
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
             component={CodingTest}
           />
           <Route path="/videointerview/:codingTestId/:participantId" component={VideoRecord} />
+          <Route path="/testComplete" component={testComplete} />
         </Switch>
       </AuthProvider>
     </Router>

@@ -23,6 +23,9 @@ describe('/codingTest', () => {
       .spyOn(ParticipantDB, 'exists')
       .mockReturnValue(Promise.resolve(mockData));
     await jest
+      .spyOn(ParticipantDB, 'findOne')
+      .mockReturnValue(Promise.resolve(mockData));
+    await jest
       .spyOn(CodingTestDB, 'findOne')
       .mockReturnValue(Promise.resolve(mockData));
     const req = {
@@ -62,6 +65,9 @@ describe('/codingTest', () => {
     };
     await jest
       .spyOn(ParticipantDB, 'exists')
+      .mockReturnValue(Promise.resolve(mockData));
+    await jest
+      .spyOn(ParticipantDB, 'findOne')
       .mockReturnValue(Promise.resolve(mockData));
     await jest
       .spyOn(CodingChallengeDB, 'find')

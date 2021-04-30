@@ -9,6 +9,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -70,6 +71,7 @@ const Problem = () => {
     code,
   } = useContext(CodingTestContext);
   const classes = useStyles();
+  const history = useHistory();
 
   const saveProgress = () => {
     codingTest.challenges[currentChallengeIndex].testResults = testResults;
@@ -118,6 +120,9 @@ const Problem = () => {
           return (res.data.data.challenges[i].language = language);
         });
         updateCodingTest(res.data.data);
+        if(res.data.data.attemptedTest){
+          history.push('/testComplete')
+        }
       } catch (err) {
         console.error(err);
       }
@@ -194,7 +199,7 @@ const Problem = () => {
           >
             {codingTest !== null ? createTabs() : ''}
           </Tabs>
-        </AppBar>
+        </AppBar> 
         {codingTest !== null ? createTabPanels() : ''}
       </div>
     </>

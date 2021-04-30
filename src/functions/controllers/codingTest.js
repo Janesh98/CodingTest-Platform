@@ -8,6 +8,7 @@ exports.getCodingTest = async (req, res) => {
   const codingTest = {
     challenges: null,
     questions: null,
+    attemptedTest: false,
   };
 
   try {
@@ -28,6 +29,13 @@ exports.getCodingTest = async (req, res) => {
         }
       }
     );
+
+    const attemptedOrNot = await ParticipantDB.findOne(
+      { _id: participantId, TestId: codingTestId },
+      { _id: 0, __v: 0, googleId: 0, codingTestResults: 0, questionResults: 0, TestId: 0, email: 0}
+    );
+
+    codingTest.attemptedTest = attemptedOrNot.attemptedTest;
 
     const codingTestIds = await CodingTestDB.findOne(
       { _id: codingTestId },
