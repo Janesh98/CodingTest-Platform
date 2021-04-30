@@ -17,7 +17,7 @@ const challengeSchema = new Schema({
   sampleInput: { type: String, required: true },
   sampleOutput: { type: String, required: true },
   exampleExplanation: { type: String, required: true },
-  testInput1: { type: String, required: true },
+  testInput1: { type: String, required: false },
   testOutput1: { type: String, required: false },
   testInput2: { type: String, required: false },
   testOutput2: { type: String, required: false },
@@ -37,7 +37,8 @@ const challengeSchema = new Schema({
   testOutput9: { type: String, required: false },
   testInput10: { type: String, required: false },
   testOutput10: { type: String, required: false },
-  testCases: {type: Array, required: false}
+  testCases: {type: Array, required: false},
+  timeout: {type: Number, required: true}
 });
 
 const CodingChallengeDB = mongoose.model('CodingChallengeDB', challengeSchema);

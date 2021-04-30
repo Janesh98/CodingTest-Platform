@@ -73,6 +73,7 @@ const EditTest = () => {
             testOutput9: item.testOutput9,
             testInput10: item.testInput10,
             testOutput10: item.testOutput10,
+            timeout: item.timeout.toString(),
             createdAt: item.createdAt,
           }))
         );

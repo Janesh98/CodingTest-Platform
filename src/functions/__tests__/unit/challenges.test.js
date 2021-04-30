@@ -124,6 +124,7 @@ describe('/updateChallenge', () => {
           testOutput9: 9,
           testInput10: 10,
           testOutput10: 10,
+          timeout: 15,
         },
       },
     };
@@ -166,6 +167,7 @@ describe('/updateChallenge', () => {
               output: '0',
             },
           ],
+          timeout10: req.body.data.timeout,
         }
       )
     );

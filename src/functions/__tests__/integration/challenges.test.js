@@ -56,6 +56,7 @@ describe('/newChallenge', () => {
           testOutput9: 9,
           testInput10: 10,
           testOutput10: 10,
+          timeout: 15
       },
     };
     const res = await request.post('/challenge').send({
@@ -125,6 +126,7 @@ describe('/updateChallenge', () => {
           testOutput9: 9,
           testInput10: 10,
           testOutput10: 10,
+          timeout: 15
       },
     };
     const res = await request.post('/updateChallenge').send({
@@ -200,6 +202,7 @@ describe('/getChallenges', () => {
           testOutput9: 9,
           testInput10: 10,
           testOutput10: 10,
+          timeout: 15
     });
     await newChallengeEntry.save();
     const res = await request.post('/challenges').send({
