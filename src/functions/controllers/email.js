@@ -1,4 +1,4 @@
-const { admin } = require('../utilities/admin');
+const { db } = require('../utilities/admin');
 let ParticipantsDB = require('../models/ParticipantsModel');
 let CodingTestDB = require('../models/CodingTestModel');
 
@@ -21,20 +21,17 @@ exports.sendEmail = async (req, res) => {
     { $push: { participants: participantsId } }
   );
 
-  await admin
-    .firestore()
-    .collection('mail')
-    .add({
-      to: email,
-      message: {
-        subject: 'Coding Test Invitation',
-        text:
-          'You have been invited to attempt a coding test, you can access the test by clicking the following link: \n https://coding-test-platform.web.app/codingtest/' +
-          TestId +
-          '/' +
-          participantsId,
-      },
-    });
+  await db.collection('mail').add({
+    to: email,
+    message: {
+      subject: 'Coding Test Invitation',
+      text:
+        'You have been invited to attempt a coding test, you can access the test by clicking the following link: \n https://coding-test-platform.web.app/codingtest/' +
+        TestId +
+        '/' +
+        participantsId,
+    },
+  });
 
   return res.status(200).json({
     data: null,
