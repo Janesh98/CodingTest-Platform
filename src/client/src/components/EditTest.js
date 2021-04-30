@@ -381,6 +381,7 @@ const EditTest = () => {
                         variant="contained"
                         color="primary"
                         size="small"
+                        disabled={QuestionsTableData.length === 0}
                         onClick={(e) => handleOnClickEditQuestions()}
                       >
                         <EditIcon />
