@@ -9,6 +9,7 @@ import MuiDialogActions from '@material-ui/core/DialogActions';
 import IconButton from '@material-ui/core/IconButton';
 import { storage } from "../firebase"
 import { ReactVideo } from "reactjs-media";
+import videoResponse from "./DashboardImages/videoResponse.png"
 
 
 const styles = (theme) => ({
@@ -79,7 +80,7 @@ export default function PlayerCard(video){
       Question: {video.question}
     </DialogTitle>
     <DialogContent dividers>
-    <ReactVideo data-testid="player" src={String(videoUrl)} poster="https://ichef.bbci.co.uk/news/976/cpsprodpb/13F8F/production/_115970818_hi064603139.jpg" />
+    <ReactVideo data-testid="player" src={String(videoUrl)} poster={videoResponse}/>
     </DialogContent>
     <DialogActions>
       <Button autoFocus data-testid="close" onClick={handleClose} color="primary">
