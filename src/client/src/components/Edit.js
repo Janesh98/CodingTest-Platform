@@ -155,7 +155,7 @@ const Edit = () => {
                       <TableCell component="th" scope="row">
                         {row.testName}
                       </TableCell>
-                      <TableCell>{row.createdAt}</TableCell>
+                      <TableCell>{row.createdAt.toString().substring(0,10)}</TableCell>
                       <TableCell>
                         <Button
                           id="addParticipants"

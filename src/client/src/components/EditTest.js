@@ -328,7 +328,7 @@ const EditTest = () => {
                       <TableCell className={classes.cell_short}>
                         {row.problemDescription}
                       </TableCell>
-                      <TableCell>{row.createdAt}</TableCell>
+                      <TableCell>{row.createdAt.toString().substring(0,10)}</TableCell>
                       <TableCell>
                         <IconButton
                           aria-label="edit"
