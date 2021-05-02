@@ -61,7 +61,7 @@ const Header = () => {
         data: { participantId, codingTestResults: codingTest },
       });
       localStorage.clear();
-      if (codingTest.questions === null) {
+      if (codingTest.questions === null || codingTest.questions.length === 0) {
         history.push('/testComplete');
       } else {
         history.push(`/videointerview/${codingTestId}/${participantId}`);
