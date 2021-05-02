@@ -3,6 +3,7 @@ const CodingChallengeDB = require('../models/CodingChallengeModel');
 const QuestionsDB = require('../models/QuestionsModel');
 const ParticipantDB = require('../models/ParticipantsModel');
 const NewUserDB = require('../models/UserModel');
+const mongoose = require('mongoose');
 
 exports.deleteTest = async (req, res) => {
   const test = {
@@ -29,7 +30,7 @@ exports.deleteTest = async (req, res) => {
 
   await NewUserDB.updateOne(
     { googleId: test.googleId },
-    { $pull: { codingTests: test._id } });
+    { $pull: { codingTests: mongoose.Types.ObjectId(test._id) } });
   return res.status(200).json({
     data: null,
   });
@@ -51,7 +52,7 @@ exports.deleteChallenge = async (req, res) => {
   await CodingChallengeDB.deleteOne(query);
   await CodingTestDB.updateOne(
     { googleId: challenge.googleId, testName: challenge.testName },
-    { $pull: { challenges: challenge._id } });
+    { $pull: { challenges: mongoose.Types.ObjectId(challenge._id) } });
 
   return res.status(200).json({
     data: null,
@@ -73,7 +74,7 @@ exports.deleteQuestions = async (req, res) => {
   await QuestionsDB.deleteOne(query);
   await CodingTestDB.updateOne(
     { googleId: questions.googleId, testName: questions.testName },
-    { $pull: { questions: questions._id } });
+    { $pull: { questions: mongoose.Types.ObjectId(questions._id) } });
 
   return res.status(200).json({
     data: null,

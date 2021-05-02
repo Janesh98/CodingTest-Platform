@@ -1,5 +1,6 @@
 const NewUserDB = require('../models/UserModel');
 const CodingTestDB = require('../models/CodingTestModel');
+const mongoose = require('mongoose');
 
 exports.newTest = async (req, res) => {
   const test = {
@@ -17,9 +18,9 @@ exports.newTest = async (req, res) => {
 
   const result = await newTestEntry.save();
   const testId = result.id;
-  NewUserDB.updateOne(
+  await NewUserDB.updateOne(
     { googleId: test.googleId },
-    { $push: { codingTests: testId } }
+    { $push: { codingTests: mongoose.Types.ObjectId(testId) } }
   );
   return res.status(200).json({
     status: 'success',

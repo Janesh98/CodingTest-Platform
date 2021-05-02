@@ -27,7 +27,7 @@ describe('/deleteTest', () => {
       data: {
         googleId: '123',
         testName: '6969',
-        _id: '12345',
+        _id: '4eb6e7e7e9b7f4194e000001',
       },
     };
     const res = await request.post('/delete').send({
@@ -69,7 +69,7 @@ describe('/deleteChallenge', () => {
         googleId: '123',
         testName: '6969',
         title: 'hello world!',
-        _id: '12345',
+        _id: '4eb6e7e7e9b7f4194e000001',
       },
     };
     const res = await request.post('/deleteChallenge').send({
@@ -110,7 +110,7 @@ describe('/deleteQuestions', () => {
       data: {
         googleId: '123',
         testName: '6969',
-        _id: '12345',
+        _id: '4eb6e7e7e9b7f4194e000001',
       },
     };
     const res = await request.post('/deleteQuestions').send({
