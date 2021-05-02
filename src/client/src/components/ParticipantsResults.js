@@ -110,8 +110,8 @@ const ParticipantsResults = () => {
                         {row.title}
                       </TableCell>
                       <TableCell component="th" scope="row">
-                        {row.testCases ? row.testCases.reduce(reducer)/row.testCases.length  * 100 : 0}%
-                      </TableCell>
+                        {row.testCases.length > 0  ? row.testCases.reduce(reducer)/row.testCases.length  * 100 : 0}%
+                      </TableCell> 
                       <TableCell>
                         {row.code !== "" ?
                         <Button

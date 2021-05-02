@@ -23,6 +23,7 @@ const ChallengeResult = () => {
 
   var data = []
   var i;
+  if(challengeData.codeOutput.length > 0 || challengeData.testResults.length > 0){
   for (i=0; i<challengeData.testCases.length; i++){
         var test = {};
         test = {
@@ -32,6 +33,7 @@ const ChallengeResult = () => {
       }
       data.push(test);
   }
+}
 
   
   useEffect(() => {
