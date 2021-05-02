@@ -12,7 +12,6 @@ export const addSubmission = async (data) => {
         stdin: data.data.input,
       },
     };
-    console.log(data);
 
     return await axios.post(submission, data);
   }

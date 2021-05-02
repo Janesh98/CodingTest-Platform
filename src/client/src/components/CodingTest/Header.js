@@ -60,10 +60,11 @@ const Header = () => {
       await axios.post(submitCodingTest, {
         data: { participantId, codingTestResults: codingTest },
       });
-      if(codingTest.questions === null){
-        history.push('/testComplete')
-      }else{
-      history.push(`/videointerview/${codingTestId}/${participantId}`);
+      localStorage.clear();
+      if (codingTest.questions === null) {
+        history.push('/testComplete');
+      } else {
+        history.push(`/videointerview/${codingTestId}/${participantId}`);
       }
     } catch (error) {
       console.error(error);
@@ -113,7 +114,7 @@ const Header = () => {
               variant="contained"
               className={classes.submit}
               onClick={(e) => handleSubmit(e)}
-              data-testid='submit'
+              data-testid="submit"
             >
               <Typography variant="button">Submit Test</Typography>
             </Button>

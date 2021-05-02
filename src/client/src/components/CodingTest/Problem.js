@@ -91,8 +91,8 @@ const Problem = () => {
     if (ct.codeOutput && ct.codeOutput !== []) updateCodeOutput(ct.codeOutput);
     else updateCodeOutput([]);
 
-    if (ct.code && ct.code !== '') updateCode(ct.code);
-    else updateCode('');
+    if (ct.code && ct.code !== '') updateCode(ct.code, false);
+    else updateCode('', false);
   };
 
   const handleTabChange = (event, newTab) => {
@@ -120,9 +120,10 @@ const Problem = () => {
           return (res.data.data.challenges[i].language = language);
         });
         updateCodingTest(res.data.data);
-        if(res.data.data.attemptedTest){
-          history.push('/testComplete')
+        if (res.data.data.attemptedTest) {
+          history.push('/testComplete');
         }
+        restoreCode(res.data.data);
       } catch (err) {
         console.error(err);
       }
@@ -132,13 +133,24 @@ const Problem = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const restoreCode = (ct) => {
+    try {
+      let savedCode = localStorage.getItem('code');
+      if (savedCode) {
+        savedCode = JSON.parse(savedCode);
+        if (savedCode['0']) updateCode(savedCode['0']);
+        Object.keys(savedCode).forEach((key) => {
+          ct.challenges[key].code = savedCode[key];
+        });
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const parseProblemDescription = (index) => {
     const ct = codingTest.challenges[index];
     let s = '';
-    // for (const [key, value] of Object.entries(ct)) {
-    //   // only print non test entries as tests are displayed in terminal
-    //   if (!key.includes('test')) s += `${key}\n${value}\n\n`;
-    // }
     s +=
       `Title\n${ct.title}\n\n` +
       `Problem Description\n${ct.problemDescription}\n\n` +
@@ -199,7 +211,7 @@ const Problem = () => {
           >
             {codingTest !== null ? createTabs() : ''}
           </Tabs>
-        </AppBar> 
+        </AppBar>
         {codingTest !== null ? createTabPanels() : ''}
       </div>
     </>
