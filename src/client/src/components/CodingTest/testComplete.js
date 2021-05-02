@@ -22,7 +22,7 @@ const classes = useStyles();
     return(
         <div className={classes.root}>
             <Typography> 
-                You have already completed this coding test.
+                You have completed this coding test. Thank you!
             </Typography>
         </div>
     
