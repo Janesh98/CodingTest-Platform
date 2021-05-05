@@ -86,6 +86,13 @@ export const CodingTestProvider = ({ children }) => {
     });
   };
 
+  const updateTimeLimit = (timeLimit) => {
+    dispatch({
+      type: 'UPDATE_TIME_LIMIT',
+      payload: timeLimit,
+    });
+  };
+
   return (
     <CodingTestContext.Provider
       value={{
@@ -96,6 +103,7 @@ export const CodingTestProvider = ({ children }) => {
         currentQuestionIndex: state.currentQuestionIndex,
         testResults: state.testResults,
         code: state.code,
+        timeLimit: state.timeLimit,
         updateCodeOutput,
         updateLanguage,
         updateCodingTest,
@@ -103,6 +111,7 @@ export const CodingTestProvider = ({ children }) => {
         updateCurrentQuestionIndex,
         updateTestResults,
         updateCode,
+        updateTimeLimit,
       }}
     >
       {children}

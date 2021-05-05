@@ -8,12 +8,21 @@ exports.newTest = async (req, res) => {
     testName: req.body.data.testName,
   };
 
+  let timeLimit;
+  try{
+      timeLimit = parseInt(req.body.data.timeLimit);
+    
+  }catch(error){
+    timeLimit = 60;
+  }
+
   const googleId = test.googleId;
   const testName = test.testName;
   // Add test to MongoDB
   const newTestEntry = new CodingTestDB({
     googleId,
     testName,
+    timeLimit
   });
 
   const result = await newTestEntry.save();

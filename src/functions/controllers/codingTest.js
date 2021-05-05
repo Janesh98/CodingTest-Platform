@@ -9,6 +9,7 @@ exports.getCodingTest = async (req, res) => {
     challenges: null,
     questions: null,
     attemptedTest: false,
+    timeLimit: 60,
   };
 
   try {
@@ -35,12 +36,25 @@ exports.getCodingTest = async (req, res) => {
       { _id: 0, __v: 0, googleId: 0, codingTestResults: 0, questionResults: 0, TestId: 0, email: 0}
     );
 
+
     codingTest.attemptedTest = attemptedOrNot.attemptedTest;
 
     const codingTestIds = await CodingTestDB.findOne(
       { _id: codingTestId },
       { _id: 0, __v: 0, googleId: 0, createdAt: 0 }
     );
+
+    codingTest.timeLimit = codingTestIds.timeLimit;
+
+    if(!attemptedOrNot.timeStarted){
+      await ParticipantDB.updateOne(
+        { _id: participantId},
+        {timeStarted: new Date()}
+      )
+    }else if(attemptedOrNot.timeStarted){
+      var CurrentDate = new Date();
+      codingTest.timeLimit = codingTest.timeLimit - ((CurrentDate.getTime() - attemptedOrNot.timeStarted.getTime())/1000)/60;
+    }
 
     if (codingTestIds.challenges.length !== 0) {
       codingTest.challenges = await CodingChallengeDB.find(

@@ -64,6 +64,7 @@ const Problem = () => {
     updateCurrentChallengeIndex,
     updateCodeOutput,
     updateTestResults,
+    updateTimeLimit,
     testResults,
     codeOutput,
     updateCode,
@@ -110,6 +111,7 @@ const Problem = () => {
             data: { codingTestId, participantId },
           }
         );
+        updateTimeLimit(res.data.data.timeLimit);
         // set language for each test to inital default
         res.data.data.challenges.map((item, i) => {
           // TODO temporary line below, needs to be changed
@@ -120,7 +122,7 @@ const Problem = () => {
           return (res.data.data.challenges[i].language = language);
         });
         updateCodingTest(res.data.data);
-        if (res.data.data.attemptedTest) {
+        if (res.data.data.attemptedTest || res.data.data.timeLimit <= 0) {
           history.push('/testComplete');
         }
         restoreCode(res.data.data);

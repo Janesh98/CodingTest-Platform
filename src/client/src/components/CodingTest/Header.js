@@ -11,6 +11,7 @@ import { submitCodingTest } from '../../endpoints';
 import { useParams } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import CountdownTimer from "react-component-countdown-timer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,6 +38,7 @@ const Header = () => {
     codingTest,
     currentChallengeIndex,
     code,
+    timeLimit,
   } = useContext(CodingTestContext);
   const { codingTestId, participantId } = useParams();
   const history = useHistory();
@@ -71,6 +73,24 @@ const Header = () => {
     }
   };
 
+  const handleTimeLimit = async () => {
+    saveCodeProgress();
+    convertCodeToBase64();
+    try {
+      await axios.post(submitCodingTest, {
+        data: { participantId, codingTestResults: codingTest },
+      });
+      localStorage.clear();
+      if (codingTest.questions === null || codingTest.questions.length === 0) {
+        history.push('/testComplete');
+      } else {
+        history.push(`/videointerview/${codingTestId}/${participantId}`);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const onLanguageChange = async (language) => {
     updateLanguage(language);
     codingTest.challenges[currentChallengeIndex].language = language;
@@ -83,6 +103,14 @@ const Header = () => {
           <Typography variant="h6" color="inherit">
             Coding Test
           </Typography>
+          {timeLimit !== undefined ? <CountdownTimer  
+            count={60 * timeLimit} 
+            className={classes.submit} 
+            hideDay={true} 
+            color="#fff" 
+            backgroundColor="#000"
+            onEnd={() => handleTimeLimit()}
+            /> : '' }
           <Container
             className={classes.container}
             disableGutters
