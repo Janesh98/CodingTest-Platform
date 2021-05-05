@@ -9,7 +9,8 @@ const participantSchema = new Schema({
   codingTestResults: { type: Array, required: false },
   questionResults: { type: Array, required: false },
   attemptedTest: {type: Boolean, required: false},
-  timeStarted: {type: Date, requred: false}
+  timeStarted: {type: Date, required: false},
+  expiryDate: {type: Date, required: true}
 });
 
 const ParticipantDB = mongoose.model('ParticipantDB', participantSchema);

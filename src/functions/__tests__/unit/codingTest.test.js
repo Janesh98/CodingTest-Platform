@@ -53,6 +53,7 @@ describe('/codingTest', () => {
         challenges: null,
         questions: null,
         timeLimit: 60,
+        expired: false,
       },
     };
 
@@ -67,6 +68,7 @@ describe('/codingTest', () => {
       challenges: [{ data: 'test' }],
       questions: [{ data: 'test' }],
       timeLimit: [{ data: 'test' }],
+      expiryDate: false,
     };
     await jest
       .spyOn(ParticipantDB, 'exists')
@@ -108,6 +110,7 @@ describe('/codingTest', () => {
         challenges: mockData.challenges,
         questions: mockData.questions,
         timeLimit: mockData.timeLimit,
+        expired: true,
       },
     };
 

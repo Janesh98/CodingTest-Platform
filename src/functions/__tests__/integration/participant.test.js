@@ -33,6 +33,7 @@ describe('/getParticipants', () => {
       TestId: mockData.data.TestId,
       googleId: '1234',
       email: 'test@gmail.com',
+      expiryDate: "2021-12-31T00:00"
     });
     await newParticipant.save();
     const res = await request.post('/getParticipants').send({
@@ -75,6 +76,7 @@ describe('/getParticipantResults', () => {
       TestId: mockData.data.TestId,
       googleId: '1234',
       email: 'test@gmail.com',
+      expiryDate: "2021-12-31T00:00"
     });
     await newParticipant.save();
     const res = await request.post('/getParticipantResults').send({

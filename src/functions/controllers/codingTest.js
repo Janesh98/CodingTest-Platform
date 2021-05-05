@@ -10,6 +10,7 @@ exports.getCodingTest = async (req, res) => {
     questions: null,
     attemptedTest: false,
     timeLimit: 60,
+    expired: false,
   };
 
   try {
@@ -46,15 +47,19 @@ exports.getCodingTest = async (req, res) => {
 
     codingTest.timeLimit = codingTestIds.timeLimit;
 
+    var CurrentDate = new Date();
+
     if(!attemptedOrNot.timeStarted){
       await ParticipantDB.updateOne(
         { _id: participantId},
         {timeStarted: new Date()}
       )
     }else if(attemptedOrNot.timeStarted){
-      var CurrentDate = new Date();
       codingTest.timeLimit = codingTest.timeLimit - ((CurrentDate.getTime() - attemptedOrNot.timeStarted.getTime())/1000)/60;
     }
+
+   codingTest.expired = CurrentDate > attemptedOrNot.expiryDate;
+ 
 
     if (codingTestIds.challenges.length !== 0) {
       codingTest.challenges = await CodingChallengeDB.find(

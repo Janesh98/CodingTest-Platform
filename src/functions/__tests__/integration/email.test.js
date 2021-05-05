@@ -38,6 +38,7 @@ describe('/sendEmail', () => {
         _id: id,
         googleId: '123',
         attemptedTest: false,
+        expiryDate: "2021-12-31T00:00"
       },
     };
 

@@ -27,6 +27,7 @@ describe('/test', () => {
           email: 'test@gmail.com',
           googleId: '123',
           TestId: 'test123',
+          expiryDate: "2021-12-31T00:00"
         },
       },
     };

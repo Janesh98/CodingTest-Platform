@@ -208,7 +208,7 @@ const NewChallenge = () => {
         <Grid container align="center" justify="center" style={{marginTop: '75px'}} spacing={5} direction="row" data-testid="setup-grid"> 
           <Grid item xs={12}>
               <Typography component="h3" variant="h5">
-                Setup A New Coding Test
+                Add A New Coding Challenge
               </Typography>
             <Card />
           </Grid>

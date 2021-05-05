@@ -125,6 +125,9 @@ const Problem = () => {
         if (res.data.data.attemptedTest || res.data.data.timeLimit <= 0) {
           history.push('/testComplete');
         }
+      if(res.data.data.expired){
+        history.push('/testExpired');
+      }
         restoreCode(res.data.data);
       } catch (err) {
         console.error(err);

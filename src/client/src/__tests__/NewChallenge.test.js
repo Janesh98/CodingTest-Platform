@@ -15,7 +15,7 @@ describe('rendering components', () => {
 
  it('renders setup test text', () => {
         render(<NewChallenge history={createBrowserHistory(history.push("/", state))}/>);
-        expect(screen.getByText("Setup A New Coding Test")).toBeInTheDocument();
+        expect(screen.getByText("Add A New Coding Challenge")).toBeInTheDocument();
  });
 
  it('renders timeout text', () => {

@@ -21,6 +21,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
 import CodingTest from './components/CodingTest/CodingTest';
 import testComplete from './components/CodingTest/testComplete';
+import testExpired from './components/CodingTest/testExpired';
 import VideoRecord from './components/CodingTest/VideoInterview/VideoRecord';
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
           />
           <Route path="/videointerview/:codingTestId/:participantId" component={VideoRecord} />
           <Route path="/testComplete" component={testComplete} />
+          <Route path="/testExpired" component={testExpired} />
         </Switch>
       </AuthProvider>
     </Router>
