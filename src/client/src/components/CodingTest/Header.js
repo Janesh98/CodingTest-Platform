@@ -11,7 +11,7 @@ import { submitCodingTest } from '../../endpoints';
 import { useParams } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-import CountdownTimer from "react-component-countdown-timer";
+import CountdownTimer from 'react-component-countdown-timer';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -103,14 +103,18 @@ const Header = () => {
           <Typography variant="h6" color="inherit">
             Coding Test
           </Typography>
-          {timeLimit !== undefined ? <CountdownTimer  
-            count={60 * timeLimit} 
-            className={classes.submit} 
-            hideDay={true} 
-            color="#fff" 
-            backgroundColor="#000"
-            onEnd={() => handleTimeLimit()}
-            /> : '' }
+          {timeLimit !== undefined ? (
+            <CountdownTimer
+              count={60 * timeLimit}
+              className={classes.submit}
+              hideDay={true}
+              color="#fff"
+              backgroundColor="#000"
+              onEnd={() => handleTimeLimit()}
+            />
+          ) : (
+            ''
+          )}
           <Container
             className={classes.container}
             disableGutters

@@ -53,6 +53,7 @@ const CodeEditor = () => {
     const testResults = [];
     // encode to base64 string
     const base64Code = btoa(code);
+    const timeout = codingTest.challenges[currentChallengeIndex].timeout;
     codingTest.challenges[currentChallengeIndex].testCases.map(
       async (test, i) => {
         const base64Input = btoa(test.input);
@@ -61,6 +62,7 @@ const CodeEditor = () => {
             language: language.toLowerCase(),
             code: base64Code,
             input: base64Input,
+            timeout,
           },
         });
 
