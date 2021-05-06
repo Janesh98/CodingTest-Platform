@@ -126,7 +126,7 @@ exports.newChallenge = async (req, res) => {
   ];
 
   var testCases = unfilteredTestCases.filter(function (el) {
-    return el.input != '';
+    return el.input != '' && el.output != '';
   });
 
   // Add CHallenge to MongoDB
@@ -268,7 +268,7 @@ exports.updateChallenge = async (req, res) => {
   ];
 
   var testCases = unfilteredTestCases.filter(function (el) {
-    return el.input != '';
+    return el.input != '' && el.output != '';
   });
 
   await CodingChallengeDB.updateOne(
