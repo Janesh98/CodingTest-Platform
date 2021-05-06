@@ -126,7 +126,7 @@ exports.newChallenge = async (req, res) => {
   ];
 
   var testCases = unfilteredTestCases.filter(function (el) {
-    return el.input != '' && el.output != '';
+    return el.input != '' || el.output != '';
   });
 
   // Add CHallenge to MongoDB
