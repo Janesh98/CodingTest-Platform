@@ -17,7 +17,7 @@ class ExecutorService {
       context.image,
       ['/bin/sh', '-c', context.cmd],
       [stdout, stderr],
-      { Tty: false, memory: '200m' }
+      { Tty: false }
     );
     const container = data[1];
 
@@ -64,6 +64,10 @@ class ExecutorService {
       case 'java':
         context.image = 'openjdk:8-alpine';
         context.cmd = `echo "${code}" > Main.java && javac Main.java && ${getMem} java Main ${input}`;
+        break;
+      case 'javascript':
+        context.image = 'node:lts';
+        context.cmd = `echo "${code}" > test.js && node test.js`;
         break;
       default:
         throw new Error(`'${language}' is not a supported language.`);
