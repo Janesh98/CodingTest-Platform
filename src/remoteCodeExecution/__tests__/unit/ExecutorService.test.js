@@ -16,7 +16,7 @@ describe('Create correct language context for Docker image and command', () => {
     expected = {
       image: 'python:3-alpine',
       cmd:
-        'echo "print(\\"hello world\\")" > test.py && time -f \'MEM: %M\' timeout 15 python3 test.py 1 2 3',
+        'echo "print(\\"hello world\\")" > test.py && time -f \'MEM: %M\' /usr/bin/timeout 15s python3 test.py 1 2 3',
     };
     expect(result).toEqual(expected);
   });
@@ -28,7 +28,7 @@ describe('Create correct language context for Docker image and command', () => {
     expected = {
       image: 'openjdk:8-alpine',
       cmd:
-        'echo "System.out.println(\\"hello world\\")" > Main.java && javac Main.java && time -f \'MEM: %M\' timeout 15 java Main 1 2 3',
+        'echo "System.out.println(\\"hello world\\")" > Main.java && javac Main.java && time -f \'MEM: %M\' java Main 1 2 3',
     };
     expect(result).toEqual(expected);
   });
