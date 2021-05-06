@@ -314,7 +314,7 @@ const Setup = () => {
                 helperText={error}
                 onChange={(input) => setConstraints(input.target.value)}
               />
-              <Typography component="h1" data-testid = "Sample Input typography">Sample Input</Typography>
+              <Typography component="h1" data-testid = "Sample Input typography">Sample Input(Input is passed in as command line arguments)</Typography>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -330,7 +330,7 @@ const Setup = () => {
                 helperText={error}
                 onChange={(input) => setSampleIn(input.target.value)}
               />
-              <Typography component="h1" data-testid = "Sample Output typography">Sample Output</Typography>
+              <Typography component="h1" data-testid = "Sample Output typography">Sample Output(Ouptut is expected to be printed to std out to allow verification of test cases)</Typography>
               <TextField
                 variant="outlined"
                 margin="normal"

@@ -296,7 +296,7 @@ const NewChallenge = () => {
                 helperText={error}
                 onChange={(input) => setConstraints(input.target.value)}
               />
-              <Typography component="h1" data-testid = "Sample Input typography">Sample Input</Typography>
+              <Typography component="h1" data-testid = "Sample Input typography">Sample Input(Input is passed in as command line arguments)</Typography>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -312,7 +312,7 @@ const NewChallenge = () => {
                 helperText={error}
                 onChange={(input) => setSampleIn(input.target.value)}
               />
-              <Typography component="h1" data-testid = "Sample Output typography">Sample Output</Typography>
+              <Typography component="h1" data-testid = "Sample Output typography">Sample Output(Ouptut is expected to be printed to std out to allow verification of test cases)</Typography>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -608,7 +608,7 @@ const NewChallenge = () => {
               />
               </Grid> : ''}
               <Grid item xs={12}>
-              <Fab color="primary" aria-label="add" data-testid="add" disabled={testCase10} onClick={(e) => handleOnClickFab(e)}>
+              <Fab color="primary" aria-label="add" style={{marginRight: '10px'}} data-testid="add" disabled={testCase10} onClick={(e) => handleOnClickFab(e)}>
                   <AddIcon />
               </Fab>
               <Fab color="secondary" aria-label="remove" data-testid="remove" disabled={!testCase2} onClick={(e) => handleOnClickFabRemove(e)}>

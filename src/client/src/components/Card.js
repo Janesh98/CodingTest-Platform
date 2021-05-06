@@ -98,8 +98,8 @@ export default function Card(){
           </Typography> 
           <Box color="black" bgcolor="lightgray" p={1}>
             <Typography>
-              The first line contains two space-separated integers n and d, the size of a and the number of left rotations.
-              The second line contains n space-separated integers, each an a[i].
+              The first two characters contain two space-separated integers n and d, the size of a and the number of left rotations.
+              The remaining arguments contain n space-separated integers, each an a[i].
             </Typography> 
           </Box>
           <Typography component="h1">
@@ -129,10 +129,7 @@ export default function Card(){
           </Typography> 
           <Box color="black" bgcolor="lightgray" p={1}>
             <Typography>
-              5 4
-            </Typography>
-            <Typography>
-              1 2 3 4 5
+              5 4 1 2 3 4 5
             </Typography>
           </Box>
           <Typography component="h1">

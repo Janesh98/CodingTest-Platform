@@ -46,12 +46,12 @@ describe('rendering components', () => {
  });
  it('renders sample input text', () => {
         render(<NewChallenge history={createBrowserHistory(history.push("/", state))}/>);
-        expect(screen.queryByTestId("Sample Input typography")).toHaveTextContent("Sample Input");
+        expect(screen.queryByTestId("Sample Input typography")).toHaveTextContent("Sample Input(Input is passed in as command line arguments)");
  });
 
  it('renders sample output text', () => {
         render(<NewChallenge history={createBrowserHistory(history.push("/", state))}/>);
-        expect(screen.queryByTestId("Sample Output typography")).toHaveTextContent("Sample Output");
+        expect(screen.queryByTestId("Sample Output typography")).toHaveTextContent("Sample Output(Ouptut is expected to be printed to std out to allow verification of test cases)");
  });
 
  it('renders example text', () => {
