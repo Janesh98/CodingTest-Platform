@@ -8,6 +8,9 @@ exports.getCodingTest = async (req, res) => {
   const codingTest = {
     challenges: null,
     questions: null,
+    attemptedTest: false,
+    timeLimit: 60,
+    expired: false,
   };
 
   try {
@@ -29,10 +32,34 @@ exports.getCodingTest = async (req, res) => {
       }
     );
 
+    const attemptedOrNot = await ParticipantDB.findOne(
+      { _id: participantId, TestId: codingTestId },
+      { _id: 0, __v: 0, googleId: 0, codingTestResults: 0, questionResults: 0, TestId: 0, email: 0}
+    );
+
+
+    codingTest.attemptedTest = attemptedOrNot.attemptedTest;
+
     const codingTestIds = await CodingTestDB.findOne(
       { _id: codingTestId },
       { _id: 0, __v: 0, googleId: 0, createdAt: 0 }
     );
+
+    codingTest.timeLimit = codingTestIds.timeLimit;
+
+    var CurrentDate = new Date();
+
+    if(!attemptedOrNot.timeStarted){
+      await ParticipantDB.updateOne(
+        { _id: participantId},
+        {timeStarted: new Date()}
+      )
+    }else if(attemptedOrNot.timeStarted){
+      codingTest.timeLimit = codingTest.timeLimit - ((CurrentDate.getTime() - attemptedOrNot.timeStarted.getTime())/1000)/60;
+    }
+
+   codingTest.expired = CurrentDate > attemptedOrNot.expiryDate;
+ 
 
     if (codingTestIds.challenges.length !== 0) {
       codingTest.challenges = await CodingChallengeDB.find(
@@ -66,9 +93,10 @@ exports.submitCodingTest = async (req, res) => {
   try {
     const id = req.body.data.participantId;
     const codingTestResults = req.body.data.codingTestResults;
+    const attemptedTest = true;
 
     const filter = { _id: id };
-    const update = { codingTestResults };
+    const update = { codingTestResults, attemptedTest };
     await ParticipantDB.findOneAndUpdate(filter, update);
     return res.status(200).json({
       data: null,

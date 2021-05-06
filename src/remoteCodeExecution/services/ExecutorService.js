@@ -7,17 +7,17 @@ const { extractMemory } = require('../utils/extractMemory');
 
 // executes code submitted in docker container, deleting container afterwards.
 class ExecutorService {
-  async execute(code, input, language) {
+  async execute(code, input, language, maxTimeLimit) {
     var stdout = new streams.WritableStream();
     var stderr = new streams.WritableStream();
 
-    const context = this.createContext(code, input, language);
+    const context = this.createContext(code, input, language, maxTimeLimit);
 
     const data = await docker.run(
       context.image,
       ['/bin/sh', '-c', context.cmd],
       [stdout, stderr],
-      { Tty: false }
+      { Tty: false, memory: '200m' }
     );
     const container = data[1];
 
@@ -27,6 +27,11 @@ class ExecutorService {
     stdout = stdout.toString().trim();
     stderr = stderr.toString().trim();
     const output = extractMemory(stderr);
+
+    if (this.isTimeoutError(stderr)) {
+      output.stderr = 'Timeout Error: Maximum time limit exceeded.';
+    }
+
     return {
       time: runTime,
       memory: output.memory,
@@ -36,18 +41,25 @@ class ExecutorService {
   }
 
   // returns correct docker image name and command to execute
-  createContext(code, input, language) {
+  createContext(code, input, language, maxTimeLimit) {
     code = Base64.decode(code);
     input = Base64.decode(input);
     code = escapeQuotes(code);
     const getMem = "time -f 'MEM: %M'";
+    if (!maxTimeLimit) {
+      maxTimeLimit = 15;
+    } else {
+      maxTimeLimit = parseInt(maxTimeLimit);
+      maxTimeLimit < 15 ? 15 : maxTimeLimit;
+    }
+    const timeout = `/usr/bin/timeout ${maxTimeLimit}s`;
 
     var context = {};
     language = language.toLowerCase();
     switch (language) {
       case 'python':
         context.image = 'python:3-alpine';
-        context.cmd = `echo "${code}" > test.py && ${getMem} python3 test.py ${input}`;
+        context.cmd = `echo "${code}" > test.py && ${getMem} ${timeout} python3 test.py ${input}`;
         break;
       case 'java':
         context.image = 'openjdk:8-alpine';
@@ -57,6 +69,10 @@ class ExecutorService {
         throw new Error(`'${language}' is not a supported language.`);
     }
     return context;
+  }
+
+  isTimeoutError(stderr) {
+    return stderr.includes('Command terminated by signal 15');
   }
 }
 

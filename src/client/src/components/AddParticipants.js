@@ -19,6 +19,7 @@ const AddParticipants = () => {
   const [error, setError] = useState('');
   const [isError, setISError] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
+  const [expiryDate, setExpiryDate] = useState('2021-12-31T00:00:00Z');
   const history = useHistory();
   const TestName = history.location.state.testName;
   const id = history.location.state._id;
@@ -38,6 +39,11 @@ const AddParticipants = () => {
     }
   };
 
+  const setDate = (date) => {
+    setExpiryDate(date + ":00Z");
+    console.log(expiryDate);
+  };
+
   const handleOnClickEmail = async (e) => {
     e.preventDefault();
     if (!isEmail(email)) {
@@ -45,7 +51,7 @@ const AddParticipants = () => {
       return setError('Please enter a valid email');
     } else {
       await axios.post(sendEmail, {
-        data: { email: email, _id: id, googleId: currentUser.uid},
+        data: { email: email, _id: id, googleId: currentUser.uid, attemptedTest: false, expiryDate: expiryDate},
       });
       document.getElementById("email-form").reset();  
       setEmailSent(true)
@@ -86,6 +92,20 @@ const AddParticipants = () => {
               helperText={error}
               onChange={(input) => setEmailAndRemoveErrors(input.target.value)}
             />
+            <Typography component="h1" variant="h5">
+              Date to complete test by:
+            </Typography>
+             <TextField
+               id="date"
+               label="Date"
+               type="datetime-local"
+               defaultValue="2021-12-31T00:00"
+               style={{margin:"15px"}}
+               InputLabelProps={{
+                 shrink: true,
+               }}
+                onChange={(input) => setDate(input.target.value)}
+               />
             <Button
               id="send-invitation"
               data-testid="send"

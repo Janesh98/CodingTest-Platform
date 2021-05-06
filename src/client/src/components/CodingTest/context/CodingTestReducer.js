@@ -38,6 +38,12 @@ export const CodingTestReducer = (state, action) => {
         ...state,
         currentQuestionIndex: action.payload,
       };
+
+      case 'UPDATE_TIME_LIMIT':
+      return {
+        ...state,
+        timeLimit: action.payload,
+      };
     default:
       return state;
   }

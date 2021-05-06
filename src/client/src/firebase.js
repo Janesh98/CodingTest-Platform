@@ -1,7 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/storage';
-import 'firebase/analytics';
+//import 'firebase/analytics';
 
 const app = firebase.initializeApp({
   apiKey: 'AIzaSyC3A8sAfhVlfmDx97uLqRvlZh_3bPnbrS8',
@@ -13,7 +13,7 @@ const app = firebase.initializeApp({
   measurementId: 'G-G17N859T23',
 });
 
-export const analytics = app.analytics();
+//export const analytics = app.analytics();
 
 export const storage = app.storage();
 

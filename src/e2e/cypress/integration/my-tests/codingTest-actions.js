@@ -1,6 +1,6 @@
 beforeEach(() => {
   cy.viewport(1920, 1080);
-  cy.visit('/codingtest/608b37629d11ba327cc0a513/608b38d940b3bf208e21e382');
+  cy.visit('/codingtest/6093ca74bb551c1e20f14fbf/6093cb54bb551c1e20f14fc3');
   cy.wait(8000);
 });
 
@@ -9,7 +9,7 @@ describe('Coding Test', () => {
     // Q1
     cy.get('[data-testid="editor"]')
       .get('textarea')
-      .type('print("hello world")');
+      .type('print("Hello World")');
     cy.get('#runcode').get('button').contains('Run Code').click().wait(15000);
     cy.get('#vertical-tab-0').click();
     cy.get('#vertical-tab-0').get('.MuiTab-wrapper').get('svg').should('exist');
@@ -17,7 +17,7 @@ describe('Coding Test', () => {
     cy.get('#scrollable-auto-tab-1').click();
     cy.get('[data-testid="editor"]')
       .get('textarea')
-      .type('print("hello world")');
+      .type('print("Hello World")');
     cy.get('#runcode').get('button').contains('Run Code').click().wait(15000);
     cy.get('#vertical-tab-0').click();
     cy.get('#vertical-tab-0').get('.MuiTab-wrapper').get('svg').should('exist');

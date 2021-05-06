@@ -39,8 +39,10 @@ const ParticipantsResults = () => {
      
       if(res.data.data[0].codingTestResults.length > 0){
       setTestId(res.data.data[0].TestId);
-      await setTableData(res.data.data[0].codingTestResults[0].challenges.map((item) => ({ title: item.title, testCases : item.testResults, challengeData: item, code: item.code})));
+      
+      await setTableData(res.data.data[0].codingTestResults[0].challenges.map((item) => ({ title: item.title, testCases : item.testResults? item.testResults: [], challengeData: item, code: item.code})));
 
+      if(res.data.data[0].codingTestResults[0].questions.length > 0){
       var index;
       var i = 1;
       for (index in res.data.data[0].codingTestResults[0].questions[0].questions){
@@ -57,7 +59,7 @@ const ParticipantsResults = () => {
 
       }
       await setQuestionsTableData(questionsList.map((item) => ({ id: item.id, question: item.question, videoUrl: item.videoUrl })));
-
+    }
       }
     };
     rows();
@@ -110,8 +112,8 @@ const ParticipantsResults = () => {
                         {row.title}
                       </TableCell>
                       <TableCell component="th" scope="row">
-                        {row.testCases ? row.testCases.reduce(reducer)/row.testCases.length  * 100 : 0}%
-                      </TableCell>
+                        { row.testCases !== null && row.testCases.length > 0  ? row.testCases.reduce(reducer)/row.testCases.length  * 100 : 0}%
+                      </TableCell> 
                       <TableCell>
                         {row.code !== "" ?
                         <Button

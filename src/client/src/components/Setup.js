@@ -28,6 +28,7 @@ const Setup = () => {
   const [sampleIn, setSampleIn] = useState('');
   const [sampleOut, setSampleOut] = useState('');
   const [exampleExplanation, setExampleExplanation] = useState('');
+  const [timeout, setTimeout] = useState('15');
   const [testIn1, setTestIn1] = useState('');
   const [testOut1, setTestOut1] = useState('');
   const [testIn2, setTestIn2] = useState('');
@@ -103,6 +104,7 @@ const Setup = () => {
           testOutput9: testOut9,
           testInput10: testIn10,
           testOutput10: testOut10,
+          timeout: timeout
         },
       });
       document.getElementById("challenge-form").reset();  
@@ -312,7 +314,7 @@ const Setup = () => {
                 helperText={error}
                 onChange={(input) => setConstraints(input.target.value)}
               />
-              <Typography component="h1" data-testid = "Sample Input typography">Sample Input</Typography>
+              <Typography component="h1" data-testid = "Sample Input typography">Sample Input(Input is passed in as command line arguments)</Typography>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -328,7 +330,7 @@ const Setup = () => {
                 helperText={error}
                 onChange={(input) => setSampleIn(input.target.value)}
               />
-              <Typography component="h1" data-testid = "Sample Output typography">Sample Output</Typography>
+              <Typography component="h1" data-testid = "Sample Output typography">Sample Output(Ouptut is expected to be printed to std out to allow verification of test cases)</Typography>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -367,6 +369,24 @@ const Setup = () => {
                 <Grid container align="center" justify="center" style={{marginTop: '75px'}}  direction="column">
                   <Grid item xs={12}>
               <Typography component="h1">
+                Timeout for test cases (Minimum and default is 15 seconds)
+              </Typography>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                id="timeout"
+                aria-label="timeout"
+                inputProps={{ "data-testid": "timeout" }}
+                defaultValue='15'
+                placeholder="timeout"
+                name="timeout"
+                error={isError}
+                helperText={error}
+                onChange={(input) => setTimeout(input.target.value)}
+              />
+              </Grid>
+                  <Grid item xs={12}>
+              <Typography component="h1">
                 Test Cases (Please provide at least 1 test case)
               </Typography>
               </Grid>
@@ -374,7 +394,6 @@ const Setup = () => {
               <TextField
                 variant="outlined"
                 margin="normal"
-                required
                 style={{marginRight: '20px'}}
                 id="test input 1"
                 aria-label="Input"

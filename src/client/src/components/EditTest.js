@@ -73,6 +73,7 @@ const EditTest = () => {
             testOutput9: item.testOutput9,
             testInput10: item.testInput10,
             testOutput10: item.testOutput10,
+            timeout: item.timeout.toString(),
             createdAt: item.createdAt,
           }))
         );
@@ -327,7 +328,7 @@ const EditTest = () => {
                       <TableCell className={classes.cell_short}>
                         {row.problemDescription}
                       </TableCell>
-                      <TableCell>{row.createdAt}</TableCell>
+                      <TableCell>{row.createdAt.toString().substring(0,10)}</TableCell>
                       <TableCell>
                         <IconButton
                           aria-label="edit"
@@ -381,6 +382,7 @@ const EditTest = () => {
                         variant="contained"
                         color="primary"
                         size="small"
+                        disabled={QuestionsTableData.length === 0}
                         onClick={(e) => handleOnClickEditQuestions()}
                       >
                         <EditIcon />

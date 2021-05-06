@@ -11,6 +11,7 @@ import { submitCodingTest } from '../../endpoints';
 import { useParams } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import CountdownTimer from 'react-component-countdown-timer';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,6 +38,7 @@ const Header = () => {
     codingTest,
     currentChallengeIndex,
     code,
+    timeLimit,
   } = useContext(CodingTestContext);
   const { codingTestId, participantId } = useParams();
   const history = useHistory();
@@ -60,7 +62,30 @@ const Header = () => {
       await axios.post(submitCodingTest, {
         data: { participantId, codingTestResults: codingTest },
       });
-      history.push(`/videointerview/${codingTestId}/${participantId}`);
+      localStorage.clear();
+      if (codingTest.questions === null || codingTest.questions.length === 0) {
+        history.push('/testComplete');
+      } else {
+        history.push(`/videointerview/${codingTestId}/${participantId}`);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleTimeLimit = async () => {
+    saveCodeProgress();
+    convertCodeToBase64();
+    try {
+      await axios.post(submitCodingTest, {
+        data: { participantId, codingTestResults: codingTest },
+      });
+      localStorage.clear();
+      if (codingTest.questions === null || codingTest.questions.length === 0) {
+        history.push('/testComplete');
+      } else {
+        history.push(`/videointerview/${codingTestId}/${participantId}`);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -78,6 +103,18 @@ const Header = () => {
           <Typography variant="h6" color="inherit">
             Coding Test
           </Typography>
+          {timeLimit !== undefined ? (
+            <CountdownTimer
+              count={60 * timeLimit}
+              className={classes.submit}
+              hideDay={true}
+              color="#fff"
+              backgroundColor="#000"
+              onEnd={() => handleTimeLimit()}
+            />
+          ) : (
+            ''
+          )}
           <Container
             className={classes.container}
             disableGutters
@@ -109,7 +146,7 @@ const Header = () => {
               variant="contained"
               className={classes.submit}
               onClick={(e) => handleSubmit(e)}
-              data-testid='submit'
+              data-testid="submit"
             >
               <Typography variant="button">Submit Test</Typography>
             </Button>

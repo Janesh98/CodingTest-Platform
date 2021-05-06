@@ -12,6 +12,7 @@ const testSchema = new Schema({
   challenges: { type: Array, required: false },
   questions: { type: Array, required: false },
   participants: { type: Array, required: false },
+  timeLimit: { type: Number, required: true},
 });
 
 const CodingTestDB = mongoose.model('CodingTestDB', testSchema);

@@ -28,6 +28,7 @@ describe('/newTest', () => {
       data: {
         googleId: '123',
         testName: 'the test',
+        timeLimit: 60
       },
     };
     const res = await request.post('/test').send({
@@ -71,11 +72,13 @@ describe('/getTests', () => {
       data: {
         googleId: '123',
         testName: 'the test',
+        timeLimit: 60
       },
     };
     const newCodingTestEntry = new CodingTestDB({
           googleId: '123',
           testName: 'the test',
+          timeLimit: 60
     });
     await newCodingTestEntry.save();
     const res = await request.post('/tests').send({

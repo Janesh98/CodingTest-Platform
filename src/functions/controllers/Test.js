@@ -1,5 +1,6 @@
 const NewUserDB = require('../models/UserModel');
 const CodingTestDB = require('../models/CodingTestModel');
+const mongoose = require('mongoose');
 
 exports.newTest = async (req, res) => {
   const test = {
@@ -7,19 +8,28 @@ exports.newTest = async (req, res) => {
     testName: req.body.data.testName,
   };
 
+  let timeLimit;
+  try{
+      timeLimit = parseInt(req.body.data.timeLimit);
+    
+  }catch(error){
+    timeLimit = 60;
+  }
+
   const googleId = test.googleId;
   const testName = test.testName;
   // Add test to MongoDB
   const newTestEntry = new CodingTestDB({
     googleId,
     testName,
+    timeLimit
   });
 
   const result = await newTestEntry.save();
   const testId = result.id;
-  NewUserDB.updateOne(
+  await NewUserDB.updateOne(
     { googleId: test.googleId },
-    { $push: { codingTests: testId } }
+    { $push: { codingTests: mongoose.Types.ObjectId(testId) } }
   );
   return res.status(200).json({
     status: 'success',

@@ -8,6 +8,9 @@ const participantSchema = new Schema({
   googleId: {type: String, required: true},
   codingTestResults: { type: Array, required: false },
   questionResults: { type: Array, required: false },
+  attemptedTest: {type: Boolean, required: false},
+  timeStarted: {type: Date, required: false},
+  expiryDate: {type: Date, required: true}
 });
 
 const ParticipantDB = mongoose.model('ParticipantDB', participantSchema);

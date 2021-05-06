@@ -14,6 +14,7 @@ import axios from 'axios';
 
 const Create = () => {
   const [created, setName] = useState('');
+  const [timeLimit, setTimeLimit] = useState('60');
   const [error, setError] = useState('');
   const [isError, setISError] = useState(false);
   const { currentUser } = useAuth();
@@ -59,7 +60,7 @@ const Create = () => {
       return setError('A test by this name already exists');
     } else {
       await axios.post(addTest, {
-        data: { googleId: currentUser.uid, testName: created },
+        data: { googleId: currentUser.uid, testName: created, timeLimit: timeLimit },
       });
       return history.push({
         pathname: '/setup',
@@ -92,6 +93,20 @@ const Create = () => {
               helperText={error}
               onChange={(input) => setNameAndRemoveErrors(input.target.value)}
             />
+            <Typography component="h1">
+                Time limit in minutes (Default is 60 minutes)
+              </Typography>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                id="timeLimit"
+                aria-label="timeLimit"
+                inputProps={{ "data-testid": "timeLimit" }}
+                defaultValue='60'
+                placeholder="timeLimit"
+                name="timeLimit"
+                onChange={(input) => setTimeLimit(input.target.value)}
+              />
             <Button
               id="continue"
               aria-label="continue"

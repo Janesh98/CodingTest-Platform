@@ -41,11 +41,28 @@ export const CodingTestProvider = ({ children }) => {
     });
   };
 
-  const updateCode = (code) => {
+  const updateCode = (code, save = true) => {
+    if (save) saveCodeToLocalStorage(code);
     dispatch({
       type: 'UPDATE_CODE',
       payload: code,
     });
+  };
+
+  const saveCodeToLocalStorage = (code) => {
+    try {
+      let updatedCode = {};
+      let savedCode = localStorage.getItem('code');
+      if (savedCode) {
+        savedCode = JSON.parse(savedCode);
+        updatedCode = savedCode;
+      }
+      // update code for current coding question
+      updatedCode[state.currentChallengeIndex] = code;
+      localStorage.setItem('code', JSON.stringify(updatedCode));
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const updateCodingTest = (codingTest) => {
@@ -69,6 +86,13 @@ export const CodingTestProvider = ({ children }) => {
     });
   };
 
+  const updateTimeLimit = (timeLimit) => {
+    dispatch({
+      type: 'UPDATE_TIME_LIMIT',
+      payload: timeLimit,
+    });
+  };
+
   return (
     <CodingTestContext.Provider
       value={{
@@ -79,6 +103,7 @@ export const CodingTestProvider = ({ children }) => {
         currentQuestionIndex: state.currentQuestionIndex,
         testResults: state.testResults,
         code: state.code,
+        timeLimit: state.timeLimit,
         updateCodeOutput,
         updateLanguage,
         updateCodingTest,
@@ -86,6 +111,7 @@ export const CodingTestProvider = ({ children }) => {
         updateCurrentQuestionIndex,
         updateTestResults,
         updateCode,
+        updateTimeLimit,
       }}
     >
       {children}

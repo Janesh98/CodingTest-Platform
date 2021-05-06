@@ -2,6 +2,20 @@ const CodingTestDB = require('../models/CodingTestModel');
 const CodingChallengeDB = require('../models/CodingChallengeModel');
 
 exports.newChallenge = async (req, res) => {
+  let timeoutValue;
+  try{
+    if(parseInt(req.body.data.timeout) >= 15)
+    {
+      timeoutValue = parseInt(req.body.data.timeout);
+    }else{
+      timeoutValue = 15;
+    }
+  }catch(error){
+    timeoutValue = 15;
+  }
+
+
+
   const challenge = {
     googleId: req.body.data.googleId,
     testName: req.body.data.testName,
@@ -33,6 +47,7 @@ exports.newChallenge = async (req, res) => {
     testOutput9: req.body.data.testOutput9,
     testInput10: req.body.data.testInput10,
     testOutput10: req.body.data.testOutput10,
+    timeout: timeoutValue,
   };
 
   const googleId = challenge.googleId;
@@ -65,6 +80,7 @@ exports.newChallenge = async (req, res) => {
   const testOutput9 = challenge.testOutput9;
   const testInput10 = challenge.testInput10;
   const testOutput10 = challenge.testOutput10;
+  const timeout = challenge.timeout;
 
   const unfilteredTestCases = [
     {
@@ -110,7 +126,7 @@ exports.newChallenge = async (req, res) => {
   ];
 
   var testCases = unfilteredTestCases.filter(function (el) {
-    return el.input != '';
+    return el.input != '' || el.output != '';
   });
 
   // Add CHallenge to MongoDB
@@ -146,6 +162,7 @@ exports.newChallenge = async (req, res) => {
     testInput10,
     testOutput10,
     testCases,
+    timeout
   });
 
   const result = await newChallengeEntry.save();
@@ -159,7 +176,19 @@ exports.newChallenge = async (req, res) => {
   });
 };
 
-exports.updateChallenge = (req, res) => {
+exports.updateChallenge = async (req, res) => {
+  let timeoutValue;
+  try{
+    if(parseInt(req.body.data.timeout) >= 15)
+    {
+      timeoutValue = parseInt(req.body.data.timeout);
+    }else{
+      timeoutValue = 15;
+    }
+  }catch(error){
+    timeoutValue = 15;
+  }
+
   const challenge = {
     _id: req.body.data._id,
     googleId: req.body.data.googleId,
@@ -192,6 +221,7 @@ exports.updateChallenge = (req, res) => {
     testOutput9: req.body.data.testOutput9,
     testInput10: req.body.data.testInput10,
     testOutput10: req.body.data.testOutput10,
+    timeout: timeoutValue,
   };
 
   const unfilteredTestCases = [
@@ -238,10 +268,10 @@ exports.updateChallenge = (req, res) => {
   ];
 
   var testCases = unfilteredTestCases.filter(function (el) {
-    return el.input != '';
+    return el.input != '' && el.output != '';
   });
 
-  CodingChallengeDB.updateOne(
+  await CodingChallengeDB.updateOne(
     { _id: challenge._id },
     {
       title: challenge.title,
@@ -273,6 +303,7 @@ exports.updateChallenge = (req, res) => {
       testInput10: challenge.testInput10,
       testOutput10: challenge.testOutput10,
       testCases: testCases,
+      timeout: challenge.timeout
     }
   );
   return res.status(200).json({

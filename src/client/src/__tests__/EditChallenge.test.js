@@ -3,7 +3,6 @@ import EditChallenge  from '../components/EditChallenge';
 import { render, screen, fireEvent, act, cleanup,} from "../test-utils";
 import '@testing-library/jest-dom'
 import { createBrowserHistory } from "history";
-import { Edit } from '@material-ui/icons';
 
 describe('rendering components', () => {
 
@@ -39,6 +38,7 @@ describe('rendering components', () => {
           testOutput9: 9,
           testInput10: 10,
           testOutput10: 10,
+          timeout: 15,
           createdAt: "1/2/3",
         } ]}
     history.push("/", state);
@@ -49,7 +49,12 @@ describe('rendering components', () => {
 
  it('renders setup test text', () => {
         render(<EditChallenge history={createBrowserHistory(history.push("/", state))}/>);
-        expect(screen.getByText("Setup A New Coding Test")).toBeInTheDocument();
+        expect(screen.getByText("Edit Coding Challenge")).toBeInTheDocument();
+ });
+
+ it('renders timeout text', () => {
+        render(<EditChallenge history={createBrowserHistory(history.push("/", state))}/>);
+        expect(screen.getByText("Timeout for test cases (Minimum and default is 15 seconds)")).toBeInTheDocument();
  });
 
  it('renders title text', () => {
@@ -75,12 +80,12 @@ describe('rendering components', () => {
  });
  it('renders sample input text', () => {
         render(<EditChallenge history={createBrowserHistory(history.push("/", state))}/>);
-        expect(screen.queryByTestId("Sample Input typography")).toHaveTextContent("Sample Input");
+        expect(screen.queryByTestId("Sample Input typography")).toHaveTextContent("Sample Input(Input is passed in as command line arguments)");
  });
 
  it('renders sample output text', () => {
         render(<EditChallenge history={createBrowserHistory(history.push("/", state))}/>);
-        expect(screen.queryByTestId("Sample Output typography")).toHaveTextContent("Sample Output");
+        expect(screen.queryByTestId("Sample Output typography")).toHaveTextContent("Sample Output(Ouptut is expected to be printed to std out to allow verification of test cases)");
  });
 
  it('renders example text', () => {
@@ -133,6 +138,34 @@ describe('rendering components', () => {
         render(<EditChallenge history={createBrowserHistory(history.push("/", state))}/>);
         expect(screen.getByLabelText("Example with Explanation")).toBeInTheDocument();
  });
+
+ it('renders timeout text box without crashing', () => {
+        render(<EditChallenge history={createBrowserHistory(history.push("/", state))}/>);
+        expect(screen.queryByTestId("timeout")).toBeInTheDocument();
+ });
+
+ it('timeout TextField have correct value', async ()=> {
+    const wrapper = render(<EditChallenge history={createBrowserHistory(history.push("/", state))}/>);
+    const timeout = wrapper.queryByTestId("timeout");
+
+   expect(timeout.value).toBe('15');
+    cleanup();
+});
+
+it('timeout TextField update', async ()=> {
+    const wrapper = render(<EditChallenge history={createBrowserHistory(history.push("/", state))}/>);
+    const input = wrapper.queryByTestId("timeout");
+   
+
+    act(() => {
+        fireEvent.change(input, { target: { value: '1' } })
+    });
+
+    expect(input.value).toBe('1');
+
+
+    cleanup();
+});
 
   it('Test input 1 check', async ()=> {
     const wrapper = render(<EditChallenge />);

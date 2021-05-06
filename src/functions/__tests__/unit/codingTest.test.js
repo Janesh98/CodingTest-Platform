@@ -18,12 +18,18 @@ describe('/codingTest', () => {
   it('POST /:codingTestId/:participantId, should return empty coding test with 200 OK', async () => {
     let responseObject = {};
     let status = null;
-    const mockData = { challenges: [], questions: [] };
+    const mockData = { challenges: [], questions: [], timeLimit: 60 };
     await jest
       .spyOn(ParticipantDB, 'exists')
       .mockReturnValue(Promise.resolve(mockData));
     await jest
+      .spyOn(ParticipantDB, 'findOne')
+      .mockReturnValue(Promise.resolve(mockData));
+    await jest
       .spyOn(CodingTestDB, 'findOne')
+      .mockReturnValue(Promise.resolve(mockData));
+    await jest
+      .spyOn(ParticipantDB, 'updateOne')
       .mockReturnValue(Promise.resolve(mockData));
     const req = {
       params: {
@@ -46,6 +52,8 @@ describe('/codingTest', () => {
       data: {
         challenges: null,
         questions: null,
+        timeLimit: 60,
+        expired: false,
       },
     };
 
@@ -59,15 +67,23 @@ describe('/codingTest', () => {
     const mockData = {
       challenges: [{ data: 'test' }],
       questions: [{ data: 'test' }],
+      timeLimit: [{ data: 'test' }],
+      expiryDate: false,
     };
     await jest
       .spyOn(ParticipantDB, 'exists')
+      .mockReturnValue(Promise.resolve(mockData));
+    await jest
+      .spyOn(ParticipantDB, 'findOne')
       .mockReturnValue(Promise.resolve(mockData));
     await jest
       .spyOn(CodingChallengeDB, 'find')
       .mockReturnValue(Promise.resolve(mockData.challenges));
     await jest
       .spyOn(CodingTestDB, 'findOne')
+      .mockReturnValue(Promise.resolve(mockData));
+    await jest
+      .spyOn(ParticipantDB, 'updateOne')
       .mockReturnValue(Promise.resolve(mockData));
     await jest
       .spyOn(QuestionsDB, 'find')
@@ -93,6 +109,8 @@ describe('/codingTest', () => {
       data: {
         challenges: mockData.challenges,
         questions: mockData.questions,
+        timeLimit: mockData.timeLimit,
+        expired: true,
       },
     };
 

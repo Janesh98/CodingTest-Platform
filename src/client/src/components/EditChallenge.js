@@ -58,6 +58,7 @@ const EditChallenge = () => {
   const [testOut9, setTestOut9] = useState(challengeData[index].testOutput9);
   const [testIn10, setTestIn10] = useState(challengeData[index].testInput10);
   const [testOut10, setTestOut10] = useState(challengeData[index].testOutput10);
+  const [timeout, setTimeout] = useState(challengeData[index].timeout);
   const [testCase2, setTestCase2] = useState(false);
   const [testCase3, setTestCase3] = useState(false);
   const [testCase4, setTestCase4] = useState(false);
@@ -141,6 +142,7 @@ const EditChallenge = () => {
           testOutput9: testOut9,
           testInput10: testIn10,
           testOutput10: testOut10,
+          timeout: timeout
         },
       });
       history.push({
@@ -247,7 +249,7 @@ const EditChallenge = () => {
         <Grid container align="center" justify="center" style={{marginTop: '75px'}} spacing={5} direction="row" data-testid="setup-grid"> 
           <Grid item xs={12}>
               <Typography component="h3" variant="h5">
-                Setup A New Coding Test
+                Edit Coding Challenge
               </Typography>
             <Card />
           </Grid>
@@ -340,7 +342,7 @@ const EditChallenge = () => {
                 helperText={error}
                 onChange={(input) => setConstraints(input.target.value)}
               />
-              <Typography component="h1" data-testid = "Sample Input typography">Sample Input</Typography>
+              <Typography component="h1" data-testid = "Sample Input typography">Sample Input(Input is passed in as command line arguments)</Typography>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -357,7 +359,7 @@ const EditChallenge = () => {
                 helperText={error}
                 onChange={(input) => setSampleIn(input.target.value)}
               />
-              <Typography component="h1" data-testid = "Sample Output typography">Sample Output</Typography>
+              <Typography component="h1" data-testid = "Sample Output typography">Sample Output(Ouptut is expected to be printed to std out to allow verification of test cases)</Typography>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -396,6 +398,24 @@ const EditChallenge = () => {
               </Grid>
               <Grid item xs={6}>
                 <Grid container align="center" justify="center" style={{marginTop: '75px'}}  direction="column">
+                  <Grid item xs={12}>
+              <Typography component="h1">
+                Timeout for test cases (Minimum and default is 15 seconds)
+              </Typography>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                id="timeout"
+                aria-label="timeout"
+                inputProps={{ "data-testid": "timeout" }}
+                defaultValue={challengeData[index].timeout}
+                placeholder="timeout"
+                name="timeout"
+                error={isError}
+                helperText={error}
+                onChange={(input) => setTimeout(input.target.value)}
+              />
+              </Grid>
                   <Grid item xs={12}>
               <Typography component="h1">
                 Test Cases (Please provide at least 1 test case)
@@ -657,7 +677,7 @@ const EditChallenge = () => {
               />
               </Grid> : ''}
               <Grid item xs={12}>
-              <Fab color="primary" aria-label="add" data-testid="add" disabled={testCase10} onClick={(e) => handleOnClickFab(e)}>
+              <Fab color="primary" aria-label="add" data-testid="add" style={{marginRight: '10px'}} disabled={testCase10} onClick={(e) => handleOnClickFab(e)}>
                   <AddIcon />
               </Fab>
               <Fab color="secondary" aria-label="remove" data-testid="remove" disabled={!testCase2} onClick={(e) => handleOnClickFabRemove(e)}>

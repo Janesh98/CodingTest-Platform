@@ -15,7 +15,12 @@ describe('rendering components', () => {
 
  it('renders setup test text', () => {
         render(<NewChallenge history={createBrowserHistory(history.push("/", state))}/>);
-        expect(screen.getByText("Setup A New Coding Test")).toBeInTheDocument();
+        expect(screen.getByText("Add A New Coding Challenge")).toBeInTheDocument();
+ });
+
+ it('renders timeout text', () => {
+        render(<NewChallenge history={createBrowserHistory(history.push("/", state))}/>);
+        expect(screen.getByText("Timeout for test cases (Minimum and default is 15 seconds)")).toBeInTheDocument();
  });
 
  it('renders title text', () => {
@@ -41,12 +46,12 @@ describe('rendering components', () => {
  });
  it('renders sample input text', () => {
         render(<NewChallenge history={createBrowserHistory(history.push("/", state))}/>);
-        expect(screen.queryByTestId("Sample Input typography")).toHaveTextContent("Sample Input");
+        expect(screen.queryByTestId("Sample Input typography")).toHaveTextContent("Sample Input(Input is passed in as command line arguments)");
  });
 
  it('renders sample output text', () => {
         render(<NewChallenge history={createBrowserHistory(history.push("/", state))}/>);
-        expect(screen.queryByTestId("Sample Output typography")).toHaveTextContent("Sample Output");
+        expect(screen.queryByTestId("Sample Output typography")).toHaveTextContent("Sample Output(Ouptut is expected to be printed to std out to allow verification of test cases)");
  });
 
  it('renders example text', () => {
@@ -89,6 +94,34 @@ describe('rendering components', () => {
         render(<NewChallenge history={createBrowserHistory(history.push("/", state))}/>);
         expect(screen.getByLabelText("Example with Explanation")).toBeInTheDocument();
  });
+
+  it('renders timeout text box without crashing', () => {
+        render(<NewChallenge history={createBrowserHistory(history.push("/", state))}/>);
+        expect(screen.queryByTestId("timeout")).toBeInTheDocument();
+ });
+
+ it('timeout TextField have correct value', async ()=> {
+    const wrapper = render(<NewChallenge history={createBrowserHistory(history.push("/", state))}/>);
+    const timeout = wrapper.queryByTestId("timeout");
+
+   expect(timeout.value).toBe('15');
+    cleanup();
+});
+
+it('timeout TextField update', async ()=> {
+    const wrapper = render(<NewChallenge history={createBrowserHistory(history.push("/", state))}/>);
+    const input = wrapper.queryByTestId("timeout");
+   
+
+    act(() => {
+        fireEvent.change(input, { target: { value: '1' } })
+    });
+
+    expect(input.value).toBe('1');
+
+
+    cleanup();
+});
 
     it('renders save button without crashing', async () => {
     
