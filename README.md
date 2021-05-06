@@ -1,36 +1,9 @@
-# CA400 template repo
+# Coding Test Platform
 
-This is a template for CA400 projects.
+#### A Live Version is available at [Coding Test Platform](https://coding-test-platform.web.app/).
 
-## 1. Create your repo
+## Overview
+The main goal of this project was to build a coding test platform for companies to use as a means to assess potential new hires. We built a live coding environment allowing candidates to complete a coding test along with the option to complete video responses to questions proposed by an employer. In addition to this employers will have access to a results section where participants code solution and  analytics about candidate’s submissions are give(i.e.  CPU time and memory used). This application was built using the MERN stack along with docker and is hosted on Firebase and google cloud.
 
-One person from your project team should fork this repo, then add other teammates as project members on GitLab.
-
-## 2. Name your repo appropriately
-
-The name of your project must be of the form `2021-ca400-XXXXXXX`, where "`XXXXXXX`"
-should be replaced with your usernames (e.g. `2021-ca400-sblott-pclarke`).
-**Note** that the year should be set as appropriate to your year of study (e.g. in the
-2021/2022 academic year, this would change to '2022-ca400-sblott-pclarke')
-
-It is the *name of your repo* which matters (not the name of your project).
-
-You can change the name of your repo on GitLab under:
-
-- Settings / General / Advanced / Change path
-
-It looks like this:
-
-![change-repo-path](./res/repo-change-path.png "Change repo path.")
-
-You should replace all of this file with a README describing your own project.
-
-## Additional resources
-
-- Repo [hygiene](https://gitlab.computing.dcu.ie/sblott/local-gitlab-documentation/blob/master/repo-hygiene.md)
-- Git [cheat sheet](https://gitlab.computing.dcu.ie/sblott/local-gitlab-documentation/blob/master/cheat-sheet.md)
-- Gitlab [CI environment](https://gitlab.computing.dcu.ie/sblott/docker-ci-environment) and it's [available software](https://gitlab.computing.dcu.ie/sblott/docker-ci-environment/blob/master/Dockerfile)
-- Example projects with CI configured:
-   * [Python](https://gitlab.computing.dcu.ie/sblott/test-project-python)
-   * [Java](https://gitlab.computing.dcu.ie/sblott/test-project-java)
-   * [MySql](https://gitlab.computing.dcu.ie/sblott/test-project-mysql)
+## API Documentation
+API Documentation is available through Postman at [API Documentation](https://documenter.getpostman.com/view/10756408/TzK14tzh#e6457c17-b2de-4c84-b2a0-51d654a1761b).
