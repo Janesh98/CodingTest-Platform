@@ -52,7 +52,7 @@ class ExecutorService {
       maxTimeLimit = parseInt(maxTimeLimit);
       maxTimeLimit < 15 ? 15 : maxTimeLimit;
     }
-    const timeout = `timeout ${maxTimeLimit}`;
+    const timeout = `/usr/bin/timeout ${maxTimeLimit}s`;
 
     var context = {};
     language = language.toLowerCase();
@@ -63,7 +63,7 @@ class ExecutorService {
         break;
       case 'java':
         context.image = 'openjdk:8-alpine';
-        context.cmd = `echo "${code}" > Main.java && javac Main.java && ${getMem} ${timeout} java Main ${input}`;
+        context.cmd = `echo "${code}" > Main.java && javac Main.java && ${getMem} java Main ${input}`;
         break;
       default:
         throw new Error(`'${language}' is not a supported language.`);
