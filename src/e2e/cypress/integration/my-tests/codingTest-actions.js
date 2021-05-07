@@ -1,6 +1,6 @@
 beforeEach(() => {
   cy.viewport(1920, 1080);
-  cy.visit('/codingtest/6093ca74bb551c1e20f14fbf/6093cb54bb551c1e20f14fc3');
+  cy.visit('/codingtest/6093ca74bb551c1e20f14fbf/60951493dca4551c5aa2cd73');
   cy.wait(8000);
 });
 
