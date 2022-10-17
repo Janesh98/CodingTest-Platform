@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const functions = require('firebase-functions');
 
+// Connect to MongoDB database.
 class ConnectMongo {
   static init() {
     const uri = functions.config().app.atlas_uri;

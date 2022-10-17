@@ -13,6 +13,7 @@ const app = firebase.initializeApp({
   measurementId: 'G-G17N859T23',
 });
 
+// Google Analytics
 //export const analytics = app.analytics();
 
 export const storage = app.storage();
