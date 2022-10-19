@@ -8,21 +8,23 @@ const crypto = require('crypto');
 // executes code submitted by user and returns stdout and stderr.
 class ExecutorService {
   async execute(code, input, language, maxTimeLimit) {
+    maxTimeLimit = this.getTimeLimit(maxTimeLimit);
     const context = this.createContext(code, input, language, maxTimeLimit);
 
     const runTime = null;
     // TODO: calculate runtime, the time taken to execute the code
 
-    const output = await this.executeShellCommand(context.cmd);
+    const output = await this.executeShellCommand(context.cmd, maxTimeLimit);
     const stdout = output.stdout.toString().trim();
     const stderr = output.stderr.toString().trim();
     const out = extractMemory(stderr);
 
     // delete temporary file
-    await this.executeShellCommand(`rm -rf ${context.folder}`);
+    await this.executeShellCommand(`rm -rf ${context.folder}`, 0);
 
-    if (this.isTimeoutError(stderr)) {
-      output.stderr = 'Timeout Error: Maximum time limit exceeded.';
+    if (this.isTimeoutError(output.stderr)) {
+      out.stderr = `Timeout Error: Maximum time limit of ${maxTimeLimit}s exceeded.`;
+      console.info(out.stderr);
     }
 
     return {
@@ -33,10 +35,10 @@ class ExecutorService {
     };
   }
 
-  async executeShellCommand(cmd) {
+  async executeShellCommand(cmd, maxTimeLimit) {
     try {
       console.info('cmd: ', cmd);
-      const output = await exec(cmd);
+      const output = await exec(cmd, { timeout: maxTimeLimit });
       console.info('stdout: ', output.stdout);
       console.info('stderr: ', output.stderr);
       return output;
@@ -52,13 +54,6 @@ class ExecutorService {
     input = Base64.decode(input);
     code = escapeQuotes(code);
     const getMem = "/usr/bin/time -f 'MEM: %M'";
-    if (!maxTimeLimit) {
-      maxTimeLimit = 15;
-    } else {
-      maxTimeLimit = parseInt(maxTimeLimit);
-      maxTimeLimit < 15 ? 15 : maxTimeLimit;
-    }
-    const timeout = `/usr/bin/timeout ${maxTimeLimit}s`;
     const id = crypto.randomBytes(16).toString('hex');
 
     var context = {};
@@ -66,14 +61,13 @@ class ExecutorService {
     language = language.toLowerCase();
     switch (language) {
       case 'python':
-        context.cmd = `mkdir -p ${context.folder}/ && echo "${code}" > ${context.folder}/test.py && ${getMem} ${timeout} python3 ${context.folder}/test.py ${input}`;
+        context.cmd = `mkdir -p ${context.folder}/ && echo "${code}" > ${context.folder}/test.py && ${getMem} python3 ${context.folder}/test.py ${input}`;
         break;
       case 'java':
-        // TODO: add getMem and timeout for java and javascript
         context.cmd = `mkdir -p ${context.folder}/ && echo "${code}" > ${context.folder}/Main.java && javac ${context.folder}/Main.java && ${getMem} java ${context.folder}/Main.java ${input}`;
         break;
       case 'javascript':
-        context.cmd = `mkdir -p ${context.folder}/ && echo "${code}" > ${context.folder}/test.js && node ${context.folder}/test.js ${input}`;
+        context.cmd = `mkdir -p ${context.folder}/ && echo "${code}" > ${context.folder}/test.js && ${getMem} node ${context.folder}/test.js ${input}`;
         break;
       default:
         throw new Error(`'${language}' is not a supported language.`);
@@ -81,8 +75,22 @@ class ExecutorService {
     return context;
   }
 
+  getTimeLimit(maxTimeLimit) {
+    if (!maxTimeLimit) {
+      maxTimeLimit = 15;
+    } else {
+      maxTimeLimit = parseInt(maxTimeLimit);
+      maxTimeLimit < 15 ? 15 : maxTimeLimit;
+    }
+
+    return maxTimeLimit * 1000;
+  }
+
   isTimeoutError(stderr) {
-    return stderr.includes('Command terminated by signal 15');
+    return (
+      (stderr.hasOwnProperty('signal') && stderr.signal === 'SIGTERM') ||
+      (stderr.hasOwnProperty('killed') && stderr.killed === true)
+    );
   }
 }
 

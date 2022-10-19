@@ -19,7 +19,7 @@ describe('Create correct command to execute the given code in the specified lang
     const result = new ExecutorService().createContext(code, input, language);
     expected = {
       folder: '/tmp/code/abc',
-      cmd: 'mkdir -p /tmp/code/abc/ && echo "print(\\"hello world\\")" > /tmp/code/abc/test.py && /usr/bin/time -f \'MEM: %M\' /usr/bin/timeout 15s python3 /tmp/code/abc/test.py 1 2 3',
+      cmd: 'mkdir -p /tmp/code/abc/ && echo "print(\\"hello world\\")" > /tmp/code/abc/test.py && /usr/bin/time -f \'MEM: %M\' python3 /tmp/code/abc/test.py 1 2 3',
     };
     expect(result).toEqual(expected);
   });
@@ -46,7 +46,7 @@ describe('Create correct command to execute the given code in the specified lang
     const result = new ExecutorService().createContext(code, input, language);
     expected = {
       folder: '/tmp/code/abc',
-      cmd: 'mkdir -p /tmp/code/abc/ && echo "console.log(\\"hello world\\")" > /tmp/code/abc/test.js && node /tmp/code/abc/test.js 1 2 3',
+      cmd: 'mkdir -p /tmp/code/abc/ && echo "console.log(\\"hello world\\")" > /tmp/code/abc/test.js && /usr/bin/time -f \'MEM: %M\' node /tmp/code/abc/test.js 1 2 3',
     };
     expect(result).toEqual(expected);
   });
@@ -132,7 +132,7 @@ describe('Create correct command to execute the given code in the specified lang
     expect(result).toEqual(expected);
   });
   it('Should return True as stderr contains timeout error', () => {
-    const stderr = 'hello world Command terminated by signal 15';
+    const stderr = {signal: 'SIGTERM', killed: true};
     const result = new ExecutorService().isTimeoutError(stderr);
     expect(result).toBeTruthy();
   });
