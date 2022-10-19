@@ -1,0 +1,11 @@
+version: '3.9'
+services:
+  cache:
+    image: redis:alpine
+    restart: always
+    ports:
+      - "6379:6379"
+  remote-code-execution:
+    build: ./
+    ports:
+      - "8000:8000"
