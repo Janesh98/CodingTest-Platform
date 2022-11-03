@@ -11,10 +11,12 @@ class ExecutorService {
     maxTimeLimit = this.getTimeLimit(maxTimeLimit);
     const context = this.createContext(code, input, language, maxTimeLimit);
 
-    const runTime = null;
-    // TODO: calculate runtime, the time taken to execute the code
-
+    const startTime = new Date();
     const output = await this.executeShellCommand(context.cmd, maxTimeLimit);
+    const endTime = new Date();
+    // calculate runtime, the time taken to execute the code in milliseconds
+    const runTime = (endTime.getTime() - startTime.getTime()) / 1000;
+
     const stdout = output.stdout.toString().trim();
     const stderr = output.stderr.toString().trim();
     const out = extractMemory(stderr);

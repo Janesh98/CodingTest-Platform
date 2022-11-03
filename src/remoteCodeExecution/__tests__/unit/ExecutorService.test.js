@@ -67,7 +67,7 @@ describe('Create correct command to execute the given code in the specified lang
       memory: '0',
       stderr: '',
       stdout: '',
-      time: null,
+      time: 0,
     };
     const mockData = {
       stdout: '',
@@ -88,7 +88,7 @@ describe('Create correct command to execute the given code in the specified lang
       memory: '0',
       stderr: '',
       stdout: '',
-      time: null,
+      time: 0,
     };
     const mockData = {
       stdout: '',
@@ -110,7 +110,7 @@ describe('Create correct command to execute the given code in the specified lang
       memory: '0',
       stderr: '',
       stdout: '',
-      time: null,
+      time: 0,
     };
     const mockData = {
       stdout: '',
