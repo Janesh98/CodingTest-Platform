@@ -4,6 +4,7 @@ const { extractMemory } = require('../utils/extractMemory');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 const crypto = require('crypto');
+const Runtime = require('../utils/runTime');
 
 // executes code submitted by user and returns stdout and stderr.
 class ExecutorService {
@@ -15,7 +16,7 @@ class ExecutorService {
     const output = await this.executeShellCommand(context.cmd, maxTimeLimit);
     const endTime = new Date();
     // calculate runtime, the time taken to execute the code in milliseconds
-    const runTime = (endTime.getTime() - startTime.getTime()) / 1000;
+    const runTime = Runtime.getRunTime(startTime, endTime);
 
     const stdout = output.stdout.toString().trim();
     const stderr = output.stderr.toString().trim();

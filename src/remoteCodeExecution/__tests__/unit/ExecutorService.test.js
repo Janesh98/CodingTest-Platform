@@ -1,4 +1,5 @@
 const ExecutorService = require('../../services/ExecutorService');
+const Runtime = require('../../utils/runTime');
 const { Base64 } = require('js-base64');
 const crypto = require('crypto');
 const util = require('util');
@@ -9,6 +10,9 @@ describe('Create correct command to execute the given code in the specified lang
     // Clear all instances and calls to constructor and all methods
     jest.clearAllMocks();
     jest.restoreAllMocks();
+
+    // Mock the getRunTime function and return 1
+    jest.spyOn(Runtime, 'getRunTime').mockReturnValue(1);
   });
   it('Should create python context', () => {
     jest.spyOn(crypto, 'randomBytes').mockReturnValue('abc');
@@ -67,7 +71,7 @@ describe('Create correct command to execute the given code in the specified lang
       memory: '0',
       stderr: '',
       stdout: '',
-      time: 0,
+      time: 1,
     };
     const mockData = {
       stdout: '',
@@ -88,7 +92,7 @@ describe('Create correct command to execute the given code in the specified lang
       memory: '0',
       stderr: '',
       stdout: '',
-      time: 0,
+      time: 1,
     };
     const mockData = {
       stdout: '',
@@ -110,7 +114,7 @@ describe('Create correct command to execute the given code in the specified lang
       memory: '0',
       stderr: '',
       stdout: '',
-      time: 0,
+      time: 1,
     };
     const mockData = {
       stdout: '',
@@ -122,17 +126,12 @@ describe('Create correct command to execute the given code in the specified lang
     const input = Base64.encode('1 2 3');
     const language = 'java';
     const maxTimeLimit = 22;
-    const result = await service.execute(
-      code,
-      input,
-      language,
-      maxTimeLimit
-    );
+    const result = await service.execute(code, input, language, maxTimeLimit);
 
     expect(result).toEqual(expected);
   });
   it('Should return True as stderr contains timeout error', () => {
-    const stderr = {signal: 'SIGTERM', killed: true};
+    const stderr = { signal: 'SIGTERM', killed: true };
     const result = new ExecutorService().isTimeoutError(stderr);
     expect(result).toBeTruthy();
   });
