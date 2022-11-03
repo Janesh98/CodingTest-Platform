@@ -1,43 +1,54 @@
-const docker = require('../config/dockerSetup');
-const streams = require('memory-streams');
 const { Base64 } = require('js-base64');
 const { escapeQuotes } = require('../utils/escape');
-const { getRunTime } = require('../utils/runTime');
 const { extractMemory } = require('../utils/extractMemory');
+const util = require('util');
+const exec = util.promisify(require('child_process').exec);
+const crypto = require('crypto');
+const Runtime = require('../utils/runTime');
 
-// executes code submitted in docker container, deleting container afterwards.
+// executes code submitted by user and returns stdout and stderr.
 class ExecutorService {
   async execute(code, input, language, maxTimeLimit) {
-    var stdout = new streams.WritableStream();
-    var stderr = new streams.WritableStream();
-
+    maxTimeLimit = this.getTimeLimit(maxTimeLimit);
     const context = this.createContext(code, input, language, maxTimeLimit);
 
-    const data = await docker.run(
-      context.image,
-      ['/bin/sh', '-c', context.cmd],
-      [stdout, stderr],
-      { Tty: false }
-    );
-    const container = data[1];
+    const startTime = new Date();
+    const output = await this.executeShellCommand(context.cmd, maxTimeLimit);
+    const endTime = new Date();
+    // calculate runtime, the time taken to execute the code in milliseconds
+    const runTime = Runtime.getRunTime(startTime, endTime);
 
-    const stats = await container.inspect();
-    const runTime = getRunTime(stats.State.StartedAt, stats.State.FinishedAt);
-    await container.remove();
-    stdout = stdout.toString().trim();
-    stderr = stderr.toString().trim();
-    const output = extractMemory(stderr);
+    const stdout = output.stdout.toString().trim();
+    const stderr = output.stderr.toString().trim();
+    const out = extractMemory(stderr);
 
-    if (this.isTimeoutError(stderr)) {
-      output.stderr = 'Timeout Error: Maximum time limit exceeded.';
+    // delete temporary file
+    await this.executeShellCommand(`rm -rf ${context.folder}`, 0);
+
+    if (this.isTimeoutError(output.stderr)) {
+      out.stderr = `Timeout Error: Maximum time limit of ${maxTimeLimit}s exceeded.`;
+      console.info(out.stderr);
     }
 
     return {
       time: runTime,
-      memory: output.memory,
+      memory: out.memory,
       stdout: Base64.encode(stdout),
-      stderr: Base64.encode(output.stderr),
+      stderr: Base64.encode(out.stderr),
     };
+  }
+
+  async executeShellCommand(cmd, maxTimeLimit) {
+    try {
+      console.info('cmd: ', cmd);
+      const output = await exec(cmd, { timeout: maxTimeLimit });
+      console.info('stdout: ', output.stdout);
+      console.info('stderr: ', output.stderr);
+      return output;
+    } catch (err) {
+      console.error('err: ', err);
+      return { stdout: '', stderr: err };
+    }
   }
 
   // returns correct docker image name and command to execute
@@ -45,29 +56,21 @@ class ExecutorService {
     code = Base64.decode(code);
     input = Base64.decode(input);
     code = escapeQuotes(code);
-    const getMem = "time -f 'MEM: %M'";
-    if (!maxTimeLimit) {
-      maxTimeLimit = 15;
-    } else {
-      maxTimeLimit = parseInt(maxTimeLimit);
-      maxTimeLimit < 15 ? 15 : maxTimeLimit;
-    }
-    const timeout = `/usr/bin/timeout ${maxTimeLimit}s`;
+    const getMem = "/usr/bin/time -f 'MEM: %M'";
+    const id = crypto.randomBytes(16).toString('hex');
 
     var context = {};
+    context.folder = `/tmp/code/${id}`;
     language = language.toLowerCase();
     switch (language) {
       case 'python':
-        context.image = 'python:3-alpine';
-        context.cmd = `echo "${code}" > test.py && ${getMem} ${timeout} python3 test.py ${input}`;
+        context.cmd = `mkdir -p ${context.folder}/ && echo "${code}" > ${context.folder}/test.py && ${getMem} python3 ${context.folder}/test.py ${input}`;
         break;
       case 'java':
-        context.image = 'openjdk:8-alpine';
-        context.cmd = `echo "${code}" > Main.java && javac Main.java && ${getMem} java Main ${input}`;
+        context.cmd = `mkdir -p ${context.folder}/ && echo "${code}" > ${context.folder}/Main.java && javac ${context.folder}/Main.java && ${getMem} java ${context.folder}/Main.java ${input}`;
         break;
       case 'javascript':
-        context.image = 'node:lts';
-        context.cmd = `echo "${code}" > test.js && node test.js`;
+        context.cmd = `mkdir -p ${context.folder}/ && echo "${code}" > ${context.folder}/test.js && ${getMem} node ${context.folder}/test.js ${input}`;
         break;
       default:
         throw new Error(`'${language}' is not a supported language.`);
@@ -75,8 +78,22 @@ class ExecutorService {
     return context;
   }
 
+  getTimeLimit(maxTimeLimit) {
+    if (!maxTimeLimit) {
+      maxTimeLimit = 15;
+    } else {
+      maxTimeLimit = parseInt(maxTimeLimit);
+      maxTimeLimit < 15 ? 15 : maxTimeLimit;
+    }
+
+    return maxTimeLimit * 1000;
+  }
+
   isTimeoutError(stderr) {
-    return stderr.includes('Command terminated by signal 15');
+    return (
+      (stderr.hasOwnProperty('signal') && stderr.signal === 'SIGTERM') ||
+      (stderr.hasOwnProperty('killed') && stderr.killed === true)
+    );
   }
 }
 
