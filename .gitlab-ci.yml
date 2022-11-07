@@ -1,4 +1,4 @@
-image: cypress/included:10.11.0
+image: cypress/browsers:node16.17.0-chrome106
 
 stages:
   - e2e
