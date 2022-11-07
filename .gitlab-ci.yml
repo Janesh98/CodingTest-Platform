@@ -1,9 +1,9 @@
 image: node:14
 
 stages:
-  - build
-  - test
-  - deploy
+  # - build
+  # - test
+  # - deploy
   - e2e
 
 ## Set environment variables for folders in "cache" job settings for npm modules and Cypress binary
@@ -20,150 +20,150 @@ variables:
 #     - ./src/functions/node_modules/
 #     - ./src/remoteCodeExecution/node_modules/
 
-build-frontend:
-  stage: build
-  cache:
-    key: frontend-cache
-    paths:
-      - ./src/client/node_modules/
-  script:
-    - cd src/client
-    - yarn
-    - yarn build
-  artifacts:
-    expire_in: 1 mos
-    paths:
-      - ./src/client/build/
-  only:
-    changes:
-      - src/client/**/*
-  retry:
-    max: 2
-    when:
-      - runner_system_failure
-      - stuck_or_timeout_failure
+# build-frontend:
+#   stage: build
+#   cache:
+#     key: frontend-cache
+#     paths:
+#       - ./src/client/node_modules/
+#   script:
+#     - cd src/client
+#     - yarn
+#     - yarn build
+#   artifacts:
+#     expire_in: 1 mos
+#     paths:
+#       - ./src/client/build/
+#   only:
+#     changes:
+#       - src/client/**/*
+#   retry:
+#     max: 2
+#     when:
+#       - runner_system_failure
+#       - stuck_or_timeout_failure
 
-test-frontend:
-  stage: test
-  cache:
-    key: frontend-cache
-    paths:
-      - ./src/client/node_modules/
-    policy: pull
-  script:
-    - cd src/client
-    - yarn
-    - yarn test --watchAll=false
-  only:
-    changes:
-      - src/client/**/*
-  retry:
-    max: 2
-    when:
-      - runner_system_failure
-      - stuck_or_timeout_failure
+# test-frontend:
+#   stage: test
+#   cache:
+#     key: frontend-cache
+#     paths:
+#       - ./src/client/node_modules/
+#     policy: pull
+#   script:
+#     - cd src/client
+#     - yarn
+#     - yarn test --watchAll=false
+#   only:
+#     changes:
+#       - src/client/**/*
+#   retry:
+#     max: 2
+#     when:
+#       - runner_system_failure
+#       - stuck_or_timeout_failure
 
-test-backend:
-  stage: test
-  cache:
-    key: backend-cache
-    paths:
-      - ./src/functions/node_modules/
-  script:
-    - cd src/functions
-    - npm i
-    - npm run test:unit
-  only:
-    changes:
-      - src/functions/**/*
-  retry:
-    max: 2
-    when:
-      - runner_system_failure
-      - stuck_or_timeout_failure
+# test-backend:
+#   stage: test
+#   cache:
+#     key: backend-cache
+#     paths:
+#       - ./src/functions/node_modules/
+#   script:
+#     - cd src/functions
+#     - npm i
+#     - npm run test:unit
+#   only:
+#     changes:
+#       - src/functions/**/*
+#   retry:
+#     max: 2
+#     when:
+#       - runner_system_failure
+#       - stuck_or_timeout_failure
 
-test-backend-integration:
-  stage: test
-  services:
-    - mongo
-  cache:
-    key: backend-cache
-    paths:
-      - ./src/functions/node_modules/
-  script:
-    - cd src/functions
-    - npm i
-    - npm run test:integration
-  only:
-    changes:
-      - src/functions/**/*
-  retry:
-    max: 2
-    when:
-      - runner_system_failure
-      - stuck_or_timeout_failure
+# test-backend-integration:
+#   stage: test
+#   services:
+#     - mongo
+#   cache:
+#     key: backend-cache
+#     paths:
+#       - ./src/functions/node_modules/
+#   script:
+#     - cd src/functions
+#     - npm i
+#     - npm run test:integration
+#   only:
+#     changes:
+#       - src/functions/**/*
+#   retry:
+#     max: 2
+#     when:
+#       - runner_system_failure
+#       - stuck_or_timeout_failure
 
-test-RCE:
-  stage: test
-  cache:
-    key: rce-cache
-    paths:
-      - ./src/remoteCodeExecution/node_modules/
-  script:
-    - cd src/remoteCodeExecution
-    - npm i
-    - npm run test:unit
-  only:
-    changes:
-      - src/remoteCodeExecution/**/*
-  retry:
-    max: 2
-    when:
-      - runner_system_failure
-      - stuck_or_timeout_failure
+# test-RCE:
+#   stage: test
+#   cache:
+#     key: rce-cache
+#     paths:
+#       - ./src/remoteCodeExecution/node_modules/
+#   script:
+#     - cd src/remoteCodeExecution
+#     - npm i
+#     - npm run test:unit
+#   only:
+#     changes:
+#       - src/remoteCodeExecution/**/*
+#   retry:
+#     max: 2
+#     when:
+#       - runner_system_failure
+#       - stuck_or_timeout_failure
 
-deploy-backend:
-  stage: deploy
-  before_script:
-    - npm i -g firebase-tools
-  script:
-    - cd src/functions
-    - npm i --production # don't install dev dependencies
-    - firebase deploy --only functions --token $FIREBASE_TOKEN
-  cache: {} # Disable globally defined cache
-  dependencies: [] # Don't download artifacts
-  only:
-    refs:
-      - master
-    changes:
-      - src/functions/**/*
-  retry:
-    max: 2
-    when:
-      - runner_system_failure
-      - stuck_or_timeout_failure
+# deploy-backend:
+#   stage: deploy
+#   before_script:
+#     - npm i -g firebase-tools
+#   script:
+#     - cd src/functions
+#     - npm i --production # don't install dev dependencies
+#     - firebase deploy --only functions --token $FIREBASE_TOKEN
+#   cache: {} # Disable globally defined cache
+#   dependencies: [] # Don't download artifacts
+#   only:
+#     refs:
+#       - master
+#     changes:
+#       - src/functions/**/*
+#   retry:
+#     max: 2
+#     when:
+#       - runner_system_failure
+#       - stuck_or_timeout_failure
 
-deploy-frontend:
-  stage: deploy
-  before_script:
-    - npm i -g firebase-tools
-  script:
-    - cd src/client
-    - yarn install --prod # don't install dev dependencies
-    - yarn build
-    - firebase deploy --only hosting --token $FIREBASE_TOKEN
-  cache: {} # Disable globally defined cache
-  dependencies: [] # Don't download artifacts
-  only:
-    refs:
-      - master
-    changes:
-      - src/client/**/*
-  retry:
-    max: 2
-    when:
-      - runner_system_failure
-      - stuck_or_timeout_failure
+# deploy-frontend:
+#   stage: deploy
+#   before_script:
+#     - npm i -g firebase-tools
+#   script:
+#     - cd src/client
+#     - yarn install --prod # don't install dev dependencies
+#     - yarn build
+#     - firebase deploy --only hosting --token $FIREBASE_TOKEN
+#   cache: {} # Disable globally defined cache
+#   dependencies: [] # Don't download artifacts
+#   only:
+#     refs:
+#       - master
+#     changes:
+#       - src/client/**/*
+#   retry:
+#     max: 2
+#     when:
+#       - runner_system_failure
+#       - stuck_or_timeout_failure
 
 prod-e2e:
   image: cypress/browsers:node14.16.0-chrome89-ff86
@@ -171,8 +171,7 @@ prod-e2e:
   script:
     - cd src/e2e
     - cypress run --browser chrome
-  when: delayed
-  start_in: 10 minutes
+  when: manual
   cache: {} # Disable globally defined cache
   dependencies: [] # Don't download artifacts
   only:
