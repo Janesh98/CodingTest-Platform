@@ -1,21 +1,25 @@
-image: node:14
-
+# Install Cypress, then run all tests (in parallel)
 stages:
   - e2e
 
-## Set environment variables for folders in "cache" job settings for npm modules and Cypress binary
+# Set environment variables for folders in "cache" job settings for npm modules and Cypress binary
 variables:
-  npm_config_cache: '$CI_PROJECT_DIR/.npm'
-  CYPRESS_CACHE_FOLDER: '$CI_PROJECT_DIR/cache/Cypress'
+  npm_config_cache: "$CI_PROJECT_DIR/.npm"
+  CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/cache/Cypress"
+
+# Cache using branch name
+# https://gitlab.com/help/ci/caching/index.md
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - .cache/*
+    - cache/Cypress
+    - node_modules
+    - build
 
 prod-e2e:
+  image: cypress/browsers:node16.14.2-slim-chrome100-ff99-edge
   stage: e2e
   script:
     - cd src/e2e
-    - npm install cypress --save-dev
     - npx cypress run --browser chrome
-  retry:
-    max: 2
-    when:
-      - runner_system_failure
-      - stuck_or_timeout_failure
