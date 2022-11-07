@@ -1,12 +1,18 @@
-image: cypress/browsers:node16.17.0-chrome106
+image: node:14
 
 stages:
   - e2e
+
+## Set environment variables for folders in "cache" job settings for npm modules and Cypress binary
+variables:
+  npm_config_cache: '$CI_PROJECT_DIR/.npm'
+  CYPRESS_CACHE_FOLDER: '$CI_PROJECT_DIR/cache/Cypress'
 
 prod-e2e:
   stage: e2e
   script:
     - cd src/e2e
+    - npm install cypress --save-dev
     - npx cypress run --browser chrome
   retry:
     max: 2
