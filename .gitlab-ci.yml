@@ -23,7 +23,6 @@ prod-e2e:
   script:
     - cd src/e2e
     - cypress run --browser chrome
-  when: manual
   cache: {} # Disable globally defined cache
   dependencies: [] # Don't download artifacts
   retry:
