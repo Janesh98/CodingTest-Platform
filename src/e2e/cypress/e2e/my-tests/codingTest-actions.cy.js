@@ -1,11 +1,11 @@
 beforeEach(() => {
   cy.viewport(1920, 1080);
-  cy.visit('/codingtest/6093ca74bb551c1e20f14fbf/60951493dca4551c5aa2cd73');
+  cy.visit('/codingtest/6368dc0abb813e912f7ab632/6368e37dbb813ece6b7ab634');
   cy.wait(8000);
 });
 
 describe('Coding Test', () => {
-  it('Should Complete Coding Test in Python and Submit', () => {
+  it.skip('Should Complete Coding Test in Python and Submit', () => {
     // Q1
     cy.get('[data-testid="editor"]')
       .get('textarea')
