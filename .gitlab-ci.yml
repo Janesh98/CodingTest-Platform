@@ -170,7 +170,7 @@ prod-e2e:
   stage: e2e
   script:
     - cd src/e2e
-    - npx cypress run --browser chrome
+    - cypress run --browser chrome
   when: delayed
   start_in: 10 minutes
   cache: {} # Disable globally defined cache
