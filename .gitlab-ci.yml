@@ -7,7 +7,7 @@ prod-e2e:
   stage: e2e
   script:
     - cd src/e2e
-    - cypress run --browser chrome
+    - npx cypress run --browser chrome
   retry:
     max: 2
     when:
