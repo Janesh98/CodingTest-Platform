@@ -22,4 +22,5 @@ prod-e2e:
   stage: e2e
   script:
     - cd src/e2e
+    - cypress install
     - npx cypress run --browser chrome
