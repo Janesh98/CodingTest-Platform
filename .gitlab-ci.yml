@@ -18,7 +18,7 @@ cache:
     - build
 
 prod-e2e:
-  image: cypress/browsers:node16.14.2-slim-chrome100-ff99-edge
+  image: cypress/included:10.11.0
   stage: e2e
   script:
     - cd src/e2e
