@@ -56,18 +56,18 @@ describe('setup and edit tests', () => {
       '{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace}{backspace} from sys.argv and print to stdout'
     );
     cy.get('[data-testid="save"]').click();
-    cy.wait(10000);
-    cy.get('[id="edit-questions"]').first().should('be.visible').click({force:true});
-    cy.wait(10000);
+    cy.wait(5000);
+    cy.get('[id="addQs"]').first().should('be.visible').click();
+    cy.wait(5000);
     cy.get('[data-testid="Question 1"]').type('What is your name?');
     cy.get('[data-testid="Question 2"]').type('What year is this?');
     cy.get('[data-testid="Question 3"]').type('What time is it?');
     cy.get('[data-testid="save"]').click();
     cy.wait(5000);
-    // cy.get('[data-testid="edit-test"]').click();
-    // cy.wait(5000);
-    // cy.get('[id="edit"]').first().click();
-    // cy.wait(5000);
+    cy.get('[data-testid="edit-test"]').click();
+    cy.wait(5000);
+    cy.get('[id="edit"]').first().click();
+    cy.wait(5000);
     cy.get('[data-testid="addChallenge"]').click();
     cy.wait(5000);
     cy.get('[data-testid="open"]').click();
