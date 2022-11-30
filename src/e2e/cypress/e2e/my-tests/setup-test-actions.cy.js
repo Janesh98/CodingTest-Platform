@@ -12,7 +12,7 @@ describe('setup tests', () => {
     cy.get('[data-testid="setup-test"]').click();
     cy.get('[data-testid="name"]').type('test1234');
     cy.get('[data-testid="continue"]').click();
-    cy.wait(3000);
+    cy.wait(5000);
     cy.get('[data-testid="open"]').click();
     cy.get('[data-testid="close"]').click();
     cy.get('[id="title"]').type('Reverse string');
@@ -66,7 +66,7 @@ describe('setup tests', () => {
     cy.get('[data-testid="setup-test"]').click();
     cy.get('[data-testid="name"]').type('test12345');
     cy.get('[data-testid="continue"]').click();
-    cy.wait(3000);
+    cy.wait(5000);
     cy.get('[data-testid="open"]').click();
     cy.get('[data-testid="close"]').click();
     cy.get('[id="title"]').type('Reverse string');
