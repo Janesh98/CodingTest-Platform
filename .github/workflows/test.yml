@@ -10,3 +10,5 @@ jobs:
           build: npm i -D cypress
           install: false
           working-directory: src/e2e
+          browser: chrome
+          headless: true
