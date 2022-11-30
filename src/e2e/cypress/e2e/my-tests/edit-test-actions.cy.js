@@ -57,7 +57,7 @@ describe('setup and edit tests', () => {
     );
     cy.get('[data-testid="save"]').click();
     cy.wait(5000);
-    cy.get('[id="addQs"]').first().click();
+    cy.get('[id="addQs"]').first().should('be.visible').click();
     cy.wait(5000);
     cy.get('[data-testid="Question 1"]').type('What is your name?');
     cy.get('[data-testid="Question 2"]').type('What year is this?');
@@ -110,8 +110,8 @@ describe('setup and edit tests', () => {
     // cy.wait(1000);
     // cy.get('[data-testid="send"]').click();
     // cy.wait(5000);
-    cy.get('[data-testid="exit"]').click();
-    cy.wait(5000);
+    // cy.get('[data-testid="exit"]').click();
+    // cy.wait(5000);
     cy.get('[id="deleteChallenge"]').first().click();
     cy.wait(5000);
     cy.get('[id="deleteQuestions"]').first().click();
