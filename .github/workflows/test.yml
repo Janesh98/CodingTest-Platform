@@ -1,8 +1,8 @@
 name: Prod E2E
 on:
   schedule:
-    # runs tests every hour at 15 mins past
-    - cron: '15 * * * *'
+    # runs tests every monday at 10am
+    - cron: '0 10 * * MON'
 jobs:
   cypress-run:
     runs-on: ubuntu-20.04
