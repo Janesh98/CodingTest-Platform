@@ -1,5 +1,8 @@
-name: E2E
-on: [push]
+name: Prod E2E
+on:
+  schedule:
+    # runs tests every hour at 15 mins past
+    - cron: '15 * * * *'
 jobs:
   cypress-run:
     runs-on: ubuntu-20.04
@@ -11,3 +14,13 @@ jobs:
           install: false
           working-directory: src/e2e
           browser: chrome
+  # Run email test
+  run_tests:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run script file
+      run: |
+         chmod +x ./src/e2e/email-test.sh
+         ./src/e2e/email-test.sh
+      shell: bash
