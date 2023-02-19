@@ -1,4 +1,4 @@
-# Coding Test Platform
+# Coding Test Platform [![Prod E2E](https://github.com/Janesh98/CodingTest-Platform/actions/workflows/test.yml/badge.svg)](https://github.com/Janesh98/CodingTest-Platform/actions/workflows/test.yml)
 
 #### A Live Version is available at [Coding Test Platform](https://coding-test-platform.web.app/).
 
