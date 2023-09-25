@@ -1,5 +1,6 @@
 name: Prod E2E
 on:
+  workflow_dispatch:
   schedule:
     # runs tests every monday at 10am
     - cron: '0 10 * * MON'
